@@ -14,26 +14,11 @@ if(isset($_POST['submit'])){
     $lozinka = $_POST['lozinka'];
     $user_pic = $_POST['user_pic'];
 
-  //  echo "$imeiprez";
-
-    $reg_query="insert into donor values('$OIB',
-                        '$ime',
-                         '$user_pic',
-                         '$datum_rod', 
-                         '$prebivaliste', 
-                          '$postanskibr', 
-                         '$brojmob',
-                         '$email', 
-                         '$spol','
-                         $adresa', 
-                         '$lozinka', 
-                         0)";
-
-
+    $reg_query="insert into donor values('$OIB','$ime','$user_pic','$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$lozinka', 0)";
     $reg_run=mysqli_query($conn, $reg_query);
 
     if($reg_run){
-        echo "fak jea";
+        echo "Zahvaljujemo na registraciji! ide neki kul js koji promijeni sve ovo dolje u sign in!";
     }
     else {
         echo "error:" .mysqli_error($conn);
