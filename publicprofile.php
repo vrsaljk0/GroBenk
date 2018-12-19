@@ -17,6 +17,10 @@ $OIB_korisnika = $_GET['OIB_korisnika'];
 $OIB_donora = $_SESSION["OIB_donora"];
 
 //spremam session varijablu da je mogu kasnije koristiti
+/**
+ * publicprofile.php prikazuje ostale donore iz perspektive onog ulogiranog
+ */
+
 
 $query = "SELECT * FROM following WHERE  donor_OIB_donora = $OIB_donora and OIB_prijatelja = $OIB_korisnika";
 $run = mysqli_query($conn, $query);
@@ -24,9 +28,16 @@ $result = $run or die("Failed to query database");
 $row = mysqli_fetch_array($result);
 if(!$row) $str = "Follow";
 else $str = "Unfollow";
+/**
+ * pri samom loadu stranicu provjeram follujem li tog korisnika već ili ne -> što će mi pisati na bottunu
+ */
+
 
 if(isset($_POST['follow'])){
-    //prvo provjeriti u bazi folluje li donor već tog korisnika
+    /**
+     * ako je onaj row od gore prazan znači klik na bottun mi treba followati tog donora
+     * kod mene se doda OIB_korisnika u following tablicu a kod tog korisnika u followers tablicu
+     */
     if(!$row) {
         //KOrisnik ide zapratiti prijatelj
         $query = "INSERT INTO following values ('$OIB_donora', '$OIB_korisnika')";
@@ -41,7 +52,7 @@ if(isset($_POST['follow'])){
         $run = mysqli_query($conn, $query);
     }
     else{ //ako već postoji znači da ga želim izbrisati
-        //člallal
+
         $query = "DELETE FROM following WHERE  donor_OIB_donora = $OIB_donora and OIB_prijatelja = $OIB_korisnika";
         $run = mysqli_query($conn, $query);
         if ($run) {
@@ -55,10 +66,12 @@ if(isset($_POST['follow'])){
     }
 }
 
-
+/**
+ * Prikazujem podatke o tom donoru
+ */
 $query ="select *from donor where OIB_donora = '$OIB_korisnika'";
 $run = mysqli_query($conn, $query);
-$result = $run or die ("Failed to query database". mysql_error());
+$result = $run or die ("Failed to query database". mysqli_error($conn));
 
 $r = mysqli_fetch_array($result);
 if($r['br_donacija'] <= 20 ) $string = '*';
@@ -69,7 +82,7 @@ else if($r['br_donacija'] <= 50) $string = '***';
 echo '<form action="" method="POST">
       <img src="data:image/jpeg;base64,'.base64_encode( $r['profile_pic'] ).'"/><br><br>
       <b>' .$r['ime_prezime_donora'].'</b><br><br>';
-    //sad idemo prebrojati koliko imamo followersa i followinga i ispisati to
+    //sad idemo prebrojati koliko imamo followersa i followinga i ispisati to->functions.php
 count_following($OIB_korisnika);
 count_followers($OIB_korisnika);
 echo   '<form>
@@ -82,6 +95,7 @@ echo   '<form>
         </form>
       ';
 
+//vraća me nazad na moj profil -> to sam prije spremila u session varijablu
 echo '<bottom><a href='.$_SESSION["current_page"].'>Nazad na moj profil</a></bottom>';
 ?>
 
