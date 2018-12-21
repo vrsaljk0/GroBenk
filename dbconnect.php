@@ -1,10 +1,4 @@
 <?php
-/*podaci o serveru i tvoj username
-imamo dva načina za stvoriti konekciju
-mysqli (object-oriented) sa new
-mysli (procedural)
-više mi se sviđa procedural tako da fak you iva
-*/
 $servername = "localhost";
 $username = "root";
 $password = "";

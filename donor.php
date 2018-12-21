@@ -2,12 +2,27 @@
     function OdjaviMe(){
         window.location.replace('odjava.php');
     }
+
+    function toggleVisibility(button) {
+        if(button == "button1")var x = document.getElementById("pratim");
+        else var x = document.getElementById("prate_me");
+
+        if(x.style.display === "block") {
+            x.style.display = "none";
+        }
+        else {
+            x.style.display = "block";
+        }
+    }
 </script>
 
 <?php
 
     require_once "dbconnect.php"; //fancy include just because I can
+    require_once "functions.php";
     session_start();
+
+    $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
 
     $OIB = $_GET['OIB'];
     $password = $_GET['password'];
@@ -49,14 +64,21 @@
     if(!strcmp($row['spol'],'Z')) $gender = 'la';
     else $gender = 'o';
 
-    //prikaz osnovnih informacija o donoru
-echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['profile_pic'] ).'"/><br><br>
-      <b>' .$row['ime_prezime_donora'].'</b><br><br>
-      Rođena: ' .$row['datum_rodenja'].'<br><br>
-      Živi u mjestu: '. $row['prebivaliste']. '<br><br>
-      Kontakt: '. $row['mail_donora']. '<br><br>
 
-      <b>'.$row['ime_prezime_donora'].' je donira'.$gender. ' ' .$row['br_donacija']. ' puta</b><br> čime je zasluži'.$gender. ' ' .$str. ' u našoj banci<br><br>
+
+    //prikaz osnovnih informacija o donoru
+    echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['profile_pic'] ).'"/><br><br>
+          <b>' .$row['ime_prezime_donora'].'</b><br><br>
+          Rođena: ' .$row['datum_rodenja'].'<br><br>
+          Živi u mjestu: '. $row['prebivaliste']. '<br><br>
+          Kontakt: '. $row['mail_donora']. '<br><br>';
+
+    echo'<button id="button1"  onclick="toggleVisibility(this.id);">'; echo count_following($OIB); echo'</button>';
+    echo'<button id="button2" onclick="toggleVisibility(this.id);">'; echo count_followers($OIB); echo'</button><br>';
+
+
+    echo   '<b>'.$row['ime_prezime_donora'].' je donira'.$gender. ' ' .$row['br_donacija']. ' puta</b><br> čime je zasluži'.$gender. ' ' .$str. ' u našoj banci<br><br>
+
 
       <input type="submit" name="poruka" value="Moj Inbox"><br><br> 
       <input type="submit" name="postavke" value="Postavke"><br><br>
@@ -79,11 +101,27 @@ echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['profile_pic'] ).'"
         }
       }
 
-      echo '<br><b>Prati:</b><br>';
+      echo '<div hidden id="pratim" ><br><b>Prati:</b><br>';
       foreach ($following as $follow) {
-            echo $follow['ime_prezime_donora'] . '<br>';
+        echo $follow['ime_prezime_donora'] . '<br>';
+      } echo'</div>';
+
+
+      $upit = "SELECT ime_prezime_donora from donor where
+               OIB_donora in (select OIB_prijatelja from followers where
+               donor_OIB_donora = '$OIB')";
+
+      $rezultat = mysqli_query($conn, $upit);
+      $followers = array();
+      if (mysqli_num_rows($rezultat) > 0) {
+            while ($red = mysqli_fetch_assoc($rezultat)) {
+                $followers[] = $red;
+            }
       }
 
-
+      echo '<div hidden id="prate_me"><br><b>Prate je :</b><br>';
+        foreach ($followers as $follow) {
+            echo $follow['ime_prezime_donora'] . '<br>';
+        }echo'</div>';
 ?>
 
