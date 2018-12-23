@@ -12,22 +12,26 @@ if(isset($_POST['submit'])){
     $spol = $_POST['spol'];
     $adresa = $_POST['adresa'];
     $lozinka = $_POST['lozinka'];
-    $user_pic = $_POST['user_pic'];
+    $image = $_FILES['image']['name'];
 
-    $reg_query="insert into donor values('$OIB','$ime','$user_pic','$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$lozinka', 0)";
+    $target = "donori/".basename($image);
+
+    $reg_query="insert into donor values('$OIB','$ime','$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$lozinka', '0', '$image')";
     $reg_run=mysqli_query($conn, $reg_query);
 
-    if($reg_run){
-        echo "Zahvaljujemo na registraciji! ide neki kul js koji promijeni sve ovo dolje u sign in!";
-    }
-    else {
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+        $msg = "Uspjesno registrirani!";
+    }else{
+        $msg = "Došlo je do greške obratite se administratoru";
         echo "error:" .mysqli_error($conn);
+        echo ' '.$msg;
     }
+
 }
 ?>
 <html>
 <body>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
          Ime i prezime:
         <input type="text" name="ime" required=""><br>
         Spol
@@ -51,10 +55,10 @@ if(isset($_POST['submit'])){
         Lozinka
         <input type="password" name="lozinka" required=""><br>
         Vasa slika profila
-        <input type ="FILE" name="user_pic" required="" ><br> <!-- ne znam kako sad prikazati tu učitanu sliku to je valjda jquery -->
+        <input type ="FILE" name="image" required=""><br>
 
         <input type="submit" name="submit" value="Posalji"><br>
-        Već imate profil ? <a href="login.php">Ulogirajte se</a>
+        Već imate profil ? <a href="login.html">Ulogirajte se</a>
         </form>
 </body>
 </html>
