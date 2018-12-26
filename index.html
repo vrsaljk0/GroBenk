@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,44 +10,26 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	<link href="style.css" rel="stylesheet">
+	<link href="popupstyle.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top">
-<div class="container-fluid">
-	<a class="navbar-brand" href="#"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarResponsive">
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="#">O nama</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Donacija</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Kako nas pronaci</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Kontakt</a>
-			</li>
-			<li class="nav-item">
-				<button type="button" class="btn btn-primary btn-lg">SIGN IN</button>
-			</li>
-		</ul>
-	</div>
+<div id="nav-placeholder">
 </div>
-</nav>
+
+<script>
+$(function(){
+  $("#nav-placeholder").load("navbar.html");
+});
+</script>
 
 <!--- Image Slider -->
 <div id="slides" class="carousel slide" data-ride="carousel">
 	<ul class="carousel-indicators">
 		<li data-target="#slides" data-slide-to="0" class="active"></li>
-		<li data-target="#slides" data-slide-to="1" class="active"></li>
-		<li data-target="#slides" data-slide-to="2" class="active"></li>
+		<li data-target="#slides" data-slide-to="1" ></li>
+		<li data-target="#slides" data-slide-to="2" ></li>
 	</ul>
 	<div class="carousel-inner">
 		<div class="carousel-item active">
@@ -56,7 +37,7 @@
 			<div class="carousel-caption">
 				<h1>Želite li biti donor krvi?</h1>
 				<h3>Postanite dio naše zajednice!</h3>
-				<button type="button" class="btn btn-outline-light btn-lg">SIGN UP</button>
+				<button type="button" class="btn btn-outline-light btn-lg" onclick="document.getElementById('id01').style.display='block'"">SIGN UP</button>
 			</div>
 		</div>
 		<div class="carousel-item">
@@ -201,6 +182,46 @@
 	</div>
 </div>
 </div>
+
+	<!--PopUp Sign in Form 
+	<div id="modal-wrapper" class="modal">
+		<form class="modal-content animate" action="donor.php" method="GET">
+
+			<div class="imgcontainer">
+				<span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close Popup">&times;</span>
+				<br><h1>Sign in</h1>
+			</div>
+
+			<div class="container">
+				<div style="padding-top: 40%;" class="textboxlogin">
+					<i class="fas fa-user-circle"></i>
+					<input type="text" placeholder="Username" name="username" value="" required="">
+				</div>
+
+				<div class="textboxlogin">
+					<i class="fas fa-lock"></i>
+					<input type="password" placeholder="Password" name="password" value="" required="">
+				</div>
+				<br>
+				<input class="btnlogin" type="submit" name="submit" value="Prijavi se"><br>
+				<br><br>
+				<h6>Nemate račun?</h6> <a href="signup.php">Sign up</a>
+			</div>
+			
+		</form>
+	</div>
+
+	<script>
+	// Get the modal
+	var modal = document.getElementById('modal-wrapper');
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	}
+	</script>-->
 
 <!--- Two Column Section -->
 
