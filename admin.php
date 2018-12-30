@@ -212,7 +212,104 @@
             <div id="content5" class="toggle" style="display:none">Bolnički zahtjevi</div>
             <div id="content6" class="toggle" style="display:none">Postavke donora</div>
             <div id="content7" class="toggle" style="display:none">Obavijesti</div>
-            <div id="content8" class="toggle" style="display:none">Statistika</div>
+            
+            <div id="content8" class="toggle" style="display:none">
+            /** Previse mi se spava za pokusat skuzit ajax*/
+                <script src=""http:/>/code.jquery.com/jquery-1.9.1.js"></script>
+                <script>
+                    function submit_form() {
+                        
+                    }
+                </script>
+            <br>
+            <form method="post">
+                <select id="mjesec" name="mjesec">
+                <option value="0">-odaberi mjesec-</option>';
+                    $mjesec = 1;
+                    $mjesec_array = array("siječanj", "veljača", "ožujak", "travanj", "svibanj", "lipanj", "srpanj", "kolovoz", "rujan", "listopad", "studeni", "prosinac");
+                    for ($i = 0; $i < 12; $i++) {
+                        echo '<option value='.$mjesec.'>-'.$mjesec_array[$i].'-</option>';
+                        $mjesec++;
+                    }
+
+                echo'</select> <br>
+                
+                <select id="godina" name="godina">
+                <option value="0">-odaberi godinu-</option>';
+
+                $now = new \DateTime('now');
+                $years = $now->format('Y')-4;
+                for ($i = 0; $i < 5; $i++) {
+                    echo '<option value='.$years.'>-'.$years.'.godina-</option>';
+                    $years++;
+                }
+                echo '</select> <br>
+            <button type="button">Prikaži statistiku</button>
+            </form><br>
+            ';
+
+
+            //kako bi znali za koj mjesec i godinu racunamo mjesecnu statistiku:
+            $now = new \DateTime('now'); //ako zelimo sadasnjost
+            $month = $now->format('m');
+            $year = $now->format('Y');
+
+            /**$month = $_POST['mjesec'];
+            $year = $_POST['godina'];*/
+
+            //broj odrzanih evenata u tom razdoblju:
+            $sql = "select id_lokacije from moj_event where id_lokacije in (select idlokacija from lokacija where 
+                                (select extract(year from datum_dogadaja)) = '$year' and 
+                                (select extract(month from datum_dogadaja)) = '$month') group by id_lokacije";
+            $result = mysqli_query($conn, $sql);
+            $num_events = mysqli_num_rows($result);
+
+            //broj prikupljenih donacija u tom razdoblju:
+            $sql = "select OIB_donora_don from moj_event where id_lokacije in (select idlokacija from lokacija where 
+                                                        (select extract(year from datum_dogadaja)) = '$year' and 
+                                                        (select extract(month from datum_dogadaja)) = '$month') and 
+                                                        prisutnost = 1";
+            $result = mysqli_query($conn, $sql);
+            $num_pdonation = mysqli_num_rows($result);
+
+            //broj odbijenih donacija u tom razdoblju:
+            $sql = "select OIB_donora_don from moj_event where id_lokacije in (select idlokacija from lokacija where 
+                                                                    (select extract(year from datum_dogadaja)) = '$year' and 
+                                                                    (select extract(month from datum_dogadaja)) = '$month') and 
+                                                                     prisutnost != 1";
+            $result = mysqli_query($conn, $sql);
+            $num_odonation = mysqli_num_rows($result);
+
+            //najvise krvne grupe u tom razdoblju:
+            $sql = "select * from moj_event join donor on (OIB_donora = OIB_donora_don) where id_lokacije in (select idlokacija from lokacija where 
+                                                                    (select extract(year from datum_dogadaja)) = '$year' and 
+                                                                    (select extract(month from datum_dogadaja)) = '$month')and 
+                                                                    prisutnost = 1 group by krvna_grupa_don  order by krvna_grupa_don desc limit 1";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $naj_krvnag = $row['krvna_grupa_don'];
+
+            echo'<br>Statistika za '.$month.'.mjesec '.$year.' .godine:
+            <table border="1">
+              <tr>
+                <th>Održani eventi</th>
+                <td>'.$num_events.'</td> 
+              </tr>
+              <tr>
+                <th>Prikupljene donacije</th>
+                <td>'.$num_pdonation.'</td> 
+              </tr>
+              <tr>
+                <th>Odbijene donacije</th>
+                <td>'.$num_odonation.'</td> 
+              </tr>
+              <tr>
+                <th>Najviše je prikupljeno krvne grupe:</th>
+                <td>'.$naj_krvnag.'</td> 
+              </tr>
+            </table>
+
+            </div>
             
             
             
