@@ -13,10 +13,7 @@
     session_start();
 
     $OIB_korisnika = $_GET['OIB_korisnika'];
-    $OIB_donora = $_SESSION["OIB_donora"];
-
-    //spremam session varijablu da je mogu kasnije koristiti
-
+    $OIB_donora =  $_SESSION['mojOIB'];
 
     $query = "SELECT * FROM following WHERE  donor_OIB_donora = $OIB_donora and OIB_prijatelja = $OIB_korisnika";
     $run = mysqli_query($conn, $query);

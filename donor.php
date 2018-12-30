@@ -32,6 +32,20 @@
  * samo na milisekundu #rip
  *********CODDE MAGIC STARTS HERE*******************/
 
+echo '
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BloodBank</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <link href="donorstyle.css" rel="stylesheet">
+</head>';
+
 
 /**
  * dbcconnect.php includam na početku svakog .php jer se u njemu radi konekcija s bazom.
@@ -39,9 +53,9 @@
  */
     require_once "dbconnect.php"; //fancy include just because I can
     require_once "functions.php";
-    echo "<link rel='stylesheet' type='text/css' href='style.css'>";
 
 /**
+
  * Jednom kad sam se ulogirala želim sačuvati OIB donora i ako odem na neke druge stranice(tipa pregledavam drugog donora)
  * pa zato pokrećem session i pamtim current_page jer svaki donor ima različit page pa se ne mogu samo vratiti na donor.php
  * ako sam negdje drugo
@@ -50,31 +64,42 @@
 
     session_start();
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
-    $OIB = $_GET['OIB'];
+    $username = $_GET['username'];
     $password = $_GET['password'];
 /**
  * iduća 4 reda sprječavaju "sql injections" o kojima ne znam još puno al znam da nam se lako hakira bazu haha. to ću na kraju finese dodavati
  * zasad nebitno
  */
-    $OIB = stripcslashes($OIB);
+    $username = stripcslashes($username);
     $password = stripcslashes($password);
-    $OIB = mysqli_real_escape_string($conn,$OIB);
+    $username = mysqli_real_escape_string($conn,$username);
     $password = mysqli_real_escape_string ($conn, $password);
 /**
  * $info upit dohvaća preko OIB sve informacije o ulogiranom donoru.
  */
+    echo "
+    <div id='nav-placeholder' onload>
+    </div> 
 
-    $info ="select *from donor where OIB_donora = '$OIB' and password = '$password'";
+    <script>
+    $(function(){
+      $('#nav-placeholder').load('donornavbar.php');
+    });
+    </script>";
+
+    $info ="select *from donor where username = '$username' and password = '$password'";
     $run = mysqli_query($conn, $info);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
     $row = mysqli_fetch_array($result);
-    if ($row['OIB_donora'] == $OIB && $row['password'] == $password && ("" !== $OIB || "" !== $password) ) {
+    $OIB = $row['OIB_donora'];
+    if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
         echo "Dobrodošao ".$row['ime_prezime_donora']." !<br><br>";
-        $_SESSION["OIB_donora"] = $OIB; //spremam session varijablu da je mogu kasnije koristiti
+      //  $_SESSION["username"] = $username; //spremam session varijablu da je mogu kasnije koristiti
         $_SESSION["ime"] = $row['ime_prezime_donora'];
+        $_SESSION["mojOIB"] = $row['OIB_donora'];
     } else {
-        echo "Pogresna lozinka ili OIB!";
+        echo "Pogresna lozinka ili username!";
         exit;
     }
 
@@ -118,12 +143,7 @@
  * Trazilica ispisuje popis ljudi koji sadrže nešto iz textboxa, fora je što je u upitu %izraz% pa bi za npr a izbacilo sve donore koji sadrže slovo a
  * na kraju bi mogla napraviti "naprednu tražilicu" npr po gradu, godinama itd...
  */
-    echo '<center>
-            <form action="pretrazi.php" method="GET">
-                <input type="text" name = "trazilica" placeholder="Pretraži ostale donore">
-                <input type="submit" name="trazi" value="Traži">
-                </form>
-          </center>';
+
 
 /**
  * Glupi sustav bodovanja kojeg bi malo trebalo izmjeniti
@@ -237,3 +257,5 @@
     }
     echo'</div>';
 ?>
+
+

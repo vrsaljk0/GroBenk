@@ -118,7 +118,7 @@ $(function(){
 	    <input type ="FILE" placeholder="Slika profila" name="image" required=""><br>
 	    </div>
 
-	    <input class="btnreg" type="submit" name="submit" value="Registriraj se"><br>
+	    <input class="btnreg" type="submit" name="submit" onclick="window.location.href='donor.php'" value="Registriraj se"><br>
 	</form>
 </div>
 </body>

@@ -1,13 +1,35 @@
 <html>
-<body>
-<form action="donor.php" method="GET">
-    Prijavite se: (malo sugavo preko OIB-a al to nam je primary key pa jebiga)<br>
-    OIB:
-    <input type="number" name="OIB" required=""><br>
-    Lozinka:
-    <input type="password" name="password" required=""><br>
-    <input type="submit" name="submit" value="Prijavi se"><br>
-    Nemate profil ? <a href="registration.php">Registrirajte se</a>
-</form>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>BloodBank</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="loginstyle.css" rel="stylesheet">
+</head>
+<body class="bodylogin">
+
+<!--Login form-->
+<div class="login-box">
+	<form action="donor.php" method="GET">
+		<h1>Sign in</h1>
+		<div class="textboxlogin">
+			<i class="fas fa-user-circle"></i>
+			<input type="text" placeholder="Username" name="username" value="" required="">
+		</div>
+
+		<div class="textboxlogin">
+			<i class="fas fa-lock"></i>
+			<input type="password" placeholder="Password" name="password" value="" required="">
+		</div>
+
+		<input class="btnlogin" type="submit" name="submit" value="Prijavi se"><br>
+		<br><br><br><br>
+		<h6>Nemate račun?</h6> <a href="signup.php">Sign up</a>
+	</form>
+</div>
 </body>
 </html>
