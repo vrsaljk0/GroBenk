@@ -15,22 +15,6 @@
         }
 </script>
 <?php
-/**
- * donor.php:
- * 1. Prikazuje osnovne informacije o donoru ✔
- * 2. Omogućava pretraživanje ostalih donora ✔
- * 3. Omogućava pregled profil ostalih donora ✔
- * 4. Sustav followinga/followersa ✔
- * 5. Sustav evenat-a ✔
- * 6. Uređivanje postavki računa ✔
- * 7. Sustav poruka
- * 8. Odjava ✔
- *
- * Što šteka ?
- * 1. sve slike profila se prikazuju sa istom širinom i visinom pa to izgleda usrano
- * 2. onclick gumb follow se ne promijeni odmah u unfollow: problem je što je tip inputa mora biti submit(jer šaljemo POST request), a submit se promijeni
- * samo na milisekundu #rip
- *********CODDE MAGIC STARTS HERE*******************/
 
 echo '
 <head>
@@ -46,37 +30,20 @@ echo '
     <link href="donorstyle.css" rel="stylesheet">
 </head>';
 
-
-/**
- * dbcconnect.php includam na početku svakog .php jer se u njemu radi konekcija s bazom.
- * functions.php sadrži dvije funkcije koje koristim u kodu, al sam ih radi preglednosti samo prebacila tamo
- */
-    require_once "dbconnect.php"; //fancy include just because I can
+    require_once "dbconnect.php"; 
     require_once "functions.php";
 
-/**
-
- * Jednom kad sam se ulogirala želim sačuvati OIB donora i ako odem na neke druge stranice(tipa pregledavam drugog donora)
- * pa zato pokrećem session i pamtim current_page jer svaki donor ima različit page pa se ne mogu samo vratiti na donor.php
- * ako sam negdje drugo
- * iz login.html preko GET metode spremam OIB i password
- */
 
     session_start();
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
     $username = $_GET['username'];
     $password = $_GET['password'];
-/**
- * iduća 4 reda sprječavaju "sql injections" o kojima ne znam još puno al znam da nam se lako hakira bazu haha. to ću na kraju finese dodavati
- * zasad nebitno
- */
+
     $username = stripcslashes($username);
     $password = stripcslashes($password);
     $username = mysqli_real_escape_string($conn,$username);
     $password = mysqli_real_escape_string ($conn, $password);
-/**
- * $info upit dohvaća preko OIB sve informacije o ulogiranom donoru.
- */
+
     echo "
     <div id='nav-placeholder' onload>
     </div> 
@@ -94,8 +61,7 @@ echo '
     $row = mysqli_fetch_array($result);
     $OIB = $row['OIB_donora'];
     if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
-        echo "Dobrodošao ".$row['ime_prezime_donora']." !<br><br>";
-      //  $_SESSION["username"] = $username; //spremam session varijablu da je mogu kasnije koristiti
+        $_SESSION["username"] = $username; //spremam session varijablu da je mogu kasnije koristiti
         $_SESSION["ime"] = $row['ime_prezime_donora'];
         $_SESSION["mojOIB"] = $row['OIB_donora'];
     } else {
@@ -103,26 +69,12 @@ echo '
         exit;
     }
 
-/**
- * 1. dolazim:
- * Donor označi željene lokacije putem checkboxa koji ima value idlokacije i po tome znam koji event je kliknut
- * Označene evente ubacujem u tablicu moj_event sa PRISUTNOSTI 0
- * PRISUTNOST 0 -> KLIKLA SAM DA DOLAZIM
- * PRISUTNOST 1 -> DONIRALA SAM KRV I ADMIN JE POTVRDIO MOJU DONACIJU
- * PRISUTNOST -1 -> KLIKLA SAM DA DOLAZIM AL IZ NEKOG RAZLOGA NISAM DONIRALA (BOLEST, NISAM SE POJAVILA, ADMIN ODBIO DONACIJU ITD)
- *
- * 2. otkazujem
- * U otkazujem se ispisuju svi eventi iz tablice moj_event koji imaju prisutnost 0 i koji su logično dalje od današnjeg datum(to su zakazani eventi)
- * opet preko checkboxa kojem u value spremam id lokacije brišem označene evente
- *
- * BITNO! ova dva ifa se moraju nalaziti iznad svega jer POST metoda automatski refresha stranicu i to nama paše jer želimo da nam se onclick npr.
- * maknu otkazani eventi i sad ako su ifovi gore ponovno će se izvršiti upiti za ispis toga, a ako je negdje dolje onda se izvrši samo kod ispod njih
- * valjda je to tako lol
- */
-
-
+    $active = 'active';
+    $active2 = '';
     if(isset($_POST['dolazim'])){
         if(!empty($_POST['check_list'])){
+            $active = '';
+            $active2 = 'active';
             foreach($_POST['check_list'] as $id) {
                 $sql = "INSERT INTO moj_event values  ('$OIB', '$id', '0')";
                 $run_sql = mysqli_query($conn, $sql);
@@ -133,107 +85,166 @@ echo '
 
     if(isset($_POST['otkazi'])) {
         if (!empty($_POST['check_list'])) {
+            $active = '';
+            $active2 = 'active';
             foreach ($_POST['check_list'] as $id) {
                 $sql = "DELETE FROM moj_event where OIB_donora_don = '$OIB' and id_lokacije= '$id' and prisutnost = '0'";
                 $run_sql = mysqli_query($conn, $sql);
             }
         }
     }
-/**
- * Trazilica ispisuje popis ljudi koji sadrže nešto iz textboxa, fora je što je u upitu %izraz% pa bi za npr a izbacilo sve donore koji sadrže slovo a
- * na kraju bi mogla napraviti "naprednu tražilicu" npr po gradu, godinama itd...
- */
 
+    $str = '<i style="color:goldenrod;" class="fas fa-star"></i>';
 
-/**
- * Glupi sustav bodovanja kojeg bi malo trebalo izmjeniti
- * Fora bi bilo dodati neki <img> umjesto samo $str
- */
-    if($row['br_donacija'] <= 20 ) $str = '*';
-    else if($row['br_donacija'] <= 30) $str='**';
-    else if($row['br_donacija'] <= 50) $str = '***';
-
-    //za ispis pravilnog roda
     if(!strcmp($row['spol'],'Z')) $gender = 'la';
     else $gender = 'o';
-    //  <img src="data:image/jpeg;base64,'.base64_encode( $row['profile_pic'] ).'"/><br><br>
-    //prikaz osnovnih informacija o donoru
-    echo '<div id="osnovne_informacije" class="left">
-            <img src="donori/'.$row['image'].'" height="300" width="250"><br><br>
-            <b>' .$row['ime_prezime_donora'].'</b><br><br>
-            Rođena: ' .$row['datum_rodenja'].'<br><br>
-            Živi u mjestu: '. $row['prebivaliste']. '<br><br>
-            Kontakt: '. $row['mail_donora']. '<br><br>';
-
-            echo'<button id="button1"  onclick="toggleVisibility(this.id);">'; echo count_following($OIB); echo'</button>';
-            echo'<button id="button2" onclick="toggleVisibility(this.id);">'; echo count_followers($OIB); echo'</button><br>';
-            echo'<b>'.$row['ime_prezime_donora'].' je donira'.$gender. ' ' .$row['br_donacija']. ' puta</b><br> čime je zasluži'.$gender. ' ' .$str. ' u našoj banci<br><br>
-                 <input type="submit" name="poruka" value="Moj Inbox"><br><br> 
-                 <a href="postavke.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">Uredi moj račun</a><br>   
-                 <input type="submit" name="odjava" value="Odjavi se" onclick="OdjaviMe()"><br><br>
-          </div>';
-
-/**
- * Ispis povijesti donacija
- */
     $upit = "select naziv_lokacije, datum_dogadaja from lokacija where idlokacija in 
             (SELECT id_lokacije from moj_event where moj_event.OIB_donora_don = '$OIB' and prisutnost = 1)";
     $rezultat = mysqli_query($conn, $upit);
 
-    echo '<div id="povijest_donacija">
-            <b><p style="color:green;">Povijest donacija</p></b>';
-            echo'<table style="width:30%">
-                    <tr><th align="left">Mjesto doniranja</th><th align="left">Datum doniranja</th></tr>';
-                    while($row = mysqli_fetch_array($rezultat)){
-                        echo '<tr><td>'.$row['naziv_lokacije'].'</td><td>'.$row['datum_dogadaja'].'</td><tr>';
-                    }
-            echo'</table>    
-           </div>';
+echo '
+    <div class="profil-img">
+        <img src="donori/'.$row['image'].'">
+        <div class="profil-info">
+            <div class="profil-title">';
+            if($row['br_donacija'] <= 20) echo '<h1>'.$row['ime_prezime_donora'].''.$str.'</h1>';
+            else if($row['br_donacija'] <= 30) echo '<h1>'.$row['ime_prezime_donora'].''.$str.''.$str.'</h1>';
+            else if($row['br_donacija'] <= 50) echo '<h1>'.$row['ime_prezime_donora'].''.$str.''.$str.''.$str.'</h1>';
+            echo '
+            </div>
+            <div class="profil-content">
+                <ul class="nav nav-tabs" id="myTab" >
+                    <li class="nav-item">
+                        <a class="nav-link '.$active.'" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">O meni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Povijest donacija</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link '.$active2.'" id="event-tab" data-toggle="tab" href="#event" role="tab" aria-controls="event" aria-selected="false">Moji eventi</a>
+                    </li>
+                </ul>
+            </div>
 
-    /**
-     * Ispis svih zakazanih donacija->PRISUTNOS 0 u tablici moj_event
-     */
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show '.$active.'" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Ime i prezime:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['ime_prezime_donora'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Krvna grupa:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['krvna_grupa_don'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>OIB:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['OIB_donora'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Korisnicko ime:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['username'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>E-mail:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['mail_donora'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Broj telefona:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['broj_mobitela'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Datum rođenja:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['datum_rodenja'].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Prebivalište:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="info">'.$row['prebivaliste'].'</p>
+                            </div>
+                        </div>
+                    </div>
 
-    $upit = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja from lokacija where idlokacija in(
-                         SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
-    $run = mysqli_query($conn, $upit);
-    $result = $run or die("Failed to query database". mysqli_error($conn));
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <table>
+                                    <tr><th align="left">Mjesto doniranja</th><th align="left">Datum doniranja</th></tr>';
+                                    while($row = mysqli_fetch_array($rezultat)){
+                                        echo '<tr><td>'.$row['naziv_lokacije'].'</td><td>'.$row['datum_dogadaja'].'</td><tr>';
+                                    }
+                      echo '</table> 
+                    </div>
 
-    echo '<div id="zakazani_eventi">
-            <form action="" method="POST">
-                <b><p style="color:red;">Zakazane donacije</p></b>';
-                while($row = mysqli_fetch_array($result)){
-                    echo $row['naziv_lokacije'].' '.$row['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row['idlokacija'].'><br>';
-                }
-                echo'<input type="submit" name="otkazi" value="Otkazi moj dolazak" onclick="Refresh();" >';
-                echo'</form>
-           </div>';
+                    <div class="tab-pane fade show '.$active2.'" id="event" role="tabpanel" aria-labelledby="event-tab">';
+                            $upit = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja from lokacija where idlokacija in(
+                                                 SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
+                            $run = mysqli_query($conn, $upit);
+                            $result = $run or die("Failed to query database". mysqli_error($conn));
 
-    /**
-     * Ispish svih evenata NA KOJE JA MOGU DOĆI znači lokacije kojih nema u tablici moj_event i koje imaju isti grad ko moj
-     * faking dobar upit
-     */
+                            echo '<div id="zakazani_eventi">
+                                    <form action="" method="POST">
+                                        <b><p style="color:red;">Zakazane donacije</p></b>';
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo $row['naziv_lokacije'].' '.$row['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row['idlokacija'].'><br>';
+                                        }
+                                        echo'<input type="submit" name="otkazi" value="Otkazi moj dolazak" onclick="Refresh();" >';
+                                        echo'</form>
+                                   </div>';
 
-    $date = date("Ymd");
-    $dolazim = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja FROM lokacija WHERE grad IN 
-               (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND idlokacija NOT IN 
-               (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
-    $run = mysqli_query($conn, $dolazim);
-    $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-    echo '<div id="novi_eventi">
-            <form action="" method="POST">
-                <b><p style="color:red;">Doniraj krv, spasi zivot! (ilitiga novi eventi blizu donora)</p></b>';
-                while($row_dolazim = mysqli_fetch_array($result)){
-                    echo '<p id="Maja">'.$row_dolazim['naziv_lokacije'].' '.$row_dolazim['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row_dolazim['idlokacija'].' onclick="Sakrij();"></p>';
-                }
-            echo'<input type="submit" name="dolazim" value="Dolazim">';
-            echo'</form>
-        </div>';
+                            $date = date("Ymd");
+                            $dolazim = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja FROM lokacija WHERE grad IN 
+                                       (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND idlokacija NOT IN 
+                                       (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
+                            $run = mysqli_query($conn, $dolazim);
+                            $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-    /**
-     * Sustav praćenja
-     */
+                            echo '<div id="novi_eventi">
+                                    <form action="" method="POST">
+                                        <b><p style="color:red;">Doniraj krv, spasi zivot! (ilitiga novi eventi blizu donora)</p></b>';
+                                        while($row_dolazim = mysqli_fetch_array($result)){
+                                            echo '<p id="Maja">'.$row_dolazim['naziv_lokacije'].' '.$row_dolazim['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row_dolazim['idlokacija'].' onclick="Sakrij();"></p>';
+                                        }
+                                    echo'<input type="submit" name="dolazim" value="Dolazim">';
+                                    echo'</form>
+                                </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+';
+
+
+
     $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
               OIB_donora in (select OIB_prijatelja from following where
               donor_OIB_donora = '$OIB')";
