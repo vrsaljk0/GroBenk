@@ -90,7 +90,7 @@
                <a href="#content5">&nbsp;Bolnički zahtjevi&nbsp;</a>
                <a href="#content6">&nbsp;Uredi postavke donora&nbsp;</a>
                <a href="#content7">&nbsp;Pošalji obavijest donorima&nbsp;</a>
-               <a href="#content8">&nbsp;Mjesecna statistika&nbsp;</a>
+               <a href="#content8">&nbsp;Statistika&nbsp;</a>
                <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
            </div>
 
@@ -354,10 +354,49 @@
             
             <div id="content7" class="toggle" style="display:none">Obavijesti</div>
             
-            <div id="content8" class="toggle" style="display:none">
+            <div id="content8" class="toggle" style="display:none">';
+
+            $sql = "select id_lokacije from moj_event group by id_lokacije";
+            $result = mysqli_query($conn, $sql);
+            $num_events = mysqli_num_rows($result);
+
+            $sql = "select OIB_donora_don from moj_event where prisutnost = 1";
+            $result = mysqli_query($conn, $sql);
+            $num_pdonation = mysqli_num_rows($result);
+
+            $sql = "select OIB_donora_don from moj_event where prisutnost = -1";
+            $result = mysqli_query($conn, $sql);
+            $num_odonation = mysqli_num_rows($result);
+
+            $sql = "select * from moj_event join donor on (OIB_donora = OIB_donora_don) where prisutnost = 1 group by krvna_grupa_don  order by krvna_grupa_don desc limit 1";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $naj_krvnag = $row['krvna_grupa_don'];
+
+                echo'Generalna statistika:
+                        <table border="1">
+                          <tr>
+                            <th>Održani eventi</th>
+                            <td>'.$num_events.'</td> 
+                          </tr>
+                          <tr>
+                            <th>Prikupljene donacije</th>
+                            <td>'.$num_pdonation.'</td> 
+                          </tr>
+                          <tr>
+                            <th>Odbijene donacije</th>
+                            <td>'.$num_odonation.'</td> 
+                          </tr>
+                          <tr>
+                            <th>Najviše je prikupljeno krvne grupe:</th>
+                            <td>'.$naj_krvnag.'</td> 
+                          </tr>
+                        </table>
             
             <br>
             <form method="post" action=""">
+            
+                
                 <select id="mjesec" name="mjesec">
                 <option value="0">-odaberi mjesec-</option>';
                     $mjesec = 1;
