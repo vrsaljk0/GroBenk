@@ -22,6 +22,7 @@
     if ($row['idbolnica'] == $idbolnice && $row['password'] == $password && ("" !== $idbolnice || "" !== $password) ) {
         echo 'Profil '.$row['naziv_bolnice'];
         $id_bolnice = $row['idbolnica']; //trebat će za kasnije
+        $naziv_bolnice = $row['naziv_bolnice'];
     } else {
         echo "Pogresna lozinka ili username!";
         exit;
