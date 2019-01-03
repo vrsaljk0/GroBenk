@@ -4,6 +4,12 @@
     }
 </script>
 
+<script>
+    function Ulogirajme(){
+        window.location.replace('boln_login.php');
+    }
+</script>
+
 <?php
     require_once "dbconnect.php";
     session_start();
@@ -284,7 +290,55 @@
                         </table>';
                     }
                   
-                  echo'</div><div id="content3" class="toggle" style="display:none">Postavke</div>      
+                  echo'</div><div id="content3" class="toggle" style="display:none" align="middle">
+                    <b>Uredi postavke:</b>';
+
+                    $sql = "select * from bolnica where idbolnica = '$idbolnice'";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    $password = $row['password'];
+
+                    echo'
+                    <form action="" method="POST">
+                    Naziv bolnice: <input type="text" name="naziv_bolnice" value="' . $row['naziv_bolnice'] . '"> <br><br>
+                    Grad: <input type="text" name="grad" value="' . $row['grad'] . '"><br><br>
+                    Adresa: <input type="text" name="adresa_bolnice" value="' . $row['adresa_bolnice'] . '"><br><br>
+                    Poštanski broj: <input type="number" name="postanski_broj" value="' . $row['postanski_broj'] . '"><br><br><br>
+                    
+                    <b>Promjeni lozinku:</b><br>
+                    Trenutna lozinka: <input type="password" name="trenutna" "><br><br> 
+                    Nova lozinka:<input type="password" name="nova1" "><br><br> 
+                    Ponovni upis nove lozinke:<input type="password" name="nova2" "><br><br> 
+                    
+                    <input type="submit" name="updejtaj" value="Spremi promjene">
+                    </form>';
+
+                    if (isset($_POST['updejtaj'])) {
+                        $naziv_bolnice = $_POST['naziv_bolnice'];
+                        $grad = $_POST['grad'];
+                        $adresa_bolnice = $_POST['adresa_bolnice'];
+                        $postanski_broj = $_POST['postanski_broj'];
+
+                        $trenutna = $_POST['trenutna'];
+                        $nova1 = $_POST['nova1'];
+                        $nova2 = $_POST['nova2'];
+
+                        $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
+                        postanski_broj = '$postanski_broj' where idbolnica = '$idbolnice'";
+                        $update_run = mysqli_query($conn, $update_query);
+
+                        if ($trenutna === $password and $nova1 === $nova2 and !is_null($nova1)) {
+                            $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnice'";
+                            $update_run = mysqli_query($conn, $update_query);
+                            echo '<script type="text/javascript">',
+                            'Ulogirajme();',
+                            '</script>'
+                            ;
+                        }
+                    }
+
+                  echo'</div>     
+                   
                   <div id="content4" class="toggle" style="display:none">Forumic<br><br>';
                     $sql = "SELECT * from komentari where idbolnica_bol = '$id_bolnice'";
                     $run = mysqli_query($conn, $sql);
