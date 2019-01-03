@@ -123,6 +123,9 @@ echo '
                     <li class="nav-item">
                         <a class="nav-link '.$active2.'" id="event-tab" data-toggle="tab" href="#event" role="tab" aria-controls="event" aria-selected="false">Moji eventi</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="follow-tab" data-toggle="tab" href="#follow" role="tab" aria-controls="follow" aria-selected="false">Praćenje</a>
+                    </li>
                 </ul>
             </div>
 
@@ -205,68 +208,141 @@ echo '
                     </div>
 
                     <div class="tab-pane fade show '.$active2.'" id="event" role="tabpanel" aria-labelledby="event-tab">';
-                            $upit = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja from lokacija where idlokacija in(
-                                                 SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
+                            $upit = "SELECT idlokacija, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj from lokacija where idlokacija in(
+                                    SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
                             $run = mysqli_query($conn, $upit);
                             $result = $run or die("Failed to query database". mysqli_error($conn));
 
-                            echo '<div id="zakazani_eventi">
-                                    <form action="" method="POST">
-                                        <b><p style="color:red;">Zakazane donacije</p></b>';
-                                        while($row = mysqli_fetch_array($result)){
-                                            echo $row['naziv_lokacije'].' '.$row['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row['idlokacija'].'><br>';
-                                        }
-                                        echo'<input type="submit" name="otkazi" value="Otkazi moj dolazak" onclick="Refresh();" >';
-                                        echo'</form>
-                                   </div>';
+                            echo '
+                            <h2>Zakazani događaji:</h2><br>
+                            <div class="event-container">
+                                <form action="" method="POST">';
+                                while($row = mysqli_fetch_array($result)){
+                                    $d = $row['datum_dogadaja'];
+                                    $day = date("d", strtotime($d));
+                                    $month = date("m", strtotime($d));
+                                    $year = date("Y", strtotime($d));
 
+                                    if($month == 1) $mjesec = "Siječanj";
+                                    if($month == 2) $mjesec = "Veljača";
+                                    if($month == 3) $mjesec = "Ožujak";
+                                    if($month == 4) $mjesec = "Travanj";
+                                    if($month == 5) $mjesec = "Svibanj";
+                                    if($month == 6) $mjesec = "Lipanj";
+                                    if($month == 7) $mjesec = "Srpanj";
+                                    if($month == 8) $mjesec = "Kolovoz";
+                                    if($month == 9) $mjesec = "Rujan";
+                                    if($month == 10) $mjesec = "Listopad";
+                                    if($month == 11) $mjesec = "Studeni";
+                                    if($month == 12) $mjesec = "Prosinac";
+
+                                    $hours_start = date('H', strtotime($row['start']));
+                                    $minutes_start = date('i', strtotime($row['start']));
+                                    $hours_kraj = date('H', strtotime($row['kraj']));
+                                    $minutes_kraj = date('i', strtotime($row['kraj']));
+
+                              echo '<div class="event">
+                                            <div class="event-date">
+                                                <span class="day">'.$day.'</span>
+                                                <span class="month">'.$mjesec.'</span>
+                                                <span class="year">'.$year.'</span>
+                                            </div>
+                                            <span class="h4">'.$row['naziv_lokacije'].'<span>
+                                            <span class="event-checkbox">
+                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row['idlokacija'].' onclick="Sakrij();"/>
+                                            </span><br>
+                                            <span class="h6">'.$hours_start.':'.$minutes_start.' - '.$hours_kraj.':'.$minutes_kraj.'</span><br>
+                                            <span class="h6">'.$row['adresa_lokacije'].'</span>
+                                    </div><br>';
+                                }    
+                               echo '<br>
+                                    <input class="event-submit" type="submit" name="otkazi" value="Otkaži moj dolazak" onclick="Refresh();">
+                                </form>
+                            </div>';
 
                             $date = date("Ymd");
-                            $dolazim = "SELECT idlokacija, grad, naziv_lokacije, datum_dogadaja FROM lokacija WHERE grad IN 
+                            $dolazim = "SELECT idlokacija, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj FROM lokacija WHERE grad IN 
                                        (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND idlokacija NOT IN 
                                        (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
                             $run = mysqli_query($conn, $dolazim);
                             $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-                            echo '<div id="novi_eventi">
-                                    <form action="" method="POST">
-                                        <b><p style="color:red;">Doniraj krv, spasi zivot! (ilitiga novi eventi blizu donora)</p></b>';
-                                        while($row_dolazim = mysqli_fetch_array($result)){
-                                            echo '<p id="Maja">'.$row_dolazim['naziv_lokacije'].' '.$row_dolazim['datum_dogadaja'].'<input type="checkbox" name="check_list[]" value='.$row_dolazim['idlokacija'].' onclick="Sakrij();"></p>';
-                                        }
-                                    echo'<input type="submit" name="dolazim" value="Dolazim">';
-                                    echo'</form>
-                                </div>
+                            echo '
+                            <h2>Nadolazeći događaji:</h2><br>
+                            <div class="event-container">
+                                <form action="" method="POST">';
+                                while($row_dolazim = mysqli_fetch_array($result)){
+                                    $d = $row_dolazim['datum_dogadaja'];
+                                    $day = date("d", strtotime($d));
+                                    $month = date("m", strtotime($d));
+                                    $year = date("Y", strtotime($d));
+
+                                    if($month == 1) $mjesec = "Siječanj";
+                                    if($month == 2) $mjesec = "Veljača";
+                                    if($month == 3) $mjesec = "Ožujak";
+                                    if($month == 4) $mjesec = "Travanj";
+                                    if($month == 5) $mjesec = "Svibanj";
+                                    if($month == 6) $mjesec = "Lipanj";
+                                    if($month == 7) $mjesec = "Srpanj";
+                                    if($month == 8) $mjesec = "Kolovoz";
+                                    if($month == 9) $mjesec = "Rujan";
+                                    if($month == 10) $mjesec = "Listopad";
+                                    if($month == 11) $mjesec = "Studeni";
+                                    if($month == 12) $mjesec = "Prosinac";
+
+                                    $hours_start = date('H', strtotime($row_dolazim['start']));
+                                    $minutes_start = date('i', strtotime($row_dolazim['start']));
+                                    $hours_kraj = date('H', strtotime($row_dolazim['kraj']));
+                                    $minutes_kraj = date('i', strtotime($row_dolazim['kraj']));
+
+                              echo '<div class="event">
+                                            <div class="event-date">
+                                                <span class="day">'.$day.'</span>
+                                                <span class="month">'.$mjesec.'</span>
+                                                <span class="year">'.$year.'</span>
+                                            </div>
+                                            <span class="h4">'.$row_dolazim['naziv_lokacije'].'<span>
+                                            <span class="event-checkbox">
+                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row_dolazim['idlokacija'].' onclick="Sakrij();"/>
+                                            </span><br>
+                                            <span class="h6">'.$hours_start.':'.$minutes_start.' - '.$hours_kraj.':'.$minutes_kraj.'</span><br>
+                                            <span class="h6">'.$row_dolazim['adresa_lokacije'].'</span>
+                                    </div><br>';
+                                }    
+                               echo '<br>
+                                    <input class="event-submit" type="submit" name="dolazim" value="Dolazim" onclick="Refresh();">
+                                </form>
+                            </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="follow" role="tabpanel" aria-labelledby="follow-tab">';
+                        $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
+                                OIB_donora in (select OIB_prijatelja from following where
+                                donor_OIB_donora = '$OIB')";
+
+                        $rezultat = mysqli_query($conn, $upit);
+                        echo '<div><b>Pratim:</b><br>';
+                        while($row = mysqli_fetch_array($rezultat)){
+                            echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
+
+                        }
+                        echo'</div>';
+
+                        $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
+                                               OIB_donora in (select OIB_prijatelja from followers where
+                                               donor_OIB_donora = '$OIB')";
+                        $rezultat = mysqli_query($conn, $upit);
+
+                        echo '<div><b>Prate me:</b><br>';
+                        while($row = mysqli_fetch_array($rezultat)){
+                            echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
+                        }
+                        echo'</div>
                     </div>
                 </div>
         </div>
     </div>
 ';
-
-
-
-    $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
-              OIB_donora in (select OIB_prijatelja from following where
-              donor_OIB_donora = '$OIB')";
-
-    $rezultat = mysqli_query($conn, $upit);
-    echo '<div hidden id="pratim" class="pratim"><br><b>Prati:</b><br>';
-    while($row = mysqli_fetch_array($rezultat)){
-        echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
-
-    }
-    echo'</div>';
-
-    $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
-                           OIB_donora in (select OIB_prijatelja from followers where
-                           donor_OIB_donora = '$OIB')";
-    $rezultat = mysqli_query($conn, $upit);
-
-    echo '<div hidden id="prate_me" class="prate_me"><br><b>Prate me:</b><br>';
-    while($row = mysqli_fetch_array($rezultat)){
-        echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
-    }
-    echo'</div>';
 ?>
 
 
