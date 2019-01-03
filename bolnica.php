@@ -41,11 +41,10 @@
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
     if(isset($_POST['komentar'])){
-
-        echo $_POST['tekst'];
-        /**
-         * iz nekog razloga se tekst ne pošalje POST metodom
-         */
+        $tekst = $_POST['tekst'];
+        $sql = "INSERT INTO komentari values ('$naziv_bolnice', '$id_bolnice', '$tekst', '$date')";
+        $run = mysqli_query($conn, $sql);
+        $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
     echo'
         <html>
@@ -95,14 +94,15 @@
                         echo '<i>'.$row['autor'].' komentirao je '. $row['datum_kom'].' :<br><br></i>';
                         echo $row['tekst_komentara'].'<br><br>';
                     }
-
-                    echo '<form action="" method="POST" id="forum">
-                            <input type="submit" value="Komentiraj" name="komentar">
-                         </form>
-                         <textarea placeholder="Napisi nesto" name="tekst" id="tekst" form="form">
-                  </div>  
-                  <script src="http://code.jquery.com/jquery-latest.js"></script>   
-                  <script  type="text/javascript">
+                    echo'<textarea name="tekst" id="tekst" form="myform"></textarea>
+                        <form action="" method="POST" id="myform">
+                          <input type="submit" value="Komentiraj" name="komentar"> 
+                        </form>
+                        ';
+                  echo'</div>  
+                 
+                 <script src="http://code.jquery.com/jquery-latest.js"></script>   
+                 <script  type="text/javascript">
                         $("#nav a").click(function(e){
                             e.preventDefault();
                             $(".toggle").hide();
