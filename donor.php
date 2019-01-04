@@ -316,28 +316,39 @@ echo '
                     </div>
 
                     <div class="tab-pane fade" id="follow" role="tabpanel" aria-labelledby="follow-tab">';
-                        $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
+                        $upit = "SELECT ime_prezime_donora, OIB_donora, image from donor where
                                 OIB_donora in (select OIB_prijatelja from following where
                                 donor_OIB_donora = '$OIB')";
 
                         $rezultat = mysqli_query($conn, $upit);
-                        echo '<div><b>Pratim:</b><br>';
+                        echo '<h4>Pratim:</h4><br>';
                         while($row = mysqli_fetch_array($rezultat)){
-                            echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
-
+                            echo '
+                            <div class="follow-info">
+                                <div class="follow-img">
+                                    <img src="donori/'.$row['image'].'">
+                                </div>
+                                <a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a>
+                            </div><br>
+                            ';
                         }
-                        echo'</div>';
 
-                        $upit = "SELECT ime_prezime_donora, OIB_donora from donor where
+                        $upit = "SELECT ime_prezime_donora, OIB_donora, image from donor where
                                                OIB_donora in (select OIB_prijatelja from followers where
                                                donor_OIB_donora = '$OIB')";
                         $rezultat = mysqli_query($conn, $upit);
 
-                        echo '<div><b>Prate me:</b><br>';
+                        echo '<h4>Prate me:</h4><br>';
                         while($row = mysqli_fetch_array($rezultat)){
-                            echo '<a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a><br>';
+                            echo '
+                            <div class="follow-info">
+                                <div class="follow-img">
+                                    <img src="donori/'.$row['image'].'">
+                                </div>
+                                <a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a>
+                            </div><br>';
                         }
-                        echo'</div>
+                        echo'
                     </div>
                 </div>
         </div>

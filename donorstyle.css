@@ -83,7 +83,6 @@
 	object-position: center;
 	width: 300px;
 	height: 337px;
-	float: left;
 }
 
 .profil-info {
@@ -310,6 +309,27 @@ table th {
 	border: 1px solid #A60202;
 }
 
+.follow-info {
+	height: 40px;
+}
+
+.follow-img {
+	width: 40px;
+	height: 40px;
+    position: absolute;
+}
+
+.follow-img img {
+	margin:0 auto;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.follow-info a {
+	margin-top: 5px;
+	margin-left: 55px;
+	display: inline-block;
+}
 
 
 
