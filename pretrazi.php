@@ -63,10 +63,19 @@
     $run = mysqli_query($conn, $query);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
+    echo '<div class="pretraga">';
     while($row = mysqli_fetch_array($result)){
     //echo '<a href="publicprofile.php">'.$row['ime_prezime_donora'].'</a><br>';
-        echo '<a href="publicbolnica.php?id_bolnice='.urlencode($row['idbolnica']).'">'.$row['naziv_bolnice'].'</a><br>';
+        echo '
+            <div class="pretraga-info">
+                <div class="pretraga-img">
+                    <img src="donori/'.$row['image'].'">
+                </div>
+               <a href="publicbolnica.php?id_bolnice='.urlencode($row['idbolnica']).'">'.$row['naziv_bolnice'].'</a>
+            </div><br>
+        ';
         $bolnica = 1;
     }
+    echo '</div>';
     if(!$bolnica && !$donor) echo'Nažalost nema rezultata pretrage.';
 ?>
