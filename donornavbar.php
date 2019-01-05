@@ -22,22 +22,21 @@ echo '
 			<li>
 				<div class="dropdown_donor">
 				  <button class="dropbtn_donor"><i class="far fa-bell"></i></button>
-				  <div class="dropdown-content_donor">
-				  </div>
-				</div>
-
-				 <div class="dropdown_donor">
-                  <button class="dropbtn_donor"><i class="far fa-envelope"></i></button>
-                  <div class="dropdown-content_donor">';
-					echo"Ja sam obavijest!";
+				  <div class="dropdown-content_donor">';
                     $sql = "SELECT * from obavijesti where OIBdonora = '$OIB'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
                 while ($row = mysqli_fetch_array($run)) {
-                    echo $row['datum_obav'].' - '.$row['tekst_obav'];
+                    echo $row['datum_obav'].' - '.$row['tekst_obav'].'<br>';
                 }
-                  echo'</div>
+				  echo'</div>
+				</div>
+
+				 <div class="dropdown_donor">
+                  <button class="dropbtn_donor"><i class="far fa-envelope"></i></button>
+                  <div class="dropdown-content_donor">
+                  </div>
                 </div>
 
 				<div class="dropdown_donor">
