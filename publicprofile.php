@@ -8,6 +8,21 @@
         }
     </script>
 <?php
+
+    echo '
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BloodBank</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link href="style.css" rel="stylesheet">
+        <link href="donorstyle.css" rel="stylesheet">
+    </head>';
+
     require_once "dbconnect.php";
     require_once "functions.php";
     session_start();
@@ -24,6 +39,15 @@
     /**
      * pri samom loadu stranicu provjeram follujem li tog korisnika već ili ne -> što će mi pisati na bottunu
      */
+    echo "
+    <div id='nav-placeholder' onload>
+    </div> 
+
+    <script>
+    $(function(){
+      $('#nav-placeholder').load('donornavbar.php');
+    });
+    </script>";
 
     if(isset($_POST['follow'])){
         /**
@@ -61,28 +85,108 @@
     /**
      * Prikazujem podatke o tom donoru
      */
+
+
     $query ="select *from donor where OIB_donora = '$OIB_korisnika'";
     $run = mysqli_query($conn, $query);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-    $r = mysqli_fetch_array($result);
-    if($r['br_donacija'] <= 20 ) $string = '*';
-    else if($r['br_donacija'] <= 30) $string='**';
-    else if($r['br_donacija'] <= 50) $string = '***';
+    $row = mysqli_fetch_array($result);
+   
+    $star = '<i style="color:goldenrod;" class="fas fa-star"></i>';
 
-    //prikaz osnovnih informacija o donoru
-    echo '<form action="" method="POST">
-            <img src="donori/'.$r['image'].'" height="300" width="250"><br><br>
-            <b>' .$r['ime_prezime_donora'].'</b><br><br>';
-            count_following($OIB_korisnika);
-            count_followers($OIB_korisnika);
-            echo'Rođena: ' .$r['datum_rodenja'].'<br><br>
-            Živi u mjestu: '. $r['prebivaliste']. '<br><br>
-            Kontakt: '. $r['mail_donora']. '<br><br>
-            <b>'.$r['ime_prezime_donora'].' je donirala ' .$r['br_donacija']. ' puta</b><br> čime je zaslužila ' .$string. ' u našoj banci<br><br>
-            <input type="submit" name="poruka" value="Pošalji poruku"><br><br> 
-            <button type="submit" name="follow" id="button" onclick="ChangeButton()">'.$str.'</button><br><br>
-          </form>';
-    echo '<bottom><a href='.$_SESSION["current_page"].'>Nazad na moj profil</a></bottom>';
+    echo '
+    <div class="profil-img">
+        <img src="donori/'.$row['image'].'">
+        <div class="profil-info">
+            <div class="profil-title">';
+                if($row['br_donacija'] <= 20) echo '<h1>'.$row['ime_prezime_donora'].''.$star.'</h1>';
+                else if($row['br_donacija'] <= 30) echo '<div class="pp-h1">'.$row['ime_prezime_donora'].''.$star.''.$star.'</div>';
+                else if($row['br_donacija'] <= 50) echo '<div class="pp-h1">'.$row['ime_prezime_donora'].''.$star.''.$star.''.$star.'</div>';
+                echo '
+                <form action="" method="POST">
+                    <button style = "width:150px;" class="submitsearch" type="submit" name="poruka" value="Pošalji poruku">Pošalji poruku</button>
+                    <button class="submitsearch" type="submit" name="follow" id="button" onclick="ChangeButton()">'.$str.'</button>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Ime i prezime:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['ime_prezime_donora'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Krvna grupa:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['krvna_grupa_don'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>OIB:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['OIB_donora'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Korisnicko ime:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['username'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>E-mail:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['mail_donora'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Broj donacija:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['br_donacija'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Broj telefona:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['broj_mobitela'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Datum rođenja:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['datum_rodenja'].'</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Prebivalište:</label>
+                </div>
+                <div class="col-md-6">
+                    <p class="info">'.$row['prebivaliste'].'</p>
+                </div>
+            </div>
+          ';
+
+    echo '<bottom><a href='.$_SESSION["current_page"].'>Nazad na moj profil</a></bottom>
+        </div>
+    </div>
+    ';
 ?>
 

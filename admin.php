@@ -42,6 +42,7 @@
             $runn = mysqli_query($conn, $sqll);
             $resultt = $run or die ("Failed to query database". mysqli_error($conn));
         }
+        header("Location:admin.php");
     }
 
 
@@ -56,6 +57,7 @@
         $sql = "INSERT INTO lokacija VALUES ('$idlokacija', '$grad', '$adresa_lokacije', '$GETanskibr', '$GETanskibr', '$datum_dogadaja')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
+        header("Location:admin.php");
     }
     if(isset($_GET['delete_event'])){
         $id = $_GET['lokacije'];
@@ -63,6 +65,7 @@
         $sql = "DELETE FROM lokacija WHERE idlokacija='$id'";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
+        header("Location:admin.php");
     }
     if(isset($_GET['prihvati'])){
         if(!empty($_GET['check_list'])){
@@ -92,6 +95,7 @@
             }
 
         }
+        header("Location:admin.php");
     }
     if(isset($_GET['odbij_zahtjev'])) {
         if (!empty($_GET['check_list'])) {
@@ -101,6 +105,7 @@
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
             }
         }
+        header("Location:admin.php");
     }
     echo '
         <html>
@@ -111,7 +116,7 @@
                <a href="#content3">&nbsp;Upravljaj donacijama(dodaj/odbij)&nbsp;</a>
                <a href="#content4">&nbsp;Pregledaj trenutnu zalihu krvi&nbsp;</a>
                <a href="#content5">&nbsp;Bolnički zahtjevi&nbsp;</a>
-               <a href="#content6">&nbsp;Uredi GETavke donora&nbsp;</a>
+               <a href="#content6">&nbsp;Uredi Postavke donora&nbsp;</a>
                <a href="#content7">&nbsp;Pošalji obavijest donorima&nbsp;</a>
                <a href="#content8">&nbsp;Statistika&nbsp;</a>
                <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
@@ -222,6 +227,7 @@
                         $sql = "UPDATE moj_event SET prisutnost = '-1' WHERE OIB_donora_don = '$OIB' and id_lokacije='$id' and prisutnost = '0'";
                         $run = mysqli_query($conn, $sql);
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
+                        header("Location:admin.php");
                     }
                     if(isset($_GET['doniraj'])){
                         $OIB = $_GET['donacija'];
@@ -240,6 +246,7 @@
                              <input type="hidden" name="id_lokacije" value='.$id.'>
                              <input type="submit" name="unesi_donaciju">
                            </form>';
+                        header("Location:admin.php");
 
                     }
                     if(isset($_GET['unesi_donaciju'])){
@@ -264,7 +271,7 @@
                         $sql = "UPDATE zaliha set kolicina_grupe = kolicina_grupe + '$kol' where krvna_grupa = '$grupa'";
                         $run = mysqli_query($conn, $sql);
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
-
+                        header("Location:admin.php");
                     }
             echo '</div>
             <div id="content4" class="toggle" style="display:none">';
@@ -347,7 +354,9 @@
                                   
                             <input type="submit" name="updejtaj" value="Spremi promjene"><br><br>
                         </form>';
-                }if (isset($_GET['updejtaj'])) {
+                    header("Location:admin.php");
+                }
+                if (isset($_GET['updejtaj'])) {
                         $id_donor = $_GET['id'];
                         $krvna_grupa_don = $_GET['krvna'];
                         $ime_prezime_donora = $_GET['imeprez'];
@@ -369,6 +378,7 @@
                     where OIB_donora = '$id_donor'";
 
                         $update_run = mysqli_query($conn, $update_query);
+                    header("Location:admin.php");
                     }
 
 
@@ -395,7 +405,7 @@
                 echo'<select name="grad" id ="grad">
                    <option value="0">-grad-</option>';
                             while ($row = mysqli_fetch_array($run)) {
-                                echo '<option value='.$row['prebivaliste'].'>'.$row['prebivaliste'].'</option>';
+                                echo '<option value="'.$row['prebivaliste'].'">'.$row['prebivaliste'].'</option>';
                             }
                             echo '</select>
               <br><textarea name="tekst" id="tekst" form="obavijest"></textarea><br>
@@ -531,7 +541,8 @@
                             <td>'.$naj_krvnag.'</td> 
                           </tr>
                         </table>
-                '; }
+                ';
+                    header("Location:admin.php");}
                 echo'
             </div>
             
