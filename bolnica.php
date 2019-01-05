@@ -15,24 +15,15 @@
     session_start();
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
     $date = date("Ymd");
-
     $idbolnice = $_GET['idbolnice'];
-    $password = $_GET['password'];
 
-    $info ="select *from bolnica where  idbolnica = '$idbolnice' and password = '$password'";
+
+    $info ="select *from bolnica where  idbolnica = '$idbolnice'";
     $run = mysqli_query($conn, $info);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
     $row = mysqli_fetch_array($result);
 
-    if ($row['idbolnica'] == $idbolnice && $row['password'] == $password && ("" !== $idbolnice || "" !== $password) ) {
-        echo 'Profil '.$row['naziv_bolnice'];
-        $id_bolnice = $row['idbolnica']; //trebat će za kasnije
-        $naziv_bolnice = $row['naziv_bolnice'];
-    } else {
-        echo "Pogresna lozinka ili username!";
-        exit;
-    }
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];

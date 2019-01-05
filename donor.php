@@ -44,7 +44,7 @@ echo '
     });
     </script>";
 
-    $OIB = $_GET['OIB'];
+    $OIB = $_POST['OIB'];
     $_SESSION["mojOIB"] = $OIB;
 
     $info ="select *from donor where OIB_donora = '$OIB'";

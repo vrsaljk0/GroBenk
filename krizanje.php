@@ -8,11 +8,12 @@
 
     require_once "dbconnect.php";
     require_once "functions.php";
-    session_start();
 
-    $username = $_GET['username'];
-    $password = $_GET['password'];
 
+    $username = $_REQUEST['username'];
+    $password = $_REQUEST['password'];
+
+    echo "hehe";
     $username = stripcslashes($username);
     $password = stripcslashes($password);
     $username = mysqli_real_escape_string($conn,$username);
@@ -43,7 +44,15 @@
             $flag = 1;
         }
         else{
+            $info ="select *from bolnica where  idbolnica = '$username' and password = '$password'";
+            $run = mysqli_query($conn, $info);
+            $result = $run or die ("Failed to query database". mysqli_error($conn));
+            $row = mysqli_fetch_array($result);
 
+            if ($row['idbolnica'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
+                $url = 'bolnica.php?idbolnice='.urlencode($row['idbolnica']);
+                $flag = 1;
+            }
         }
     }
     if($flag) header("Location:$url");
