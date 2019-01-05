@@ -9,17 +9,32 @@
     session_start();
     echo"Dobrodošao admine!";
 
-    if(isset($_POST["obavijest"])) {
-        $grad = $_POST['grad'];
-        $krvna_grupa = $_POST['kgrupa'];
-        $tekst = $_POST['tekst'];
+    if(isset($_GET['obavijest'])) {
+        $grad = $_GET['grad'];
+        $krvna_grupa = $_GET['kgrupa'];
+        $tekst = $_GET['tekst'];
 
         $datum = date('Y-m-d');
         $status = 0;
 
-        $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad' and '$krvna_grupa'!=='0' and '$grad'!== '0'";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
+        if ($krvna_grupa == '0' and $grad == '0') {
+            $sql = "SELECT * from donor";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+        } else if ($krvna_grupa == '0') {
+            $sql = "SELECT * from donor where prebivaliste = '$grad'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database". mysqli_error($conn));
+        } else if ($grad == '0') {
+            $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database". mysqli_error($conn));
+        } else {
+            $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database". mysqli_error($conn));
+        }
 
         while ($row = mysqli_fetch_array($run)) {
             $OIB = $row['OIB_donora'];
@@ -32,27 +47,26 @@
 
 
 
-
-    if(isset($_POST['submit_event'])){
-        $idlokacija = $_POST['idlokacija'];
-        $grad = $_POST['grad'];
-        $adresa_lokacije = $_POST['adresa_lokacije'];
-        $postanskibr = $_POST['postanski_broj'];
-        $datum_dogadaja= date('Y-m-d',strtotime($_POST['datum_dogadaja']));
-        $sql = "INSERT INTO lokacija VALUES ('$idlokacija', '$grad', '$adresa_lokacije', '$postanskibr', '$postanskibr', '$datum_dogadaja')";
+    if(isset($_GET['submit_event'])){
+        $idlokacija = $_GET['idlokacija'];
+        $grad = $_GET['grad'];
+        $adresa_lokacije = $_GET['adresa_lokacije'];
+        $GETanskibr = $_GET['GETanski_broj'];
+        $datum_dogadaja= date('Y-m-d',strtotime($_GET['datum_dogadaja']));
+        $sql = "INSERT INTO lokacija VALUES ('$idlokacija', '$grad', '$adresa_lokacije', '$GETanskibr', '$GETanskibr', '$datum_dogadaja')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
-    if(isset($_POST['delete_event'])){
-        $id = $_POST['lokacije'];
+    if(isset($_GET['delete_event'])){
+        $id = $_GET['lokacije'];
         //echo $id;
         $sql = "DELETE FROM lokacija WHERE idlokacija='$id'";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
-    if(isset($_POST['prihvati'])){
-        if(!empty($_POST['check_list'])){
-            foreach($_POST['check_list'] as $id) {
+    if(isset($_GET['prihvati'])){
+        if(!empty($_GET['check_list'])){
+            foreach($_GET['check_list'] as $id) {
                 $sql = "SELECT krvna_grupa_zaht, kolicina_krvi_zaht from zahtjev where idzahtjev = '$id'";
                 $run = mysqli_query($conn, $sql);
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
@@ -68,7 +82,7 @@
                     $prihvati_zahtjev = "UPDATE zaliha SET kolicina_grupe = kolicina_grupe - '$kolicina_zahtjeva' where krvna_grupa = '$krvna_gr'";
                     $run = mysqli_query($conn, $prihvati_zahtjev);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
-                    //postaviti odobreno na 1 u tablici zahtjeva
+                    //GETaviti odobreno na 1 u tablici zahtjeva
                     $update_zahtjev = "UPDATE zahtjev SET odobreno = '1' WHERE idzahtjev = '$id'";
                     $run = mysqli_query($conn, $update_zahtjev);
                 }
@@ -79,9 +93,9 @@
 
         }
     }
-    if(isset($_POST['odbij_zahtjev'])) {
-        if (!empty($_POST['check_list'])) {
-            foreach ($_POST['check_list'] as $id) {
+    if(isset($_GET['odbij_zahtjev'])) {
+        if (!empty($_GET['check_list'])) {
+            foreach ($_GET['check_list'] as $id) {
                 $sql = "UPDATE zahtjev SET odobreno = '-1' WHERE idzahtjev = '$id'";
                 $run = mysqli_query($conn, $sql);
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
@@ -97,7 +111,7 @@
                <a href="#content3">&nbsp;Upravljaj donacijama(dodaj/odbij)&nbsp;</a>
                <a href="#content4">&nbsp;Pregledaj trenutnu zalihu krvi&nbsp;</a>
                <a href="#content5">&nbsp;Bolnički zahtjevi&nbsp;</a>
-               <a href="#content6">&nbsp;Uredi postavke donora&nbsp;</a>
+               <a href="#content6">&nbsp;Uredi GETavke donora&nbsp;</a>
                <a href="#content7">&nbsp;Pošalji obavijest donorima&nbsp;</a>
                <a href="#content8">&nbsp;Statistika&nbsp;</a>
                <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
@@ -108,7 +122,7 @@
             $date = date("Ymd");
             $query = "SELECT idlokacija, naziv_lokacije, datum_dogadaja FROM lokacija where datum_dogadaja < '$date'";
             $run = mysqli_query($conn, $query);
-            echo "<form action='' method='POST'>
+            echo "<form action='' method='GET'>
                          <select name='lokacije'>";
                                 while ($row = mysqli_fetch_array($run)) {
                                     echo "<option value='" . $row['idlokacija'] ."'>" . $row['naziv_lokacije'] ."</option>";
@@ -119,8 +133,8 @@
                echo '</div>
 
            <div id="content00" class="toggle2" style="display:none">';
-                    if(isset($_POST['show_events'])){
-                        $id = $_POST['lokacije'];
+                    if(isset($_GET['show_events'])){
+                        $id = $_GET['lokacije'];
                         $sql = "SELECT * from lokacija where idlokacija = '$id'";
                         $run = mysqli_query($conn, $sql);
                         $row = mysqli_fetch_array($run);
@@ -137,13 +151,13 @@
                 }
             echo'</div>
            <div id="content1" class="toggle" style="display:none">
-               <form action="" method="POST">
+               <form action="" method="GET">
                    <br>Dodaj novi event:<br><br>
                    idlokacije <input type="number" name="idlokacija"><br><br>
                    Grad <input type="text" name="grad"><br><br>
                    Naziv lokacije <input type="text" name="grad"> <br><br>
                    Adresa <input type="text" name="adresa_lokacije"><br><br>
-                   Poštanski broj<input type="text" name="postanski_broj"><br><br>
+                   Poštanski broj<input type="text" name="GETanski_broj"><br><br>
                    Datum<input type="date" name="datum_dogadaja"><br><br>
                    <input type="submit" name="submit_event"><br><br>
                </form>
@@ -153,7 +167,7 @@
                 $query = "SELECT idlokacija, naziv_lokacije, datum_dogadaja FROM lokacija";
                 $run = mysqli_query($conn, $query);
                 echo"<br>Izbrisi neki event<br><br>";
-                echo "<form action='' method='POST'>
+                echo "<form action='' method='GET'>
                          <select name='lokacije'>";
                             while ($row = mysqli_fetch_array($run)) {
                             echo "<option value='" . $row['idlokacija'] ."'>" . $row['naziv_lokacije'] ."</option>";
@@ -170,7 +184,7 @@
                 $run = mysqli_query($conn, $query);
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-                echo "<form action='' method='POST'>
+                echo "<form action='' method='GET'>
                            <select name='lok'>";
                             while ($row = mysqli_fetch_array($run)) {
                                 echo "<option value='" . $row['idlokacija'] ."'>" . $row['naziv_lokacije'] ."</option>";
@@ -180,13 +194,13 @@
                          </form>";
             echo '</div>
            <div id="content30" class="toggle2"style="display:none">';
-                if(isset($_POST['show'])){
-                    $id = $_POST['lok'];
+                if(isset($_GET['show'])){
+                    $id = $_GET['lok'];
                     $sql = "SELECT OIB_donora, ime_prezime_donora from donor where OIB_donora in
                            (SELECT OIB_donora_don from moj_event where id_lokacije='$id' and prisutnost='0')";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
-                    echo "<form action='' method='POST'>
+                    echo "<form action='' method='GET'>
                                <br><br>
                                <select name='donacija'>";
                                     while ($row = mysqli_fetch_array($run)) {
@@ -198,26 +212,26 @@
                                           <input type="submit" name="odbij" value="Odbij donaciju">';
                                     echo "</select>
                          </form>";
-                    //unset($_POST['show']);
+                    //unset($_GET['show']);
                 }
             echo'</div>
            <div id="content31" class="toggle2">';
-                    if(isset($_POST['odbij'])){
-                        $OIB = $_POST['donacija'];
-                        $id = $_POST['id_lokacije'];
+                    if(isset($_GET['odbij'])){
+                        $OIB = $_GET['donacija'];
+                        $id = $_GET['id_lokacije'];
                         $sql = "UPDATE moj_event SET prisutnost = '-1' WHERE OIB_donora_don = '$OIB' and id_lokacije='$id' and prisutnost = '0'";
                         $run = mysqli_query($conn, $sql);
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
                     }
-                    if(isset($_POST['doniraj'])){
-                        $OIB = $_POST['donacija'];
-                        $id = $_POST['id_lokacije'];
+                    if(isset($_GET['doniraj'])){
+                        $OIB = $_GET['donacija'];
+                        $id = $_GET['id_lokacije'];
                         $sql = "SELECT *from donor where OIB_donora = '$OIB'";
                         $run = mysqli_query($conn, $sql);
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
                         $row = mysqli_fetch_array($result);
 
-                        echo'<form action="" method="POST">
+                        echo'<form action="" method="GET">
                              <p>Dodaj novu donaciju</p>
                              Ime i prezime donora <input type="text" value="'.$row['ime_prezime_donora'].'" ><br><br>
                              OIB_donora <input type="text" name="OIB_don" value='.$row['OIB_donora'].'  ><br><br>
@@ -228,11 +242,11 @@
                            </form>';
 
                     }
-                    if(isset($_POST['unesi_donaciju'])){
-                        $OIB = $_POST['OIB_don'];
-                        $id = $_POST['id_lokacije'];
-                        $kol = $_POST['kol_krvi'];
-                        $grupa = $_POST['krvna_grupa_don'];
+                    if(isset($_GET['unesi_donaciju'])){
+                        $OIB = $_GET['OIB_don'];
+                        $id = $_GET['id_lokacije'];
+                        $kol = $_GET['kol_krvi'];
+                        $grupa = $_GET['krvna_grupa_don'];
 
                         $sql = "INSERT into donacija (kolicina_krvi_donacije, krvna_grupa_zal, OIB_donora, idlokacija)
                                         values ( '$kol', '$grupa', '$OIB', '$id')";
@@ -269,7 +283,7 @@
                 $run = mysqli_query($conn, $zahtjev_q);
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-                echo '<form action="" method="POST">
+                echo '<form action="" method="GET">
                        <b><p style="color:red;">Novi zahtjevi za krvlju</p></b>
                        <p>Bolnica&nbsp;&nbsp;Kolicina krvi&nbsp;&nbsp;Krvna grupa&nbsp;&nbsp;Datum zahtjevanja</p>';
                         while($row = mysqli_fetch_array($result)){
@@ -283,7 +297,7 @@
             <div id="content6" class="toggle" style="display:none">
             
             <br>
-            <form method="post" action="">
+            <form method="GET" action="">
                 <select id="id_donor" name="id_donor">
                 <option value="0">-Ime Prezime-(ID)-</option>';
                     $preg_query = "select * from donor";
@@ -298,16 +312,16 @@
             </form></div><br>
 
              <div id="content60" class="toggle2" style="display:none">';
-                if(isset($_POST['submit'])) {
+                if(isset($_GET['submit'])) {
 
-                    $id_donor = $_POST['id_donor'];
+                    $id_donor = $_GET['id_donor'];
 
                     $sql = "select * from donor where OIB_donora = '$id_donor'";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
 
-                    echo '<form action="" method="POST">
-                            <br>Uredi postavke donora:<br><br>
+                    echo '<form action="" method="GET">
+                            <br>Uredi GETavke donora:<br><br>
                             OIB <input type="text" name="id" value = "'.$id_donor.'" readonly><br><br>
                             Ime i prezime <input type="text" name="imeprez" value = "' . $row['ime_prezime_donora'] . '"><br><br> <!--value "" kako bi ispisalo cijeli string (inace do razmaka)-->
                             Krvna grupa 
@@ -321,7 +335,7 @@
                     echo '</select><br><br>
                             Datum rođenja <input type="date" name="datum" value=' . $row['datum_rodenja'] . '> <br><br>
                             Prebivalište <input type="text" name="prebivaliste" value="' . $row['prebivaliste'] . '"><br><br>
-                            Poštanski broj<input type="number" name="postanski_broj" value="' . $row['postanski_broj'] . '"><br><br>
+                            Poštanski broj<input type="number" name="GETanski_broj" value="' . $row['GETanski_broj'] . '"><br><br>
                             Broj Mobitela<input type="number" name="mobitel" value="' . $row['broj_mobitela'] . '"><br><br> 
                             E-mail<input type="text" name="email" value="' . $row['mail_donora'] . '"><br><br> 
                             Spol<input type="text" name="spol" value="' . $row['spol'] . '"><br><br> 
@@ -333,24 +347,24 @@
                                   
                             <input type="submit" name="updejtaj" value="Spremi promjene"><br><br>
                         </form>';
-                }if (isset($_POST['updejtaj'])) {
-                        $id_donor = $_POST['id'];
-                        $krvna_grupa_don = $_POST['krvna'];
-                        $ime_prezime_donora = $_POST['imeprez'];
-                        $datum_rodenja = $_POST['datum'];
+                }if (isset($_GET['updejtaj'])) {
+                        $id_donor = $_GET['id'];
+                        $krvna_grupa_don = $_GET['krvna'];
+                        $ime_prezime_donora = $_GET['imeprez'];
+                        $datum_rodenja = $_GET['datum'];
                         $prebivaliste = $row['prebivaliste'];
-                        $postanski_broj = $_POST['postanski_broj'];
-                        $brojmobitela = $_POST['mobitel'];
-                        $mail_donora = $_POST['email'];
-                        $spol = $_POST['spol'];
-                        $adresa_donora = $_POST['adresa'];
-                        $username = $_POST['username'];
-                        $password = $_POST['password'];
-                        $br_donacija = $_POST['brdonacija'];
-                        $image = $_POST['profilna'];
+                        $GETanski_broj = $_GET['GETanski_broj'];
+                        $brojmobitela = $_GET['mobitel'];
+                        $mail_donora = $_GET['email'];
+                        $spol = $_GET['spol'];
+                        $adresa_donora = $_GET['adresa'];
+                        $username = $_GET['username'];
+                        $password = $_GET['password'];
+                        $br_donacija = $_GET['brdonacija'];
+                        $image = $_GET['profilna'];
 
                         $update_query = "update donor set krvna_grupa_don = '$krvna_grupa_don',ime_prezime_donora ='$ime_prezime_donora', datum_rodenja = '$datum_rodenja',
-                    prebivaliste = '$prebivaliste', postanski_broj = '$postanski_broj',broj_mobitela = '$brojmobitela', mail_donora = '$mail_donora',
+                    prebivaliste = '$prebivaliste', GETanski_broj = '$GETanski_broj',broj_mobitela = '$brojmobitela', mail_donora = '$mail_donora',
                     spol = '$spol', adresa_donora = '$adresa_donora', username = '$username', password = '$password', br_donacija = '$br_donacija', image = '$image'
                     where OIB_donora = '$id_donor'";
 
@@ -361,27 +375,27 @@
                 echo'
             </div>
             
-            <div id="content7" class="toggle" style="display:none">
+           <div id="content7" class="toggle" style="display:none">
                Pošalji obavijest:
                
-               <form id = "obavijest">
+               <form id = "obavijest" method="GET" action="">
                <select id="kgrupa" name="kgrupa">
                <option value="0">-krvna grupa-</option>';
                     $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
                     for ($i = 0; $i < 8; $i++) {
-                        echo '<option value='.$krvna_grupa[$i].'>-'.$krvna_grupa[$i].'-</option>';
+                        echo '<option value='.$krvna_grupa[$i].'>'.$krvna_grupa[$i].'</option>';
                     }
 
                 echo'</select>';
 
-                $query = "select * from lokacija group by grad";
+                $query = "select * from donor group by prebivaliste";
                 $run = mysqli_query($conn, $query);
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
                 echo'<select name="grad" id ="grad">
                    <option value="0">-grad-</option>';
                             while ($row = mysqli_fetch_array($run)) {
-                                echo '<option value='.$row['grad'].'>'.$row['grad'].'</option>';
+                                echo '<option value='.$row['prebivaliste'].'>'.$row['prebivaliste'].'</option>';
                             }
                             echo '</select>
               <br><textarea name="tekst" id="tekst" form="obavijest"></textarea><br>
@@ -429,7 +443,7 @@
                         </table>
             
             <br>
-            <form method="post" action=""">
+            <form method="GET" action=""">
             
                 
                 <select id="mjesec" name="mjesec">
@@ -457,14 +471,14 @@
             </form></div><br>
 
              <div id="content80" class="toggle2" style="display:none">';
-                if(isset($_POST['prikazi'])){
+                if(isset($_GET['prikazi'])){
                         //kako bi znali za koj mjesec i godinu racunamo mjesecnu statistiku:
                         /*$now = new \DateTime('now'); //ako zelimo sadasnjost
                         $month = $now->format('m');
                         $year = $now->format('Y');*/
 
-                        $month = $_POST['mjesec'];
-                        $year = $_POST['godina'];
+                        $month = $_GET['mjesec'];
+                        $year = $_GET['godina'];
 
                         //broj odrzanih evenata u tom razdoblju:
                         $sql = "select id_lokacije from moj_event where id_lokacije in (select idlokacija from lokacija where 
