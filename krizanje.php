@@ -6,14 +6,13 @@
  * Time: 19:19
  */
 
-    require_once "dbconnect.php";
-    require_once "functions.php";
+require_once "dbconnect.php";
+require_once "functions.php";
+session_start();
 
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $username = $_REQUEST['username'];
-    $password = $_REQUEST['password'];
-
-    echo "hehe";
     $username = stripcslashes($username);
     $password = stripcslashes($password);
     $username = mysqli_real_escape_string($conn,$username);
