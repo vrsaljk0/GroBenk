@@ -7,23 +7,7 @@
 <?php
     require_once "dbconnect.php";
     session_start();
-    $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
-
-    $username = $_GET['username'];
-    $password = $_GET['password'];
-
-    $info ="select *from admin where username = '$username' and password = '$password'";
-    $run = mysqli_query($conn, $info);
-    $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-    $row = mysqli_fetch_array($result);
-
-    if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
-        echo "Dobrodošao admine";
-    } else {
-        echo "Pogresna lozinka ili username!";
-    exit;
-    }
+    echo"Dobrodošao admine!";
     if(isset($_POST['submit_event'])){
         $idlokacija = $_POST['idlokacija'];
         $grad = $_POST['grad'];

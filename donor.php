@@ -32,17 +32,7 @@ echo '
 
     require_once "dbconnect.php"; 
     require_once "functions.php";
-
-
     session_start();
-    $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
-    $username = $_GET['username'];
-    $password = $_GET['password'];
-
-    $username = stripcslashes($username);
-    $password = stripcslashes($password);
-    $username = mysqli_real_escape_string($conn,$username);
-    $password = mysqli_real_escape_string ($conn, $password);
 
     echo "
     <div id='nav-placeholder' onload>
@@ -54,20 +44,13 @@ echo '
     });
     </script>";
 
-    $info ="select *from donor where username = '$username' and password = '$password'";
+    $OIB = $_GET['OIB'];
+    $_SESSION["mojOIB"] = $OIB;
+
+    $info ="select *from donor where OIB_donora = '$OIB'";
     $run = mysqli_query($conn, $info);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
-
     $row = mysqli_fetch_array($result);
-    $OIB = $row['OIB_donora'];
-    if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
-        $_SESSION["username"] = $username; //spremam session varijablu da je mogu kasnije koristiti
-        $_SESSION["ime"] = $row['ime_prezime_donora'];
-        $_SESSION["mojOIB"] = $row['OIB_donora'];
-    } else {
-        echo "Pogresna lozinka ili username!";
-        exit;
-    }
 
     $active = 'active';
     $active2 = '';
