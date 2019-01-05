@@ -8,6 +8,31 @@
     require_once "dbconnect.php";
     session_start();
     echo"Dobrodošao admine!";
+
+    if(isset($_POST["obavijest"])) {
+        $grad = $_POST['grad'];
+        $krvna_grupa = $_POST['kgrupa'];
+        $tekst = $_POST['tekst'];
+
+        $datum = date('Y-m-d');
+        $status = 0;
+
+        $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad' and '$krvna_grupa'!=='0' and '$grad'!== '0'";
+        $run = mysqli_query($conn, $sql);
+        $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+        while ($row = mysqli_fetch_array($run)) {
+            $OIB = $row['OIB_donora'];
+            $sqll = "INSERT INTO obavijesti VALUES ('$OIB', '$tekst', '$datum', '$status')";
+            $runn = mysqli_query($conn, $sqll);
+            $resultt = $run or die ("Failed to query database". mysqli_error($conn));
+        }
+    }
+
+
+
+
+
     if(isset($_POST['submit_event'])){
         $idlokacija = $_POST['idlokacija'];
         $grad = $_POST['grad'];
@@ -336,7 +361,33 @@
                 echo'
             </div>
             
-            <div id="content7" class="toggle" style="display:none">Obavijesti</div>
+            <div id="content7" class="toggle" style="display:none">
+               Pošalji obavijest:
+               
+               <form id = "obavijest">
+               <select id="kgrupa" name="kgrupa">
+               <option value="0">-krvna grupa-</option>';
+                    $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
+                    for ($i = 0; $i < 8; $i++) {
+                        echo '<option value='.$krvna_grupa[$i].'>-'.$krvna_grupa[$i].'-</option>';
+                    }
+
+                echo'</select>';
+
+                $query = "select * from lokacija group by grad";
+                $run = mysqli_query($conn, $query);
+                $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+                echo'<select name="grad" id ="grad">
+                   <option value="0">-grad-</option>';
+                            while ($row = mysqli_fetch_array($run)) {
+                                echo '<option value='.$row['grad'].'>'.$row['grad'].'</option>';
+                            }
+                            echo '</select>
+              <br><textarea name="tekst" id="tekst" form="obavijest"></textarea><br>
+              <input type="submit" name="obavijest" value="Posalji obavijest">
+              </form>
+           </div>
             
             <div id="content8" class="toggle" style="display:none">';
 
