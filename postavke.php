@@ -1,10 +1,10 @@
 ﻿
-
-
 <?php
+
 require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
-
+session_start();
+$OIB = $_SESSION["mojOIB"];
 echo '
 <head>
     <meta charset="utf-8">
@@ -24,8 +24,7 @@ echo '
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>';
 
-session_start();
-$OIB = $_GET['OIB_korisnika'];
+
 
 
 
@@ -65,7 +64,7 @@ if(isset($_POST['submit'])){
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
     }
-    $url = $_SESSION['current_page'];
+    $url = 'donor.php?OIB='.$OIB;
     header("Location: $url");
 }
 
@@ -74,7 +73,7 @@ if(isset($_POST['submit'])){
     $run = mysqli_query($conn, $info);
     $result = $run or die("Failed to query database");
     $row = mysqli_fetch_array($result);
-
+    $OIB = $row['OIB_donora'];
 echo '
 <div class="container">
     <form action="" method="POST" enctype="multipart/form-data">
