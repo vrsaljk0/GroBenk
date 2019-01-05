@@ -33,6 +33,7 @@ echo '
     require_once "dbconnect.php"; 
     require_once "functions.php";
     session_start();
+    $_SEESION["current"] = $_SERVER['REQUEST_URI'];
 
     echo "
     <div id='nav-placeholder' onload>

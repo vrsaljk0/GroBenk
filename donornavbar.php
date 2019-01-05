@@ -3,7 +3,6 @@
 	$OIB = $_SESSION['mojOIB'];
 	require_once "dbconnect.php";
 
-
 echo '
 <nav class="navbar navbar-expand-md navbar-light bg-white ">
 <div class="container-fluid">
@@ -42,7 +41,7 @@ echo '
 				<div class="dropdown_donor">
 				  <button class="dropbtn_donor"><i class="fas fa-user-circle"></i></button>
 				  <div class="dropdown-content_donor">
-				  	<a href='.$_SESSION["current_page"].'>Moj profil</a>
+				  	<a href="donor.php?OIB='.$OIB.'">Moj profil</a>
 				    <a href="postavke.php?OIB_korisnika='.urlencode($OIB).'">Uredi profil</a> 
 				    <a href="odjava.php">Odjavi se</a>
 				  </div>
