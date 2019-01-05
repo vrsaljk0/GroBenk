@@ -85,6 +85,11 @@
 	height: 337px;
 }
 
+.profil-img input {
+	margin-top: 10px;
+	margin-left: 140px;
+}
+
 .profil-info {
 	margin-left: 600px;
 	width: 900px;
@@ -331,6 +336,51 @@ table th {
 	display: inline-block;
 }
 
+.pp-h1 { 
+  display: block;
+  font-size: 2.7em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: 500;
+}
+
+.pretraga {
+	position: absolute;
+    height: 800px;
+    width: 500px;
+    margin: -100px 0 0 -200px;
+    top: 37%;
+    left: 25%;
+}
+
+.pretraga-title {
+	margin-top: 10px;
+	margin-left: 200px; 
+}
+
+.pretraga-info {
+	height: 40px;
+}
+
+.pretraga-info a {
+	margin-top: 5px;
+	margin-left: 55px;
+	display: inline-block;
+}
+
+.pretraga-img {
+	width: 40px;
+	height: 40px;
+    position: absolute;
+}
+
+.pretraga-img img{
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+}
 
 
 
