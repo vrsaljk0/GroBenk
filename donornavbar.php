@@ -2,6 +2,7 @@
 	session_start();
 	$OIB = $_SESSION['mojOIB'];
 	require_once "dbconnect.php";
+    //$_SEESION["current"] = $_SERVER['REQUEST_URI'];
 
 echo '
 <nav class="navbar navbar-expand-md navbar-light bg-white ">
@@ -19,16 +20,37 @@ echo '
                 </form>
 			</li>
 			<li>
-				<div class="dropdown_donor">
-				  <button class="dropbtn_donor"><i class="far fa-bell"></i></button>
+				<div class="dropdown_donor">';
+				   $sql = "SELECT * from obavijesti where OIBdonora = '$OIB'";
+                   $run = mysqli_query($conn, $sql);
+                   $result = $run or die ("Failed to query database". mysqli_error($conn));
+                   $class = 'far fa-bell';
+                   $neprocitano = 0;
+                   while($row = mysqli_fetch_array($result)){
+                       if($row['status'] == 0) {
+                           $class = 'fas fa-bell';
+                           $neprocitano = 1;
+                           break;
+                       }
+                   }
+                   echo'<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
 				  <div class="dropdown-content_donor">';
-                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB'";
+
+                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and status='0'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
+                    if($neprocitano){
+                        echo'<form action="notification.php" method="POST">';
+                        while($row = mysqli_fetch_array($result)){
+                            echo '<p>'.$row['tekst_obav'].' '.$row['datum_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
+                        }
+                        echo '<input type="hidden" name="OIB" value="'.$OIB.'">
+                    </form>';
+                    }
+                    else{
+                        echo"Nema novih obavijesti";
+                    }
 
-                while ($row = mysqli_fetch_array($run)) {
-                    echo $row['datum_obav'].' - '.$row['tekst_obav'].'<br>';
-                }
 				  echo'</div>
 				</div>
 
