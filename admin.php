@@ -52,9 +52,9 @@
         $idlokacija = $_GET['idlokacija'];
         $grad = $_GET['grad'];
         $adresa_lokacije = $_GET['adresa_lokacije'];
-        $GETanskibr = $_GET['GETanski_broj'];
+        $postanskibr = $_GET['postanski_broj'];
         $datum_dogadaja= date('Y-m-d',strtotime($_GET['datum_dogadaja']));
-        $sql = "INSERT INTO lokacija VALUES ('$idlokacija', '$grad', '$adresa_lokacije', '$GETanskibr', '$GETanskibr', '$datum_dogadaja')";
+        $sql = "INSERT INTO lokacija VALUES ('$idlokacija', '$grad', '$adresa_lokacije', '$postanskibr', '$postanskibr', '$datum_dogadaja')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
         header("Location:admin.php");
@@ -65,7 +65,7 @@
         $sql = "DELETE FROM lokacija WHERE idlokacija='$id'";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
-        header("Location:admin.php");
+        //header("Location:admin.php");
     }
     if(isset($_GET['prihvati'])){
         if(!empty($_GET['check_list'])){
@@ -95,7 +95,7 @@
             }
 
         }
-        header("Location:admin.php");
+        //header("Location:admin.php");
     }
     if(isset($_GET['odbij_zahtjev'])) {
         if (!empty($_GET['check_list'])) {
@@ -105,7 +105,7 @@
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
             }
         }
-        header("Location:admin.php");
+        //header("Location:admin.php");
     }
     echo '
         <html>
@@ -246,7 +246,7 @@
                              <input type="hidden" name="id_lokacije" value='.$id.'>
                              <input type="submit" name="unesi_donaciju">
                            </form>';
-                        header("Location:admin.php");
+                        //header("Location:admin.php");
 
                     }
                     if(isset($_GET['unesi_donaciju'])){
@@ -342,7 +342,7 @@
                     echo '</select><br><br>
                             Datum rođenja <input type="date" name="datum" value=' . $row['datum_rodenja'] . '> <br><br>
                             Prebivalište <input type="text" name="prebivaliste" value="' . $row['prebivaliste'] . '"><br><br>
-                            Poštanski broj<input type="number" name="GETanski_broj" value="' . $row['GETanski_broj'] . '"><br><br>
+                            Poštanski broj<input type="number" name="postanski_broj" value="' . $row['postanski_broj'] . '"><br><br>
                             Broj Mobitela<input type="number" name="mobitel" value="' . $row['broj_mobitela'] . '"><br><br> 
                             E-mail<input type="text" name="email" value="' . $row['mail_donora'] . '"><br><br> 
                             Spol<input type="text" name="spol" value="' . $row['spol'] . '"><br><br> 
@@ -354,7 +354,7 @@
                                   
                             <input type="submit" name="updejtaj" value="Spremi promjene"><br><br>
                         </form>';
-                    header("Location:admin.php");
+
                 }
                 if (isset($_GET['updejtaj'])) {
                         $id_donor = $_GET['id'];
@@ -362,7 +362,7 @@
                         $ime_prezime_donora = $_GET['imeprez'];
                         $datum_rodenja = $_GET['datum'];
                         $prebivaliste = $row['prebivaliste'];
-                        $GETanski_broj = $_GET['GETanski_broj'];
+                        $postanski_broj = $_GET['postanski_broj'];
                         $brojmobitela = $_GET['mobitel'];
                         $mail_donora = $_GET['email'];
                         $spol = $_GET['spol'];
@@ -373,12 +373,11 @@
                         $image = $_GET['profilna'];
 
                         $update_query = "update donor set krvna_grupa_don = '$krvna_grupa_don',ime_prezime_donora ='$ime_prezime_donora', datum_rodenja = '$datum_rodenja',
-                    prebivaliste = '$prebivaliste', GETanski_broj = '$GETanski_broj',broj_mobitela = '$brojmobitela', mail_donora = '$mail_donora',
+                    prebivaliste = '$prebivaliste', postanski_broj = '$postanski_broj',broj_mobitela = '$brojmobitela', mail_donora = '$mail_donora',
                     spol = '$spol', adresa_donora = '$adresa_donora', username = '$username', password = '$password', br_donacija = '$br_donacija', image = '$image'
                     where OIB_donora = '$id_donor'";
 
                         $update_run = mysqli_query($conn, $update_query);
-                    header("Location:admin.php");
                     }
 
 
@@ -542,7 +541,7 @@
                           </tr>
                         </table>
                 ';
-                    header("Location:admin.php");}
+                    }
                 echo'
             </div>
             
