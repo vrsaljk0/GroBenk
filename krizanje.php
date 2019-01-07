@@ -56,5 +56,4 @@ session_start();
     }
     if($flag) header("Location:$url");
     else echo "Pogresan unos!";
-
 ?>
