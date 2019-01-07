@@ -4,6 +4,7 @@ require_once "dbconnect.php";
 if(isset($_POST['submit'])){
     $OIB = $_POST['oib'];
     $ime = $_POST['ime'];
+    $krvna_grupa = $_POST['krvna_grupa'];
     $datum_rod= $_POST['datum_rod'];
     $prebivaliste = $_POST['prebivaliste'];
     $postanskibr = $_POST['postanskibr'];
@@ -17,8 +18,9 @@ if(isset($_POST['submit'])){
 
     $target = "donori/".basename($image);
 
-    $reg_query="insert into donor values('$OIB','$ime','$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$username', '$lozinka', '0', '$image')";
+    $reg_query="insert into donor values('$OIB','$krvna_grupa', '$ime', '$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$username', '$lozinka', '0', '$image')";
     $reg_run=mysqli_query($conn, $reg_query);
+    $result = $reg_run or die("Failed to query database");
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
         $msg = "Uspjesno registrirani!";
@@ -78,10 +80,14 @@ $(function(){
 		</div>
 
 		<div class="textboxreg">
-		<input type="number" placeholder="OIB"  name="oib" required=""><br>
+		<input type="text" placeholder="OIB"  name="oib" required=""><br>
 	    </div>
 
-	    <div class="textboxreg">
+        <div class="textboxreg">
+            <input type="text" placeholder="krvna_grupa"  name="krvna_grupa" required=""><br>
+        </div>
+
+        <div class="textboxreg">
 	    <p>Datum rođenja:</p>
 		<input type="date" placeholder="Datum rođenja"  name="datum_rod" required=""><br>
 	    </div>
@@ -95,7 +101,7 @@ $(function(){
 	    </div>
 
 	    <div class="textboxreg">
-		<input type="number" placeholder="Poštanski broj"  name="postanskibr" required=""><br>
+		<input type="text" placeholder="Poštanski broj"  name="postanskibr" required=""><br>
 	    </div>
 
 	    <div class="textboxreg">
@@ -118,7 +124,7 @@ $(function(){
 	    <input type ="FILE" placeholder="Slika profila" name="image" required=""><br>
 	    </div>
 
-	    <input class="btnreg" type="submit" name="submit" onclick="window.location.href='donor.php'" value="Registriraj se"><br>
+	    <input class="btnreg" type="submit" name="submit" value="Registriraj se"><br>
 	</form>
 </div>
 </body>
