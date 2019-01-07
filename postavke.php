@@ -1,4 +1,8 @@
-﻿
+﻿<script>
+function OdjaviMe(){
+window.location.replace('donor.php');
+}
+</script>
 <?php
 
 require_once "dbconnect.php"; //fancy include just because I can
@@ -69,11 +73,11 @@ if(isset($_POST['submit'])){
 }
 
 
-    $info = "SELECT * FROM donor where OIB_donora = '$OIB'";
-    $run = mysqli_query($conn, $info);
-    $result = $run or die("Failed to query database");
-    $row = mysqli_fetch_array($result);
-    $OIB = $row['OIB_donora'];
+$info = "SELECT * FROM donor where OIB_donora = '$OIB'";
+$run = mysqli_query($conn, $info);
+$result = $run or die("Failed to query database");
+$row = mysqli_fetch_array($result);
+$OIB = $row['OIB_donora'];
 echo '
 <div class="container">
     <form action="" method="POST" enctype="multipart/form-data">
@@ -94,7 +98,7 @@ echo '
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Ime i prezime:</label>
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" name="ime" value='.$row['ime_prezime_donora'].'>
+                    <input type="text" class="form-control" name="ime" value="'.$row['ime_prezime_donora'].'">
                   </div>
                 </div>
                 <div class="form-group">
@@ -168,7 +172,7 @@ echo '
                   <div class="col-md-8">
                     <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="submit" value="Promijeni podatke">
                     <span></span>
-                    <input type="reset" class="btn btn-default" value="Odustani" onclick="Vratime();">
+                    <bottom><br><br><a href="donor.php?OIB='.$OIB.'">Nazad na moj profil</a></bottom>
                   </div>
                 </div>
             </div>
