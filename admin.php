@@ -18,19 +18,21 @@
         $status = 0;
 
         if ($krvna_grupa == '0' and $grad == '0') {
-            $sql = "SELECT * from donor";
+            $sql = "SELECT * from donor where 1";
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-        } else if ($krvna_grupa == '0') {
+        }
+        if ($krvna_grupa == '0' and $grad != '0') {
             $sql = "SELECT * from donor where prebivaliste = '$grad'";
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
-        } else if ($grad == '0') {
+        }
+        if ($grad == '0' and $krvna_grupa != '0') {
             $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa'";
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
-        } else {
+        }
+        if ($krvna_grupa!= '0' and $grad != '0'){
             $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad'";
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
@@ -38,9 +40,9 @@
 
         while ($row = mysqli_fetch_array($run)) {
             $OIB = $row['OIB_donora'];
-            $sqll = "INSERT INTO obavijesti VALUES ('$OIB', '$tekst', '$datum', '$status')";
+            $sqll = "INSERT INTO obavijesti (OIBdonora, tekst_obav, datum_obav, status) VALUES ('$OIB', '$tekst', '$datum', '$status')";
             $runn = mysqli_query($conn, $sqll);
-            $resultt = $run or die ("Failed to query database". mysqli_error($conn));
+            $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
         }
         header("Location:admin.php");
     }
