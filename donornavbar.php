@@ -27,7 +27,7 @@ echo '
                    $class = 'far fa-bell';
                    $neprocitano = 0;
                    while($row = mysqli_fetch_array($result)){
-                       if($row['status'] == 0) {
+                       if($row['procitano'] == 0) {
                            $class = 'fas fa-bell';
                            $neprocitano = 1;
                            break;
