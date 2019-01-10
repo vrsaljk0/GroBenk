@@ -38,7 +38,7 @@
 
         while ($row = mysqli_fetch_array($run)) {
             $OIB = $row['OIB_donora'];
-            $sqll = "INSERT INTO obavijesti (OIBdonora, tekst_obav, datum_obav, procitano) VALUES ( '$OIB', '$tekst', '$datum', '$status')";
+            $sqll = "INSERT INTO obavijesti VALUES ('$OIB', '$tekst', '$datum', '$status')";
             $runn = mysqli_query($conn, $sqll);
             $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
         }

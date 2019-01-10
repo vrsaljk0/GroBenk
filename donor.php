@@ -82,7 +82,7 @@ echo '
 
     if(!strcmp($row['spol'],'Z')) $gender = 'la';
     else $gender = 'o';
-    $upit = "select naziv_lokacije, datum_dogadaja from lokacija where idlokacija in 
+    $upit = "select naziv_lokacije, datum_dogadaja from lokacija where id_lokacije in 
             (SELECT id_lokacije from moj_event where moj_event.OIB_donora_don = '$OIB' and prisutnost = 1)";
     $rezultat = mysqli_query($conn, $upit);
 
@@ -192,7 +192,7 @@ echo '
                     </div>
 
                     <div class="tab-pane fade show '.$active2.'" id="event" role="tabpanel" aria-labelledby="event-tab">';
-                            $upit = "SELECT idlokacija, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj from lokacija where idlokacija in(
+                            $upit = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj from lokacija where id_lokacije in(
                                     SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
                             $run = mysqli_query($conn, $upit);
                             $result = $run or die("Failed to query database". mysqli_error($conn));
@@ -233,7 +233,7 @@ echo '
                                             </div>
                                             <span class="h4">'.$row['naziv_lokacije'].'<span>
                                             <span class="event-checkbox">
-                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row['idlokacija'].' onclick="Sakrij();"/>
+                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row['id_lokacije'].' onclick="Sakrij();"/>
                                             </span><br>
                                             <span class="h6">'.$hours_start.':'.$minutes_start.' - '.$hours_kraj.':'.$minutes_kraj.'</span><br>
                                             <span class="h6">'.$row['adresa_lokacije'].'</span>
@@ -245,8 +245,8 @@ echo '
                             </div>';
 
                             $date = date("Ymd");
-                            $dolazim = "SELECT idlokacija, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj FROM lokacija WHERE grad IN 
-                                       (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND idlokacija NOT IN 
+                            $dolazim = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj FROM lokacija WHERE grad IN 
+                                       (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND id_lokacije NOT IN 
                                        (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
                             $run = mysqli_query($conn, $dolazim);
                             $result = $run or die ("Failed to query database". mysqli_error($conn));
@@ -287,7 +287,7 @@ echo '
                                             </div>
                                             <span class="h4">'.$row_dolazim['naziv_lokacije'].'<span>
                                             <span class="event-checkbox">
-                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row_dolazim['idlokacija'].' onclick="Sakrij();"/>
+                                                <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row_dolazim['id_lokacije'].' onclick="Sakrij();"/>
                                             </span><br>
                                             <span class="h6">'.$hours_start.':'.$minutes_start.' - '.$hours_kraj.':'.$minutes_kraj.'</span><br>
                                             <span class="h6">'.$row_dolazim['adresa_lokacije'].'</span>
