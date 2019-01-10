@@ -9,10 +9,10 @@
     session_start();
     echo"Dobrodošao admine!";
 
-    if(isset($_GET['obavijest'])) {
-        $grad = $_GET['grad'];
-        $krvna_grupa = $_GET['kgrupa'];
-        $tekst = $_GET['tekst'];
+    if(isset($_POST['obavijest'])) {
+        $grad = $_POST['grad'];
+        $krvna_grupa = $_POST['kgrupa'];
+        $tekst = $_POST['tekst'];
 
         $datum = date('Y-m-d');
         $status = 0;
@@ -38,9 +38,9 @@
 
         while ($row = mysqli_fetch_array($run)) {
             $OIB = $row['OIB_donora'];
-            $sqll = "INSERT INTO obavijesti VALUES ('$OIB', '$tekst', '$datum', '$status')";
+            $sqll = "INSERT INTO obavijesti (OIBdonora, tekst_obav, datum_obav, procitano) VALUES ( '$OIB', '$tekst', '$datum', '$status')";
             $runn = mysqli_query($conn, $sqll);
-            $resultt = $run or die ("Failed to query database". mysqli_error($conn));
+            $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
         }
         header("Location:admin.php");
     }
@@ -387,7 +387,7 @@
            <div id="content7" class="toggle" style="display:none">
                Pošalji obavijest:
                
-               <form id = "obavijest" method="GET" action="">
+               <form id = "obavijest" method="POST" action="">
                <select id="kgrupa" name="kgrupa">
                <option value="0">-krvna grupa-</option>';
                     $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");

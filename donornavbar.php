@@ -27,7 +27,7 @@ echo '
                    $class = 'far fa-bell';
                    $neprocitano = 0;
                    while($row = mysqli_fetch_array($result)){
-                       if($row['status'] == 0) {
+                       if($row['procitano'] == 0) {
                            $class = 'fas fa-bell';
                            $neprocitano = 1;
                            break;
@@ -36,7 +36,7 @@ echo '
                    echo'<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
 				  <div class="dropdown-content_donor">';
 
-                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and status='0'";
+                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
                     if($neprocitano){

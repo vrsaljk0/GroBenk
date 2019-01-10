@@ -23,11 +23,11 @@
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
     $row = mysqli_fetch_array($result);
-
+    $naziv_bolnice = $row['naziv_bolnice'];
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];
-        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$id_bolnice', '$kolicina', '$krvna_grupa', '$date', '0')";
+        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$idbolnice', '$kolicina', '$krvna_grupa', '$date', '0')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
@@ -40,7 +40,7 @@
     }
     if(isset($_POST['komentar'])){
         $tekst = $_POST['tekst'];
-        $sql = "INSERT INTO komentari values ('$naziv_bolnice', '$id_bolnice', '$tekst', '$date')";
+        $sql = "INSERT INTO komentari values ('$naziv_bolnice', '$idbolnice', '$tekst', '$date')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
@@ -70,7 +70,7 @@
                   </div>
                   <div id="content1" class="toggle" style="display:none" align="center">
                     Otkazi zahtjev';
-                    $query = "SELECT *from zahtjev WHERE id_bolnica='$id_bolnice' and  odobreno='0'";
+                    $query = "SELECT *from zahtjev WHERE id_bolnica='$idbolnice' and  odobreno='0'";
                     $run = mysqli_query($conn, $query);
                     echo '<form action="" method="POST">
                                   <select name="zahtjev">';
@@ -331,7 +331,7 @@
                   echo'</div>     
                    
                   <div id="content4" class="toggle" style="display:none">Forumic<br><br>';
-                    $sql = "SELECT * from komentari where idbolnica_bol = '$id_bolnice'";
+                    $sql = "SELECT * from komentari where idbolnica_bol = '$idbolnice'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
                     while($row = mysqli_fetch_array($run)){
