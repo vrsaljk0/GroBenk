@@ -23,11 +23,11 @@
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
     $row = mysqli_fetch_array($result);
-
+    $naziv_bolnice = $row['naziv_bolnice'];
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];
-        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$id_bolnica', '$kolicina', '$krvna_grupa', '$date', '0')";
+        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$idbolnica', '$kolicina', '$krvna_grupa', '$date', '0')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
@@ -40,7 +40,7 @@
     }
     if(isset($_POST['komentar'])){
         $tekst = $_POST['tekst'];
-        $sql = "INSERT INTO komentari values ('$naziv_bolnice', '$id_bolnice', '$tekst', '$date')";
+        $sql = "INSERT INTO komentari values ('$naziv_bolnice', '$idbolnica', '$tekst', '$date')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
