@@ -163,7 +163,9 @@
             echo'</div>
             </div>
            <div id="content1" class="toggle" style="display:none"> <br><br>
-               <!--<form action="" method="GET">
+               <!--
+               MAJINO OD PRIJE
+               <form action="" method="GET">
                    <br>Dodaj novi event:<br><br>
                    idlokacije <input type="number" name="idlokacija"><br><br>
                    Grad <input type="text" name="grad"><br><br>
