@@ -36,7 +36,7 @@ echo '
                    echo'<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
 				  <div class="dropdown-content_donor">';
 
-                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
+                    $sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and status='0'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
                     if($neprocitano){
