@@ -15,10 +15,10 @@
     session_start();
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
     $date = date("Ymd");
-    $idbolnice = $_GET['idbolnice'];
+    $idbolnica = $_GET['idbolnice'];
 
 
-    $info ="select *from bolnica where  idbolnica = '$idbolnice'";
+    $info ="select *from bolnica where  idbolnica = '$idbolnica'";
     $run = mysqli_query($conn, $info);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
@@ -27,7 +27,7 @@
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];
-        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$id_bolnice', '$kolicina', '$krvna_grupa', '$date', '0')";
+        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$id_bolnica', '$kolicina', '$krvna_grupa', '$date', '0')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
@@ -70,7 +70,7 @@
                   </div>
                   <div id="content1" class="toggle" style="display:none" align="center">
                     Otkazi zahtjev';
-                    $query = "SELECT *from zahtjev WHERE id_bolnica='$id_bolnice' and  odobreno='0'";
+                    $query = "SELECT *from zahtjev WHERE id_bolnica='$idbolnica' and  odobreno='0'";
                     $run = mysqli_query($conn, $query);
                     echo '<form action="" method="POST">
                                   <select name="zahtjev">';
@@ -85,19 +85,19 @@
                   <div id="content2" class="toggle" style="display:none" align="middle">
                   </br> Generalna statistika:';
 
-                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice'";
+                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica'";
                     $result = mysqli_query($conn, $sql);
                     $num_zahtjev= mysqli_num_rows($result);
 
-                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice' and odobreno = '1'";
+                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica' and odobreno = '1'";
                     $result = mysqli_query($conn, $sql);
                     $num_odobreni= mysqli_num_rows($result);
 
-                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice' and odobreno = '-1'";
+                    $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica' and odobreno = '-1'";
                     $result = mysqli_query($conn, $sql);
                     $num_odbijeni= mysqli_num_rows($result);
 
-                    $sql = "select * from zahtjev where id_bolnica = '$idbolnice' group by krvna_grupa_zaht order by krvna_grupa_zaht desc limit 1";
+                    $sql = "select * from zahtjev where id_bolnica = '$idbolnica' group by krvna_grupa_zaht order by krvna_grupa_zaht desc limit 1";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
                     $naj_krvnag = $row['krvna_grupa_zaht'];
@@ -106,7 +106,7 @@
                     $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
                     for ($i=0; $i<8; $i++) {
-                        $sql = "select round(sum(kolicina_krvi_zaht)) as suma from zahtjev where id_bolnica = '$idbolnice' and krvna_grupa_zaht='$krv[$i]' group by krvna_grupa_zaht";
+                        $sql = "select round(sum(kolicina_krvi_zaht)) as suma from zahtjev where id_bolnica = '$idbolnica' and krvna_grupa_zaht='$krv[$i]' group by krvna_grupa_zaht";
                         $result = mysqli_query($conn, $sql);
                         $row = mysqli_fetch_assoc($result);
                         if ($row['suma'] == null) {
@@ -196,22 +196,22 @@
                         $month = $_POST['mjesec'];
                         $year = $_POST['godina'];
 
-                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice' 
+                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica' 
                                 and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month'";
                         $result = mysqli_query($conn, $sql);
                         $num_zahtjev= mysqli_num_rows($result);
 
-                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice' and odobreno = '1'
+                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica' and odobreno = '1'
                                 and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month'";
                         $result = mysqli_query($conn, $sql);
                         $num_odobreni= mysqli_num_rows($result);
 
-                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnice' and odobreno = '-1'
+                        $sql = "select id_bolnica from zahtjev where id_bolnica = '$idbolnica' and odobreno = '-1'
                                 and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month'";
                         $result = mysqli_query($conn, $sql);
                         $num_odbijeni= mysqli_num_rows($result);
 
-                        $sql = "select * from zahtjev where id_bolnica = '$idbolnice' and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month'
+                        $sql = "select * from zahtjev where id_bolnica = '$idbolnica' and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month'
                                 group by krvna_grupa_zaht order by krvna_grupa_zaht desc limit 1";
                         $result = mysqli_query($conn, $sql);
                         $row = mysqli_fetch_assoc($result);
@@ -221,7 +221,7 @@
                         $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
                         for ($i=0; $i<8; $i++) {
-                            $sql = "select round(sum(kolicina_krvi_zaht)) as suma from zahtjev where id_bolnica = '$idbolnice' and krvna_grupa_zaht='$krv[$i]' 
+                            $sql = "select round(sum(kolicina_krvi_zaht)) as suma from zahtjev where id_bolnica = '$idbolnica' and krvna_grupa_zaht='$krv[$i]' 
                                     and (select extract(year from datum_zahtjeva)) = '$year' and (select extract(month from datum_zahtjeva)) = '$month' group by krvna_grupa_zaht";
                             $result = mysqli_query($conn, $sql);
                             $row = mysqli_fetch_assoc($result);
@@ -284,7 +284,7 @@
                   echo'</div><div id="content3" class="toggle" style="display:none" align="middle">
                     <b>Uredi postavke:</b>';
 
-                    $sql = "select * from bolnica where idbolnica = '$idbolnice'";
+                    $sql = "select * from bolnica where idbolnica = '$idbolnica'";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
                     $password = $row['password'];
@@ -315,11 +315,11 @@
                         $nova2 = $_POST['nova2'];
 
                         $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
-                        postanski_broj = '$postanski_broj' where idbolnica = '$idbolnice'";
+                        postanski_broj = '$postanski_broj' where idbolnica = '$idbolnica'";
                         $update_run = mysqli_query($conn, $update_query);
 
                         if ($trenutna === $password and $nova1 === $nova2 and !is_null($nova1)) {
-                            $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnice'";
+                            $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnica'";
                             $update_run = mysqli_query($conn, $update_query);
                             echo '<script type="text/javascript">',
                             'Ulogirajme();',
@@ -331,7 +331,7 @@
                   echo'</div>     
                    
                   <div id="content4" class="toggle" style="display:none">Forumic<br><br>';
-                    $sql = "SELECT * from komentari where idbolnica_bol = '$id_bolnice'";
+                    $sql = "SELECT * from komentari where idbolnica_bol = '$idbolnica'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
                     while($row = mysqli_fetch_array($run)){
