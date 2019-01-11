@@ -68,6 +68,17 @@ Dobrodošao admine!
 
 <div id="content10" class="toggle" ><br><br>
             <form action="" method="GET">
+            <table border = "1">
+            <tr>
+                <th>DATUM</th>
+                <th>GRAD</th>
+                <th>LOKACIJA</th>
+                <th>ADRESA</th>
+                <th>POŠTANSKI BROJ</th>
+                <th>POČINJE</th>
+                <th>ZAVRŠAVA</th>
+                <th>PRIKAŽI DETALJNIJE</th>
+            </tr>
                 <td><input type="date" name = "datum" required=""></td>
                 <td><input type="text" name = "grad" required=""></td>
                 <td><input type="text" name = "lokacija" required=""></td>
@@ -76,6 +87,7 @@ Dobrodošao admine!
                 <td><input type="time" name = "startt" required=""></td>
                 <td><input type="time" name = "kraj" required=""></td>
                 <td><input type="submit" name="submit_event" value="Dodaj event"></td>
+            </table>
             </form>
     <form action="" method="GET">
         <input type="text" name = "keyword" placeholder="Pretraži evente">
