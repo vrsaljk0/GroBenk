@@ -10,15 +10,15 @@
     $(function(){
 
         $("#select_all").click(function () {
-            $('.case').attr('checked', this.checked);
+            $('.case').prop('checked', this.checked);
         });
 
         $(".case").click(function(){
 
             if($(".case").length == $(".case:checked").length) {
-                $("#select_all").attr("checked", "checked");
+                $("#select_all").prop("checked", "checked");
             } else {
-                $("#select_all").removeAttr("checked");
+                $("#select_all").removeProp("checked");
             }
 
         });

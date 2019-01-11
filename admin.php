@@ -535,7 +535,6 @@
                     e.preventDefault();
                     $(".toggle").hide();
                     $(".toggle2").hide();
-                    var toShow = $(this).attr(\'href\');
                     $(toShow).show();
                     
                 });
