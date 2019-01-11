@@ -42,9 +42,19 @@
                <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
                <a href="#content8">&nbsp;Statistika&nbsp;</a>
                <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
-           </div>          
+           </div>    
+           
+    <br><h3>Trenutno stanje zaliha:</h3>';
 
-    <div id="content30" class="toggle"  ><br><br>
+    $zaliha_q = "SELECT * from zaliha";
+    $run = mysqli_query($conn, $zaliha_q);
+    $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+    while($red = mysqli_fetch_array($result)){
+        echo $red['krvna_grupa'].' ' . $red['kolicina_grupe'].'<br><br>';
+    }
+
+    echo'<div id="content30" class="toggle"  ><br><br>
         
         <form action="" method="GET">
             <input type="text" name = "keyword" placeholder="Pretraži donacije">
