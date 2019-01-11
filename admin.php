@@ -7,6 +7,7 @@
 <?php
     require_once "dbconnect.php";
     session_start();
+
     echo"Dobrodošao admine!";
 
 
@@ -51,20 +52,7 @@
 
 
 
-    if(isset($_GET['submit_event'])){
-        $grad = $_GET['grad'];
-        $lokacija = $_GET['lokacija'];
-        $adresa_lokacije = $_GET['adresa'];
-        $postanskibr = $_GET['postbroj'];
-        $datum_dogadaja= $_GET['datum'];
-        $startt = $_GET['startt'];
-        $kraj = $_GET['kraj'];
-        $sql = "INSERT INTO lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj) 
-                VALUES('$grad', '$lokacija', '$adresa_lokacije', '$postanskibr', '$datum_dogadaja', '$startt', '$kraj')";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
-        header("Location:admin.php");
-    }
+
     if(isset($_GET['delete_event'])){
         $id = $_GET['lokacije'];
         //echo $id;
@@ -115,15 +103,11 @@
     }
     echo '
         <html>
-            <div id="nav">
-               <a href="#content0" >Pregledaj evente&nbsp;</a>
-               <a href="#content1" >Dodaj event&nbsp;</a>
-               <a href="#content2">&nbsp;Izbrisi event&nbsp;</a>
-               <a href="#content3">&nbsp;Upravljaj donacijama(dodaj/odbij)&nbsp;</a>
-               <a href="#content4">&nbsp;Pregledaj trenutnu zalihu krvi&nbsp;</a>
-               <a href="#content5">&nbsp;Bolnički zahtjevi&nbsp;</a>
-               <a href="#content6">&nbsp;Uredi Postavke donora&nbsp;</a>
-               <a href="#content7">&nbsp;Pošalji obavijest donorima&nbsp;</a>
+            <div>
+               <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
+               <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
+               <a href="donacije.php">&nbsp;Donacije&nbsp;</a>
+               <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
                <a href="#content8">&nbsp;Statistika&nbsp;</a>
                <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
            </div>
@@ -162,137 +146,9 @@
                 }
             echo'</div>
             </div>
-           <div id="content1" class="toggle" style="display:none"> <br><br>
-               <!--
-               MAJINO OD PRIJE
-               <form action="" method="GET">
-                   <br>Dodaj novi event:<br><br>
-                   idlokacije <input type="number" name="idlokacija"><br><br>
-                   Grad <input type="text" name="grad"><br><br>
-                   Naziv lokacije <input type="text" name="grad"> <br><br>
-                   Adresa <input type="text" name="adresa_lokacije"><br><br>
-                   Poštanski broj<input type="text" name="postanski_broj"><br><br>
-                   Datum<input type="date" name="datum_dogadaja"><br><br>
-                   <input type="submit" name="submit_event"><br><br>
-               </form>
-               -->
-               	<form action="" method="GET">
-                	<input type="text" name = "keyword" placeholder="Pretraži evente">
-                	<input type="submit" name="trazi" value="Traži">
-                </form>
-                
-                    <table border="1">
-                        <tr>
-                            <th>DATUM</th>
-                            <th>GRAD</th>
-                            <th>LOKACIJA</th>
-                            <th>ADRESA</th>
-                            <th>POŠTANSKI BROJ</th>
-                            <th>POČINJE</th>
-                            <th>ZAVRŠAVA</th>
-                            <th>AŽURIRAJ?glupo zvuci</th>
-                        </tr>
-                        <tr>
-                            <form action="" method="GET">
-                            <td><input type="date" name = "datum" required=""></td>
-                            <td><input type="text" name = "grad" required=""></td>
-                            <td><input type="text" name = "lokacija" required=""></td>
-                            <td><input type="text" name = "adresa" required=""></td>
-                            <td><input type="number" name = "postbroj" required=""></td>
-                            <td><input type="time" name = "startt" required=""></td>
-                            <td><input type="time" name = "kraj" required=""></td>
-                            <td><input type="submit" name="submit_event" value="Dodaj event"></td>
-                            </form>
-                            </tr>';
-                            $query = "SELECT *from lokacija WHERE 1";
-                            $run = mysqli_query($conn, $query);
-                            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+          
 
-                            while ($row = mysqli_fetch_array($result)) {
-                                $datum = date('Y-m-d');
-                                if ($row['datum_dogadaja'] < $datum) {
-                                    echo '
-                                   <tr>
-                                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '</td><td><a href = "delete_event.php?idEvent='. $row['id_lokacije'].'">Izbrisi</a></td>
-                                   </tr>';
-                                } else {
-                                    echo '
-                                   <tr>
-                                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '</td><td><a href = "show_event.php?idEvent='. $row['id_lokacije'].'">Prikaži detaljnije</a></td>
-                                   </tr>';
-                                }
-                            }
-                        echo'</form>
-                    </table>
-                </div>
-                
-                <div id="content10" class="toggle" style="display:none"><br><br>
-                   <!--<form action="" method="GET">
-                       <br>Dodaj novi event:<br><br>
-                       idlokacije <input type="number" name="idlokacija"><br><br>
-                       Grad <input type="text" name="grad"><br><br>
-                       Naziv lokacije <input type="text" name="grad"> <br><br>
-                       Adresa <input type="text" name="adresa_lokacije"><br><br>
-                       Poštanski broj<input type="text" name="postanski_broj"><br><br>
-                       Datum<input type="date" name="datum_dogadaja"><br><br>
-                       <input type="submit" name="submit_event"><br><br>
-                   </form>-->
-                   
-                    <form action="" method="GET">
-                        <input type="text" name = "keyword" placeholder="Pretraži evente">
-                        <input type="submit" name="trazi" value="Traži">
-                    </form>
-                    
-                    <table border="1">
-                        <tr>
-                            <th>DATUM</th>
-                            <th>GRAD</th>
-                            <th>LOKACIJA</th>
-                            <th>ADRESA</th>
-                            <th>POŠTANSKI BROJ</th>
-                            <th>POČINJE</th>
-                            <th>ZAVRŠAVA</th>
-                            <th>AŽURIRAJ?glupo zvuci</th>
-                        </tr>
-                        <tr>
-                            <form action="" method="GET">
-                                <td><input type="date" name = "datum" required=""></td>
-                                <td><input type="text" name = "grad" required=""></td>
-                                <td><input type="text" name = "lokacija" required=""></td>
-                                <td><input type="text" name = "adresa" required=""></td>
-                                <td><input type="number" name = "postbroj" required=""></td>
-                                <td><input type="time" name = "startt" required=""></td>
-                                <td><input type="time" name = "kraj" required=""></td>
-                                <td><input type="submit" name="dodaj_event" value="Dodaj event"></td>
-                            </form>
-                        </tr>';
-                        if(isset($_GET['trazi'])) {
-                            $datum = date('Y-m-d');
-                            $pretraga = $_GET['keyword'];
-                            $query = "SELECT *from lokacija WHERE (grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')";
-                            $run = mysqli_query($conn, $query);
-                            $result = $run or die ("Failed to query database" . mysqli_error($conn));
-
-                            echo '<div>';
-                            while ($row = mysqli_fetch_array($result)) {
-                                if ($row['datum_dogadaja'] < $datum) {
-                                    echo '
-                                   <tr>
-                                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '</td><td><a href = "delete_event.php?idEvent='. $row["id_lokacije"].'">Izbrisi</a></td>
-                                   </tr>';
-                                } else {
-                                    echo '
-                                   <tr>
-                                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '</td><td><a href = "show_event.php?idEvent='. $row["id_lokacije"].'">Prikaži detaljnije</a></td>
-                                   </tr>';
-                                }
-                            }
-                        }
-                    echo'</table>
-                </div>';
-
-
-            echo'<div id="content2" class="toggle" style="display:none">';
+            <div id="content2" class="toggle" style="display:none">';
                 $query = "SELECT id_lokacije, naziv_lokacije, datum_dogadaja FROM lokacija";
                 $run = mysqli_query($conn, $query);
                 echo"<br>Izbrisi neki event<br><br>";
@@ -319,9 +175,10 @@
                                 echo "<option value='" . $row['id_lokacije'] ."'>" . $row['naziv_lokacije'] ."</option>";
                             }
                             echo  '<input type="submit" name="show" value="Pokazi donore">';
-                            echo "</select>
-                         </form>";
-            echo '</div>
+                            echo '</select>
+                         </form>
+            </div>
+            
            <div id="content30" class="toggle2"style="display:none">';
                 if(isset($_GET['show'])){
                     $id = $_GET['lok'];
