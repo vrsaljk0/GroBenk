@@ -1,9 +1,3 @@
-<script>
-    function OdjaviMe(){
-        window.location.replace('odjava.php');
-    }
-</script>
-
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <SCRIPT language="javascript">
@@ -61,7 +55,7 @@ Dobrodošao admine!
                <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
                <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
                <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
-               <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
+               <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>
           
 
