@@ -36,7 +36,7 @@ if(isset($_GET['submit_event'])){
                 VALUES('$grad', '$lokacija', '$adresa_lokacije', '$postanskibr', '$datum_dogadaja', '$startt', '$kraj')";
     $run = mysqli_query($conn, $sql);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
-    header("Location:admin.php");
+    header("Location:eventi.php?keyword=&trazi=Traži");
 }
 if(isset($_POST['delete'])){
     if (!empty($_POST['check_list'])) {
