@@ -2,14 +2,15 @@
     session_start();
     require_once ("dbconnect.php");
     echo'Dobrodošao admine!
-            <div>
-               <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
-               <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
-               <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
-               <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-               <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
-               <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
-           </div><br><br>';
+
+    <div>
+       <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
+       <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
+       <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
+       <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
+       <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
+       <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
+   </div><br><br>';
 
     $id = $_GET['idEvent'];
 
