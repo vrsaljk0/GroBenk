@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once ("dbconnect.php");
     echo'Dobrodošao admine!
 
@@ -12,12 +11,6 @@
        <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
    </div><br><br>';
 
-    $id = $_GET['idEvent'];
-
-    $sql = "SELECT * from lokacija where id_lokacije = '$id'";
-    $run = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($run);
-
     if(isset($_GET['uredi_event'])) {
         $datum = $_GET['datum'];
         $grad = $_GET['grad'];
@@ -28,14 +21,21 @@
         $kraj = $_GET['kraj'];
 
         $sql = "UPDATE lokacija SET datum_dogadaja = '$datum', grad = '$grad', naziv_lokacije = '$lokacija', adresa_lokacije = '$adresa', postanski_broj = '$postbroj',
-                start = '$startt', kraj = '$kraj' WHERE id_lokacije = '$id'";
+                            start = '$startt', kraj = '$kraj' WHERE id_lokacije = '$id'";
 
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
-        header("Location:edit_event.php?idEvent='.$id.'");
+    } else {
+        $id = $_GET['idEvent'];
+        echo $id;
     }
 
+    $sql = "SELECT * from lokacija where id_lokacije = '$id'";
+    $run = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($run);
+
     echo'<form action="" method="GET">
+        
         <table border = "1">
         <tr>
             <th>DATUM</th>
