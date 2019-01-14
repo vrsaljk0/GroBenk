@@ -34,7 +34,7 @@
                <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
                <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
                <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-               <a href="#content8">&nbsp;Statistika&nbsp;</a>
+               <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
                <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>    
            
@@ -68,6 +68,12 @@
                 $pretraga = $_GET['keyword'];
                 $date = date("Ymd");
 
+
+                /** STORYTIME:
+                 *Nes je sjebano, unjela sam novi event i logicno nijedan donor nije bio prijavljen na njega. Pod donacijama mi se ponudio Jasmin,
+                 *otisla sam na njegov profil i pod njegovim oznacenim eventima je bio taj event. WHY? nemam blage, id_lokacije tog event nije uopce bio u moj_event.
+                 * id_lokacije nije foreign key u moj_event, mozda to????? al svjeednooo se to nebi smjelo dogadaat :(
+                 */
                 $query = "select lokacija.naziv_lokacije, donor.OIB_donora, donor.ime_prezime_donora, donor.krvna_grupa_don from lokacija, donor, moj_event
                           where lokacija.datum_dogadaja = '$date' and lokacija.id_lokacije = moj_event.id_lokacije and donor.OIB_donora = moj_event.OIB_donora_don and moj_event.prisutnost = '0'
                           and ((lokacija.naziv_lokacije like '%$pretraga%') or (donor.ime_prezime_donora like '%$pretraga%') or (donor.krvna_grupa_don = '$pretraga'))";

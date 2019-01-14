@@ -51,7 +51,7 @@ echo '
                <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
                <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
                <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-               <a href="#content8">&nbsp;Statistika&nbsp;</a>
+               <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
                <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>
 

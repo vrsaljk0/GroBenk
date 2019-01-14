@@ -10,8 +10,11 @@
        <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
        <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
    </div><br><br>';
+    /** kadgod se klikne na uredi_event link se sjebe i vise ne zna sta je idEvent
+      stavila sam u formu hidden input jer inace nez kako da saljem taj id :((((  */
 
     if(isset($_GET['uredi_event'])) {
+        $id = $_GET['id'];
         $datum = $_GET['datum'];
         $grad = $_GET['grad'];
         $lokacija = $_GET['lokacija'];
@@ -54,6 +57,7 @@
             <td><input type="number" name = "postbroj" value="'.$row['postanski_broj'].'" required=""></td>
             <td><input type="time" name = "startt" value="'.$row['start'].'" required=""></td>
             <td><input type="time" name = "kraj" value="'.$row['kraj'].'" required=""></td>
+            <td><input type="hidden" name = "id" value="'.$id.'" required=""></td>
             <td><input type="submit" name="uredi_event" value="Uredi"></td>
         </table>
         </form>';
