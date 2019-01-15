@@ -7,6 +7,7 @@
 <?php
     require_once "dbconnect.php";
     session_start();
+    mysqli_set_charset($conn,"utf8");
 
     echo"Dobrodošao admine!";
 
@@ -106,10 +107,10 @@
             <div>
                <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
                <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
-               <a href="donacije.php">&nbsp;Donacije&nbsp;</a>
+               <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
                <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-               <a href="#content8">&nbsp;Statistika&nbsp;</a>
-               <a href="" onclick="OdjaviMe();">&nbsp;Odjavi se&nbsp;</a>
+               <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
+               <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>
 
            <div id="content0" class="toggle" style="display:none">';

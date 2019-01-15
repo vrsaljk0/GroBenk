@@ -7,6 +7,7 @@
  */
 
 require_once "dbconnect.php";
+mysqli_set_charset($conn,"utf8");
 
     $OIB = $_SESSION['id'];
     if (!empty($_POST['check_list'])) {

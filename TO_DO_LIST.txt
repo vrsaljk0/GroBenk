@@ -3,7 +3,7 @@ KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
 
 publicprofile.php
-    -profil Klare Vidakovic cudno izgleda, ime i zvjezdice su joj malene nemam pojma zas
+    -profil Klare Vidakovic i Marko Stojanovic il kako god,  cudno izgledaju, ime i zvjezdice su malene nemam pojma zas
     -probat napravit da ne pise OIB u url-u
     -mozda sakrit OIB u public profilu? da nije prejavno
 

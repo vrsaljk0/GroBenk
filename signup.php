@@ -1,5 +1,6 @@
 <?php
-require_once "dbconnect.php"; 
+require_once "dbconnect.php";
+mysqli_set_charset($conn,"utf8");
 
 if(isset($_POST['submit'])){
     $OIB = $_POST['oib'];

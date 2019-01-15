@@ -5,8 +5,10 @@ window.location.replace('donor.php');
 </script>
 <?php
 
+
 require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
+mysqli_set_charset($conn,"utf8");
 session_start();
 
 /** SESSION TIMEOUT */
@@ -18,6 +20,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
 if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
 $OIB = $_SESSION["mojOIB"];
+
 echo '
 <head>
     <meta charset="utf-8">

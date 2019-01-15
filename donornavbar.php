@@ -13,6 +13,7 @@ if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
 
 require_once "dbconnect.php";
+mysqli_set_charset($conn,"utf8");
 //$_SEESION["current"] = $_SERVER['REQUEST_URI'];
 
 echo '

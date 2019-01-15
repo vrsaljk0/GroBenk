@@ -1,7 +1,8 @@
 <?php
 
     require_once "dbconnect.php";
- 
+    mysqli_set_charset($conn,"utf8");
+
     $query = "SELECT DISTINCT naziv_lokacije FROM lokacija";
     $run = mysqli_query($conn, $query);
     $myval = "";

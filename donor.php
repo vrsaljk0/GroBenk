@@ -33,6 +33,7 @@ echo '
     require_once "dbconnect.php"; 
     require_once "functions.php";
     session_start();
+    mysqli_set_charset($conn,"utf8");
     /** SESSION TIMEOUT */
     if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
         header("Location:odjava.php");

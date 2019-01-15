@@ -8,6 +8,8 @@
 
 require_once "dbconnect.php";
 require_once "functions.php";
+mysqli_set_charset($conn,"utf8");
+
 session_start();
 
     $username = $_GET['username'];
