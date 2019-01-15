@@ -65,7 +65,7 @@ echo'</div>
 				  <button class="dropbtn_donor"><i class="fas fa-user-circle"></i></button>
 				  <div class="dropdown-content_donor">
 				  	<a href="donor.php?OIB='.$OIB.'">Moj profil</a>
-				    <a href="postavke.php?OIB_korisnika='.urlencode($OIB).'">Uredi profil</a> 
+				    <a href="postavke.php">Uredi profil</a> 
 				    <a href="odjava.php">Odjavi se</a>
 				  </div>
 				</div>

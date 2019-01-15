@@ -70,7 +70,7 @@ if(isset($_POST['submit'])){
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
     }
-    $url = 'donor.php?OIB='.$OIB;
+    $url = 'donor.php';
     header("Location: $url");
 }
 
@@ -174,7 +174,7 @@ echo '
                   <div class="col-md-8">
                     <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="submit" value="Promijeni podatke">
                     <span></span>
-                    <bottom><br><br><a href="donor.php?OIB='.$OIB.'">Nazad na moj profil</a></bottom>
+                    <bottom><br><br><a href="donor.php">Nazad na moj profil</a></bottom>
                   </div>
                 </div>
             </div>
