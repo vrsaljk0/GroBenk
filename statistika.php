@@ -1,6 +1,7 @@
 <?php
-    require_once "dbconnect.php";
+    require_once ("dbconnect.php");
     session_start();
+    if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
     echo"Dobrodošao admine!";
 
@@ -15,14 +16,28 @@
                <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>';
 
-                if(isset($_GET['prikazi'])){
-                        //kako bi znali za koj mjesec i godinu racunamo mjesecnu statistiku:
-                        /*$now = new \DateTime('now'); //ako zelimo sadasnjost
-                        $month = $now->format('m');
-                        $year = $now->format('Y');*/
+                /*** AKO ZELIMO PO MJESECU I GODINI, malo mi retard izgledalo dok sam stavljala piecharts a zao mi obrisat
+                 * if(isset($_GET['prikazi'])){
 
-                        $month = $_GET['mjesec'];
-                        $year = $_GET['godina'];
+                    $month = $_GET['mjesec'];
+                    $year = $_GET['godina'];
+
+                        $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
+                        $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+                        for ($i=0; $i<8; $i++) {
+                            $sql = "select sum(kolicina_krvi_donacije) as suma from donacija where krvna_grupa_zal='$krv[$i]' 
+                                        and (select extract(year from (select datum_dogadaja from lokacija where id_lokacije = idlokacija))) = '$year' 
+                                        and (select extract(month from (select datum_dogadaja from lokacija where id_lokacije = idlokacija))) = '$month' group by krvna_grupa_zal";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            if ($row['suma'] == null) {
+                                $kol_krvi[$i] = '0';
+                            } else {
+                                $kol_krvi[$i] = $row['suma'];
+                            }
+
+                        }
 
                         //broj odrzanih evenata u tom razdoblju:
                         $sql = "select id_lokacije from moj_event where id_lokacije in (select id_lokacije from lokacija where 
@@ -57,51 +72,72 @@
                         $naj_krvnag = $row['krvna_grupa_don'];
 
                         echo'<br>Statistika za '.$month.'.mjesec '.$year.' .godine:';
-                    } else {
+                    } else {***/
 
-                        $sql = "select id_lokacije from moj_event group by id_lokacije";
+                        /** ZALIHA KRVI*/
+                        $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
+                        $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+                        for ($i=0; $i<8; $i++) {
+                            $sql = "select sum(kolicina_krvi_donacije) as suma from donacija where krvna_grupa_zal='$krv[$i]' 
+                                    group by krvna_grupa_zal";
+                            $result = mysqli_query($conn, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            if ($row['suma'] == null) {
+                                $kol_krvi[$i] = '0';
+                            } else {
+                                $kol_krvi[$i] = $row['suma'];
+                            }
+
+                        }
+
+                        /** TOP 3 GRADA ZA EVENTE I OSTATAK*/
+                        $sql = "select count(id_lokacije) as suma, grad from lokacija group by grad order by suma desc limit 3";
                         $result = mysqli_query($conn, $sql);
-                        $num_events = mysqli_num_rows($result);
 
-                        $sql = "select OIB_donora_don from moj_event where prisutnost = 1";
-                        $result = mysqli_query($conn, $sql);
-                        $num_pdonation = mysqli_num_rows($result);
+                        $i = 0;
+                        while ($row = mysqli_fetch_assoc($result))
+                        {
+                            $lokacija[$i]['grad'] = $row['grad'];
+                            $lokacija[$i]['suma'] = $row['suma'];
+                            $i++;
+                        }
 
-                        $sql = "select OIB_donora_don from moj_event where prisutnost = -1";
-                        $result = mysqli_query($conn, $sql);
-                        $num_odonation = mysqli_num_rows($result);
-
-                        $sql = "select * from moj_event join donor on (OIB_donora = OIB_donora_don) where prisutnost = 1 group by krvna_grupa_don  order by krvna_grupa_don desc limit 1";
+                        $sql = "select count(id_lokacije) as suma from lokacija where 1";
                         $result = mysqli_query($conn, $sql);
                         $row = mysqli_fetch_assoc($result);
-                        $naj_krvnag = $row['krvna_grupa_don'];
-                    echo'Generalna statistika:';
-                }
+
+                        $lokacija[3]['grad'] = 'ostalo';
+                        $lokacija[3]['suma'] = $row['suma'] - $lokacija[0]['suma'] - $lokacija[1]['suma'] - $lokacija[2]['suma'];
+
+                        /**BROJ DONACIJA USPJESNIH/ODBIJENIH/NISU_DOSLI DO SAD*/
+                        $datum = date('Y-m-d');
+
+
+                        $sql = "select OIB_donora_don from moj_event where id_lokacije in (select id_lokacije from lokacija where datum_dogadaja < '$datum') and 
+                                                                                            prisutnost = 1";
+                        $result = mysqli_query($conn, $sql);
+                        $donirali = mysqli_num_rows($result);
+
+                        $sql = "select OIB_donora_don from moj_event where id_lokacije in (select id_lokacije from lokacija where datum_dogadaja < '$datum') and 
+                                                                                                                    prisutnost = -1";
+                        $result = mysqli_query($conn, $sql);
+                        $odbijeni = mysqli_num_rows($result);
+
+                        $sql = "select OIB_donora_don from moj_event where id_lokacije in (select id_lokacije from lokacija where datum_dogadaja < '$datum') and 
+                                                                                                                    prisutnost = 0";
+                        $result = mysqli_query($conn, $sql);
+                        $nisu_dosli = mysqli_num_rows($result);
+
+                    echo'<br><h3>Generalna statistika: ne rade mjesecne statistike jos nez dal da maknemo to il ne</h3>';
+                //}
 
 
 
                 echo'
-                        <table border="1">
-                          <tr>
-                            <th>Održani eventi</th>
-                            <td>'.$num_events.'</td> 
-                          </tr>
-                          <tr>
-                            <th>Prikupljene donacije</th>
-                            <td>'.$num_pdonation.'</td> 
-                          </tr>
-                          <tr>
-                            <th>Odbijene donacije</th>
-                            <td>'.$num_odonation.'</td> 
-                          </tr>
-                          <tr>
-                            <th>Najviše je prikupljeno krvne grupe:</th>
-                            <td>'.$naj_krvnag.'</td> 
-                          </tr>
-                        </table>
             
             <br>
-            <form method="GET" action=""">
+            <form method="GET" action="">
             
                 
                 <select id="mjesec" name="mjesec">
@@ -124,9 +160,100 @@
                     echo '<option value='.$years.'>-'.$years.'.godina-</option>';
                     $years++;
                 }
-                echo '</select> <br>
+                ?>
+            </select> <br>
             <input type="submit" name="prikazi" value="prikazi">
             </form></div><br>
 
-        </html>';
-?>
+    <!-- maznula odavde: https://developers.google.com/chart/interactive/docs/gallery/piechart -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {"packages":["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+            
+          var Apoz = <?php echo $kol_krvi[0]; ?>;
+          var Aneg = <?php echo $kol_krvi[1]?>;
+          var Bpoz = <?php echo $kol_krvi[2]?>;
+          var Bneg = <?php echo $kol_krvi[3]?>;
+          var ABpoz = <?php echo $kol_krvi[4]?>;
+          var ABneg = <?php echo $kol_krvi[5]?>;
+          var Opoz = <?php echo $kol_krvi[6]?>;
+          var Oneg = <?php echo $kol_krvi[7]?>;
+
+        var data = google.visualization.arrayToDataTable([
+          ['Krvna grupa', 'Kolicina'],
+          ["A+", Apoz],
+          ["A-", Aneg],
+          ["B+", Bpoz],
+          ["B-", Bneg],
+          ["AB+", ABpoz],
+          ["AB-", ABneg],
+          ["0+", Opoz],
+          ["0-", Oneg]
+        ]);
+
+        var options = {
+          title: "Zaliha krvi"
+        };
+        var chart = new google.visualization.PieChart(document.getElementById("krv"));
+        chart.draw(data, options);
+
+          var suma0 = <?php echo $lokacija[0]['suma']; ?>;
+          var suma1 = <?php echo $lokacija[1]['suma']; ?>;
+          var suma2 = <?php echo $lokacija[2]['suma']; ?>;
+          var suma3 = <?php echo $lokacija[3]['suma']; ?>;
+
+          var lok0 = "<?php echo $lokacija[0]['grad']; ?>";
+          var lok1 = "<?php echo $lokacija[1]['grad']; ?>";
+          var lok2 = "<?php echo $lokacija[2]['grad']; ?>";
+          var lok3 = "<?php echo $lokacija[3]['grad']; ?>";
+
+      var data = google.visualization.arrayToDataTable([
+          ['Grad', 'Postotak'],
+          [lok0, suma0],
+          [lok1, suma1],
+          [lok2, suma2],
+          [lok3, suma3]
+      ]);
+
+      var options = {
+          title: "Lokacije evenata"
+      };
+      var chart = new google.visualization.PieChart(document.getElementById("lokacije"));
+      chart.draw(data, options);
+
+          var donirali = <?php echo $donirali; ?>;
+          var odbijeni = <?php echo $odbijeni; ?>;
+          var nisudosli = <?php echo $nisu_dosli; ?>;
+
+          var data = google.visualization.arrayToDataTable([
+              ['tekst', 'broj'],
+              ["Donirali", donirali],
+              ["Odbijeni", odbijeni],
+              ["Nisu došli", nisudosli],
+          ]);
+
+          var options = {
+              title: "Prijavljeni donori"
+          };
+          var chart = new google.visualization.PieChart(document.getElementById("donacije"));
+          chart.draw(data, options);
+
+      }
+
+
+    </script>
+
+    <table>
+        <tr>
+            <td><div id="krv" style="width: 400px; height: 225px;"></div></td>
+            <td><div id="lokacije" style="width: 400px; height: 225px;"></div></td>
+            <td><div id="donacije" style="width: 400px; height: 225px;"></div></td>
+        </tr>
+    </table>
+
+
+
+        </html>
