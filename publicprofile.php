@@ -26,6 +26,7 @@
     require_once "dbconnect.php";
     require_once "functions.php";
     session_start();
+    if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
     $OIB_korisnika = $_GET['OIB_korisnika'];
     $OIB_donora =  $_SESSION['mojOIB'];

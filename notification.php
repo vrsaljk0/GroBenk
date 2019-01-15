@@ -8,7 +8,7 @@
 
 require_once "dbconnect.php";
 
-    $OIB = $_POST['OIB'];
+    $OIB = $_SESSION['id'];
     if (!empty($_POST['check_list'])) {
         foreach ($_POST['check_list'] as $id) {
             echo $id;
@@ -17,7 +17,7 @@ require_once "dbconnect.php";
             $result = $run or die ("Failed to query database". mysqli_error($conn));
         }
     }
-    $url = 'donor.php?OIB='.urlencode($OIB);
+    $url = 'donor.php';
     header("Location:$url");
 
 

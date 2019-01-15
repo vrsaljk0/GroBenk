@@ -2,6 +2,8 @@
 
   require_once ("dbconnect.php");
   session_start();
+  if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
+
   $id_bolnice = $_GET['id_bolnice'];
   $OIB = $_SESSION['mojOIB'];
 

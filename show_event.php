@@ -1,6 +1,7 @@
 <?php
-    session_start();
     require_once ("dbconnect.php");
+    session_start();
+    if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
     echo'Dobrodošao admine!
 
     <div>

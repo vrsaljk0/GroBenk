@@ -1,6 +1,7 @@
 <?php
 session_start();
-$OIB = $_SESSION['mojOIB'];
+$OIB = $_SESSION['id'];
+if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 require_once "dbconnect.php";
 //$_SEESION["current"] = $_SERVER['REQUEST_URI'];
 

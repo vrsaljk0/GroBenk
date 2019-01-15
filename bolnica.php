@@ -13,9 +13,13 @@
 <?php
     require_once "dbconnect.php";
     session_start();
+    if (!$_SESSION['bolnica_loggedin']) header("Location:denied_permission.php");
+
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
+
+
     $date = date("Ymd");
-    $idbolnica = $_GET['idbolnice'];
+    $idbolnica = $_SESSION['id'];
 
 
     $info ="select *from bolnica where  idbolnica = '$idbolnica'";

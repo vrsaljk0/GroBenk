@@ -33,6 +33,7 @@ echo '
     require_once "dbconnect.php"; 
     require_once "functions.php";
     session_start();
+    if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
     $_SEESION["current_page"] = $_SERVER['REQUEST_URI'];
 
     echo "
@@ -45,7 +46,7 @@ echo '
     });
     </script>";
 
-    $OIB = $_GET['OIB'];
+    $OIB = $_SESSION['id'];
     $_SESSION["mojOIB"] = $OIB;
 
     $info ="select *from donor where OIB_donora = '$OIB'";

@@ -8,6 +8,8 @@ window.location.replace('donor.php');
 require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
 session_start();
+if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
+
 $OIB = $_SESSION["mojOIB"];
 echo '
 <head>

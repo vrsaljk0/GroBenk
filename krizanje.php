@@ -29,8 +29,12 @@ session_start();
     $row = mysqli_fetch_array($result);
 
     if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
-        $url = 'donor.php?OIB='.urlencode($row['OIB_donora']);
+        $url = 'donor.php';
         $flag=1;
+        $_SESSION['donor_loggedin'] = true;
+        $_SESSION['id'] = $row['OIB_donora'];
+        $_SESSION['admin_loggedin'] = false;
+        $_SESSION['bolnica_loggedin'] = false;
     }
     else{
         $info ="select *from admin where username = '$username' and password = '$password'";
@@ -41,6 +45,9 @@ session_start();
         if ($row['username'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
             $url = "admin.php";
             $flag = 1;
+            $_SESSION['admin_loggedin'] = true;
+            $_SESSION['donor_loggedin'] = false;
+            $_SESSION['bolnica_loggedin'] = false;
         }
         else{
             $info ="select *from bolnica where  idbolnica = '$username' and password = '$password'";
@@ -49,8 +56,12 @@ session_start();
             $row = mysqli_fetch_array($result);
 
             if ($row['idbolnica'] == $username && $row['password'] == $password && ("" !== $username || "" !== $password) ) {
-                $url = 'bolnica.php?idbolnice='.urlencode($row['idbolnica']);
+                $url = 'bolnica.php';
                 $flag = 1;
+                $_SESSION['bolnica_loggedin'] = true;
+                $_SESSION['id'] = $row['idbolnica'];
+                $_SESSION['admin_loggedin'] = false;
+                $_SESSION['donor_loggedin'] = false;
             }
         }
     }

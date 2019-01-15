@@ -1,6 +1,7 @@
 <?php
-    require_once "dbconnect.php";
+    require_once ("dbconnect.php");
     session_start();
+    if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
     $pretraga = $_GET['trazilica'];
     $OIB = $_SESSION['mojOIB'];
     //echo $_SESSION['mojOIB'];
