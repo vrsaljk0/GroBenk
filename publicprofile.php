@@ -26,6 +26,13 @@
     require_once "dbconnect.php";
     require_once "functions.php";
     session_start();
+
+    /** SESSION TIMEOUT */
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+        header("Location:odjava.php");
+    }
+    $_SESSION['LAST_ACTIVITY'] = time();
+
     if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
     $OIB_korisnika = $_GET['OIB_korisnika'];

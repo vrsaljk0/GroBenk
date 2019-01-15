@@ -13,6 +13,13 @@
 <?php
     require_once "dbconnect.php";
     session_start();
+
+    /** SESSION TIMEOUT */
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+        header("Location:odjava.php");
+    }
+    $_SESSION['LAST_ACTIVITY'] = time();
+
     if (!$_SESSION['bolnica_loggedin']) header("Location:denied_permission.php");
 
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];

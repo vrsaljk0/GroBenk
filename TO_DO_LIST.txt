@@ -10,8 +10,6 @@ publicprofile.php
 statistika.php
     -dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
 
-sessions
-    -dodat timeout
 
 bolnica.php
     -popravit statistiku i dodat sve isto ko u admin statistici

@@ -1,7 +1,17 @@
 <?php
 session_start();
 $OIB = $_SESSION['id'];
+
+/** SESSION TIMEOUT */
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    header("Location:odjava.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
 if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
+
+
+
 require_once "dbconnect.php";
 //$_SEESION["current"] = $_SERVER['REQUEST_URI'];
 

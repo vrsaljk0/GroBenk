@@ -23,6 +23,13 @@
 
 require_once ("dbconnect.php");
 session_start();
+
+/** SESSION TIMEOUT */
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    header("Location:odjava.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
 if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
 if(isset($_GET['submit_event'])){

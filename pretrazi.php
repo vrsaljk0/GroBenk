@@ -1,6 +1,13 @@
 <?php
     require_once ("dbconnect.php");
     session_start();
+
+    /** SESSION TIMEOUT */
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+        header("Location:odjava.php");
+    }
+    $_SESSION['LAST_ACTIVITY'] = time();
+
     if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
     $pretraga = $_GET['trazilica'];
     $OIB = $_SESSION['mojOIB'];
