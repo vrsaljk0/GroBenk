@@ -114,6 +114,7 @@
                         }
 
                         /** TOP 3 GRADA ZA EVENTE I OSTATAK*/
+                        $sumaa = 0;
                         $sql = "select count(id_lokacije) as suma, grad from lokacija group by grad order by suma desc limit 3";
                         $result = mysqli_query($conn, $sql);
 
@@ -123,6 +124,7 @@
                             $lokacija[$i]['grad'] = $row['grad'];
                             $lokacija[$i]['suma'] = $row['suma'];
                             $i++;
+                            $sumaa += $row['suma'];
                         }
 
                         $sql = "select count(id_lokacije) as suma from lokacija where 1";
@@ -130,7 +132,7 @@
                         $row = mysqli_fetch_assoc($result);
 
                         $lokacija[3]['grad'] = 'ostalo';
-                        $lokacija[3]['suma'] = $row['suma'] - $lokacija[0]['suma'] - $lokacija[1]['suma'] - $lokacija[2]['suma'];
+                        $lokacija[3]['suma'] = $row['suma'] - $sumaa;
 
                         /**BROJ DONACIJA USPJESNIH/ODBIJENIH/NISU_DOSLI DO SAD*/
                         $datum = date('Y-m-d');
