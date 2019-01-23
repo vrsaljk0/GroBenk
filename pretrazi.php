@@ -57,7 +57,7 @@
                 <div class="pretraga-img">
                     <img src="donori/'.$row['image'].'">
                 </div>
-                <a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a>
+                <a href="publicprofile.php?username='.urlencode($row['username']).'">'.$row['ime_prezime_donora'].'</a>
             </div><br>
         ';
         $donor = 1;
@@ -78,7 +78,7 @@
         echo '
             <div class="pretraga-info">
                 <div class="pretraga-img">
-                    <img src="donori/'.$row['image'].'">
+                   <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="200" height="200"><br><br> 
                 </div>
                <a href="publicbolnica.php?id_bolnice='.urlencode($row['idbolnica']).'">'.$row['naziv_bolnice'].'</a>
             </div><br>
