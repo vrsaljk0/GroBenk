@@ -33,18 +33,32 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
-if(isset($_GET['submit_event'])){
-    $grad = $_GET['grad'];
-    $lokacija = $_GET['lokacija'];
-    $adresa_lokacije = $_GET['adresa'];
-    $postanskibr = $_GET['postbroj'];
-    $datum_dogadaja= $_GET['datum'];
-    $startt = $_GET['startt'];
-    $kraj = $_GET['kraj'];
-    $sql = "INSERT INTO lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj) 
-                VALUES('$grad', '$lokacija', '$adresa_lokacije', '$postanskibr', '$datum_dogadaja', '$startt', '$kraj')";
+if(isset($_POST['submit_event'])){
+    $grad = $_POST['grad'];
+    $lokacija = $_POST['lokacija'];
+    $adresa_lokacije = $_POST['adresa'];
+    $postanskibr = $_POST['postbroj'];
+    $datum_dogadaja= $_POST['datum'];
+    $startt = $_POST['startt'];
+    $kraj = $_POST['kraj'];
+    $image = $_FILES['image']['name'];
+    $target = "lokacije/".basename($image);
+    $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+        $msg = "Podaci uspješno promijenjeni";
+    } else {
+        $msg = "Došlo je do greške";
+    }
+
+    echo $msg;
+
+    $sql = "INSERT INTO lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj, image) 
+                VALUES('$grad', '$lokacija', '$adresa_lokacije', '$postanskibr', '$datum_dogadaja', '$startt', '$kraj', '$image')";
     $run = mysqli_query($conn, $sql);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+
+
     header("Location:eventi.php?keyword=&trazi=Traži");
 }
 if(isset($_POST['delete'])){
@@ -67,11 +81,9 @@ Dobrodošao admine!
                <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
                <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
            </div>
-          
-
-
+           
 <div id="content10" class="toggle" ><br><br>
-            <form action="" method="GET">
+            <form action="" "method="POST" enctype="multipart/form-data">
             <table border = "1">
             <tr>
                 <th>DATUM</th>
@@ -81,7 +93,7 @@ Dobrodošao admine!
                 <th>POŠTANSKI BROJ</th>
                 <th>POČINJE</th>
                 <th>ZAVRŠAVA</th>
-                <th>PRIKAŽI DETALJNIJE</th>
+                <th>SLIKA</th>
             </tr>
                 <td><input type="date" name = "datum" required=""></td>
                 <td><input type="text" name = "grad" required=""></td>
@@ -90,6 +102,8 @@ Dobrodošao admine!
                 <td><input type="number" name = "postbroj" required=""></td>
                 <td><input type="time" name = "startt" required=""></td>
                 <td><input type="time" name = "kraj" required=""></td>
+                <input type="file" name = "image" class="form-control"><br><br>
+                <input type="hidden" name="image_text" value="image_text">
                 <td><input type="submit" name="submit_event" value="Dodaj event"></td>
             </table>
             </form>
@@ -138,7 +152,6 @@ Dobrodošao admine!
             echo'
             
         </table><br>
-            
             Označi sve:
             <input type="checkbox" name="select_all" id = "select_all"><br><br>
             <input type="submit" name="delete" value="Izbrisi evente">
