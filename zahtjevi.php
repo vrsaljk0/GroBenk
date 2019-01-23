@@ -22,7 +22,7 @@ echo '
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="style.css" rel="stylesheet">
-        <link href="donorstyle.css" rel="stylesheet">
+        <link href="adminstyle.css" rel="stylesheet">
     </head>';
 
     echo "
@@ -39,7 +39,7 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Tra%C5%BEi">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="zahtjevi.php">Zahtjevi</a>
@@ -56,7 +56,7 @@ echo '
         </ul>
 </div>
 
-<div class="col-md-8">';
+<div id="d" class="col-md-8">';
     if(isset($_GET['prihvati'])){
         if(!empty($_GET['check_list'])){
             foreach($_GET['check_list'] as $id) {
@@ -148,25 +148,48 @@ echo '
         }
         //header("Location:admin.php");
     }
+    $i = 0;
     echo '
-        <html>
+   <div id="content5" class="toggle" >';
+        $zahtjev_q = "SELECT  *from zahtjev, bolnica where zahtjev.odobreno = '0' and zahtjev.id_bolnica = bolnica.idbolnica ";
+        $run = mysqli_query($conn, $zahtjev_q);
+        $result = $run or die ("Failed to query database". mysqli_error($conn));
 
+        echo '<form action="" method="GET">
+               <table class="table table-fixed">
+                    <thead class="t">
+                        <tr class="trtr">
+                            <th class="thth1">#</th>
+                            <th class="thth">Bolnica</th>
+                            <th class="thth">Količina krvi</th>
+                            <th class="thth">Krvna grupa</th>
+                            <th class="thth">Datum zahtijevanja</th>
+                            <th class="thth2">✔</th>
+                        </tr>
+                    </thead>
+                <tbody>';
 
-           <div id="content5" class="toggle" >Bolnički zahtjevi';
-                $zahtjev_q = "SELECT  *from zahtjev, bolnica where zahtjev.odobreno = '0' and zahtjev.id_bolnica = bolnica.idbolnica ";
-                $run = mysqli_query($conn, $zahtjev_q);
-                $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-                echo '<form action="" method="GET">
-                       <b><p style="color:red;">Novi zahtjevi za krvlju</p></b>
-                       <p>Bolnica&nbsp;&nbsp;Kolicina krvi&nbsp;&nbsp;Krvna grupa&nbsp;&nbsp;Datum zahtjevanja</p>';
-                        while($row = mysqli_fetch_array($result)){
-                            echo '<p>'.$row['naziv_bolnice'].' '.$row['kolicina_krvi_zaht'].'l '.$row['krvna_grupa_zaht'] .$row['datum_zahtjeva'].'<input type="checkbox" name="check_list[]" value='.$row['idzahtjev'].'></p>';
-                        }
-                        echo'<input type="submit" name="prihvati" value="Prihvati">
-                            <input type="submit" name="odbij_zahtjev" value="Odbij">
-                    </form>';
-            echo '</div>
-
+                while($row = mysqli_fetch_array($result)){
+                    $i++;
+                    echo '
+                        <tr class="trtrtr">
+                            <td class="tdtd1">'.$i.'.</td>
+                            <td class="tdtdb">'.$row['naziv_bolnice'].'</td>
+                            <td class="tdtd">'.$row['kolicina_krvi_zaht'].' L</td>
+                            <td class="tdtd">'.$row['krvna_grupa_zaht'].'</td>
+                            <td class="tdtd">'.$row['datum_zahtjeva'].'</td>
+                            <td class="tdtd1"><input type="checkbox" name="check_list[]" value='.$row['idzahtjev'].'></td>
+                        </tr>
+                    ';
+                }
+                echo '
+                </tbody>
+                </table>
+                ';
+                echo'<input type="submit" class="submitsearch" style="margin-left:30%; margin-top:2%;" name="prihvati" value="Prihvati">
+                    <input type="submit" class="submitsearch" name="odbij_zahtjev" value="Odbij">
+            </form>';
+    echo '
+    </div>
 </div>';
 ?>

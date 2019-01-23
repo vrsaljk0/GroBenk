@@ -37,4 +37,8 @@ FRONTEND::
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
 	-pokušat dodat sliku kraj imena
+-ADMIN:
+	-div reload
+	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
+	-prikaz količine krvi kod zahtjeva
 	
