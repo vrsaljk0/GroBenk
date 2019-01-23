@@ -36,8 +36,14 @@
 
     if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
-    $OIB_korisnika = $_GET['OIB_korisnika'];
+    $username = $_GET['username'];
     $OIB_donora =  $_SESSION['mojOIB'];
+
+    $info = "SELECT *from donor WHERE username='$username'";
+    $run = mysqli_query($conn, $info);
+    $result = $run or die("Failed to query database");
+    $row = mysqli_fetch_array($result);
+    $OIB_korisnika = $row['OIB_donora'];
 
     $query = "SELECT * FROM following WHERE  donor_OIB_donora = $OIB_donora and OIB_prijatelja = $OIB_korisnika";
     $run = mysqli_query($conn, $query);
