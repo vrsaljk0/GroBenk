@@ -78,7 +78,7 @@ echo '
 					  <h3>'.$username.'</h3>
 					</div>
 					<div class="dropdown-content_donor">
-						<a href="donor.php?OIB='.$OIB.'"><i class="fas fa-home"></i>Moj profil</a>
+					<a href="donor.php?OIB='.$OIB.'"><i class="fas fa-home"></i>&nbspMoj profil</a>
 					<a href="postavke.php"><i class="fas fa-cogs"></i>&nbspUredi profil</a> 
 					<a href="odjava.php"><i class="fas fa-sign-out-alt"></i>&nbspOdjavi se</a>
 					</div>
