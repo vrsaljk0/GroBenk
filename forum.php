@@ -25,8 +25,11 @@
     $row = mysqli_fetch_array($result);
     $naziv_bolnice = $row['naziv_bolnice'];
 
+
+
     if(isset($_POST['komentar'])){
         $tekst = $_POST['tekst'];
+
         $sql = "INSERT INTO komentari values ('$idbolnica', '$naziv_bolnice', '$idbolnica', '$tekst', '$date')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
