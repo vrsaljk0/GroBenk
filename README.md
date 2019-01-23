@@ -63,5 +63,4 @@ Kontakti itd)
 - može poslati upit na "live chat"
 -blabla
 
-SO MUCH WORK :( :(
 
