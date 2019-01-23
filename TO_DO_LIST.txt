@@ -1,21 +1,40 @@
-
+﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
-23.1.2019 13:02
+19.1.2019
 
 publicprofile.php
-    -profil Klare Vidakovic i Marko Stojanovic il kako god,  cudno izgledaju, ime i zvjezdice su malene nemam pojma zas
+  
+-sad piše username
 
 statistika.php
-    -dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
+    
+-dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
+    
+- sad kad sam ispravila lokaciju statistika ne pokazuje ništa
 
 donor.php
-    - ne znam jesmo ispravile unos lozinki
+    
+- ne znam jesmo ispravile unos lozinki
 
 bolnica.php
-    -popravit statistiku i dodat sve isto ko u admin statistici
+    
+-popravit statistiku i dodat sve isto ko u admin statistici
 
-eventi.php
-    -treba dodat filter za stare/nove evente
+baza
+    
+-dodan stupac image za lokacije i nova mapa za "lokacije" za slike
 
 
+-follow botun kod donora baca error
+- ulogiran kao donor but username = root ??
+
+FRONTEND::
+-DONOR:
+	-probat zakeljit krvnu grupu negdje da šljašti
+	-dodat follower following ako ostane vremena
+	-napravit nešto sa pretraži jer je basic previše
+	-sredit dropdown notifikacija
+	-u evente dodat sličice
+	-pokušat dodat sliku kraj imena
+	

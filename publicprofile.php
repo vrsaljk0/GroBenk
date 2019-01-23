@@ -118,8 +118,8 @@
         <div class="profil-info">
             <div class="profil-title">';
                 if($row['br_donacija'] <= 20) echo '<h1>'.$row['ime_prezime_donora'].''.$star.'</h1>';
-                else if($row['br_donacija'] <= 30) echo '<div class="pp-h1">'.$row['ime_prezime_donora'].''.$star.''.$star.'</div>';
-                else if($row['br_donacija'] <= 50) echo '<div class="pp-h1">'.$row['ime_prezime_donora'].''.$star.''.$star.''.$star.'</div>';
+                else if($row['br_donacija'] <= 30) echo '<h1>'.$row['ime_prezime_donora'].''.$star.''.$star.'</h1>';
+                else if($row['br_donacija'] <= 50) echo '<h1>'.$row['ime_prezime_donora'].''.$star.''.$star.''.$star.'</h1>';
                 echo '
                 <form action="" method="POST">
                     <button style = "width:150px;" class="submitsearch" type="submit" name="poruka" value="Pošalji poruku">Pošalji poruku</button>
@@ -201,7 +201,7 @@
             </div>
           ';
 
-    echo '<bottom><a href="donor.php?OIB='.$OIB_donora.'">Nazad na moj profil</a></bottom>
+    echo '
         </div>
     </div>
     ';
