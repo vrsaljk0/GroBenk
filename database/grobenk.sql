@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jan 23, 2019 at 10:27 AM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Host: 127.0.0.1
+-- Generation Time: Jan 23, 2019 at 11:56 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,11 +28,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
+CREATE TABLE `admin` (
   `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  PRIMARY KEY (`username`)
+  `password` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -48,16 +46,13 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 -- Table structure for table `bolnica`
 --
 
-DROP TABLE IF EXISTS `bolnica`;
-CREATE TABLE IF NOT EXISTS `bolnica` (
+CREATE TABLE `bolnica` (
   `idbolnica` int(10) UNSIGNED NOT NULL,
   `naziv_bolnice` varchar(45) NOT NULL,
   `grad` varchar(45) NOT NULL,
   `adresa_bolnice` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `postanski_broj` int(11) DEFAULT NULL,
-  `password` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`idbolnica`),
-  UNIQUE KEY `idbolnica_UNIQUE` (`idbolnica`)
+  `password` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -77,18 +72,13 @@ INSERT INTO `bolnica` (`idbolnica`, `naziv_bolnice`, `grad`, `adresa_bolnice`, `
 -- Table structure for table `donacija`
 --
 
-DROP TABLE IF EXISTS `donacija`;
-CREATE TABLE IF NOT EXISTS `donacija` (
-  `id_donacija` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `donacija` (
+  `id_donacija` int(11) UNSIGNED NOT NULL,
   `kolicina_krvi_donacije` float UNSIGNED NOT NULL,
   `krvna_grupa_zal` varchar(45) NOT NULL,
   `OIB_donora` double UNSIGNED NOT NULL,
-  `idlokacija` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id_donacija`),
-  UNIQUE KEY `id_donacija_UNIQUE` (`id_donacija`),
-  KEY `fk_donacija_donor_idx` (`OIB_donora`),
-  KEY `fk_donacija_lokacija1_idx` (`idlokacija`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  `idlokacija` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `donacija`
@@ -109,8 +99,7 @@ INSERT INTO `donacija` (`id_donacija`, `kolicina_krvi_donacije`, `krvna_grupa_za
 -- Table structure for table `donor`
 --
 
-DROP TABLE IF EXISTS `donor`;
-CREATE TABLE IF NOT EXISTS `donor` (
+CREATE TABLE `donor` (
   `OIB_donora` double UNSIGNED NOT NULL,
   `krvna_grupa_don` varchar(100) NOT NULL,
   `ime_prezime_donora` varchar(45) NOT NULL,
@@ -124,10 +113,7 @@ CREATE TABLE IF NOT EXISTS `donor` (
   `username` varchar(100) NOT NULL,
   `password` varchar(10) DEFAULT NULL,
   `br_donacija` int(11) DEFAULT NULL,
-  `image` varchar(300) NOT NULL,
-  PRIMARY KEY (`OIB_donora`),
-  UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_donora`),
-  UNIQUE KEY `username` (`username`)
+  `image` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -157,11 +143,9 @@ INSERT INTO `donor` (`OIB_donora`, `krvna_grupa_don`, `ime_prezime_donora`, `dat
 -- Table structure for table `followers`
 --
 
-DROP TABLE IF EXISTS `followers`;
-CREATE TABLE IF NOT EXISTS `followers` (
+CREATE TABLE `followers` (
   `donor_OIB_donora` double UNSIGNED NOT NULL,
-  `OIB_prijatelja` double DEFAULT NULL,
-  KEY `fk_followers_donor1` (`donor_OIB_donora`)
+  `OIB_prijatelja` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -185,11 +169,9 @@ INSERT INTO `followers` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 -- Table structure for table `following`
 --
 
-DROP TABLE IF EXISTS `following`;
-CREATE TABLE IF NOT EXISTS `following` (
+CREATE TABLE `following` (
   `donor_OIB_donora` double UNSIGNED NOT NULL,
-  `OIB_prijatelja` double DEFAULT NULL,
-  KEY `donor_OIB_donora` (`donor_OIB_donora`) USING BTREE
+  `OIB_prijatelja` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -213,14 +195,12 @@ INSERT INTO `following` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 -- Table structure for table `komentari`
 --
 
-DROP TABLE IF EXISTS `komentari`;
-CREATE TABLE IF NOT EXISTS `komentari` (
+CREATE TABLE `komentari` (
   `id_autora` int(11) NOT NULL,
   `autor` varchar(100) NOT NULL,
   `idbolnica_bol` int(10) UNSIGNED NOT NULL,
   `tekst_komentara` varchar(300) DEFAULT NULL,
-  `datum_kom` date NOT NULL,
-  KEY `id_bolnica_fk` (`idbolnica_bol`)
+  `datum_kom` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -251,9 +231,8 @@ INSERT INTO `komentari` (`id_autora`, `autor`, `idbolnica_bol`, `tekst_komentara
 -- Table structure for table `lokacija`
 --
 
-DROP TABLE IF EXISTS `lokacija`;
-CREATE TABLE IF NOT EXISTS `lokacija` (
-  `id_lokacije` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `lokacija` (
+  `id_lokacije` int(11) UNSIGNED NOT NULL,
   `grad` varchar(45) NOT NULL,
   `naziv_lokacije` varchar(45) DEFAULT NULL,
   `adresa_lokacije` varchar(45) DEFAULT NULL,
@@ -261,9 +240,8 @@ CREATE TABLE IF NOT EXISTS `lokacija` (
   `datum_dogadaja` date NOT NULL,
   `start` time NOT NULL,
   `kraj` time NOT NULL,
-  `image` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_lokacije`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `image` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `lokacija`
@@ -295,13 +273,10 @@ INSERT INTO `lokacija` (`id_lokacije`, `grad`, `naziv_lokacije`, `adresa_lokacij
 -- Table structure for table `moj_event`
 --
 
-DROP TABLE IF EXISTS `moj_event`;
-CREATE TABLE IF NOT EXISTS `moj_event` (
+CREATE TABLE `moj_event` (
   `OIB_donora_don` double UNSIGNED NOT NULL,
   `id_lokacije` int(11) UNSIGNED NOT NULL,
-  `prisutnost` tinyint(4) NOT NULL,
-  KEY `OIB_donora_idx` (`OIB_donora_don`),
-  KEY `lokacija_fk` (`id_lokacije`)
+  `prisutnost` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -337,16 +312,13 @@ INSERT INTO `moj_event` (`OIB_donora_don`, `id_lokacije`, `prisutnost`) VALUES
 -- Table structure for table `obavijesti`
 --
 
-DROP TABLE IF EXISTS `obavijesti`;
-CREATE TABLE IF NOT EXISTS `obavijesti` (
-  `id_obavijesti` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `obavijesti` (
+  `id_obavijesti` int(11) NOT NULL,
   `OIBdonora` double NOT NULL,
   `tekst_obav` varchar(100) COLLATE utf8_croatian_ci NOT NULL,
   `datum_obav` date NOT NULL,
-  `procitano` int(11) NOT NULL,
-  PRIMARY KEY (`id_obavijesti`),
-  KEY `OIBdonor_fk` (`OIBdonora`)
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
+  `procitano` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
 
 --
 -- Dumping data for table `obavijesti`
@@ -431,13 +403,10 @@ INSERT INTO `obavijesti` (`id_obavijesti`, `OIBdonora`, `tekst_obav`, `datum_oba
 -- Table structure for table `poruke`
 --
 
-DROP TABLE IF EXISTS `poruke`;
-CREATE TABLE IF NOT EXISTS `poruke` (
+CREATE TABLE `poruke` (
   `OIB_primatelja` double UNSIGNED NOT NULL,
   `OIB_prijatelja` int(11) NOT NULL,
-  `tekst_poruke` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`OIB_primatelja`),
-  UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_primatelja`)
+  `tekst_poruke` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -446,18 +415,14 @@ CREATE TABLE IF NOT EXISTS `poruke` (
 -- Table structure for table `zahtjev`
 --
 
-DROP TABLE IF EXISTS `zahtjev`;
-CREATE TABLE IF NOT EXISTS `zahtjev` (
-  `idzahtjev` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `zahtjev` (
+  `idzahtjev` int(8) UNSIGNED NOT NULL,
   `id_bolnica` int(10) UNSIGNED NOT NULL,
   `kolicina_krvi_zaht` float UNSIGNED NOT NULL,
   `krvna_grupa_zaht` varchar(45) NOT NULL,
   `datum_zahtjeva` date DEFAULT NULL,
-  `odobreno` int(11) NOT NULL,
-  PRIMARY KEY (`idzahtjev`),
-  UNIQUE KEY `idzahtjev_UNIQUE` (`idzahtjev`),
-  KEY `fk_zahtjev_bolnica1_idx` (`id_bolnica`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+  `odobreno` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `zahtjev`
@@ -482,11 +447,9 @@ INSERT INTO `zahtjev` (`idzahtjev`, `id_bolnica`, `kolicina_krvi_zaht`, `krvna_g
 -- Table structure for table `zaliha`
 --
 
-DROP TABLE IF EXISTS `zaliha`;
-CREATE TABLE IF NOT EXISTS `zaliha` (
+CREATE TABLE `zaliha` (
   `krvna_grupa` varchar(10) NOT NULL,
-  `kolicina_grupe` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`krvna_grupa`)
+  `kolicina_grupe` varchar(45) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -502,6 +465,127 @@ INSERT INTO `zaliha` (`krvna_grupa`, `kolicina_grupe`) VALUES
 ('B-', '0'),
 ('0+', '0'),
 ('0-', '0');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `bolnica`
+--
+ALTER TABLE `bolnica`
+  ADD PRIMARY KEY (`idbolnica`),
+  ADD UNIQUE KEY `idbolnica_UNIQUE` (`idbolnica`);
+
+--
+-- Indexes for table `donacija`
+--
+ALTER TABLE `donacija`
+  ADD PRIMARY KEY (`id_donacija`),
+  ADD UNIQUE KEY `id_donacija_UNIQUE` (`id_donacija`),
+  ADD KEY `fk_donacija_donor_idx` (`OIB_donora`),
+  ADD KEY `fk_donacija_lokacija1_idx` (`idlokacija`);
+
+--
+-- Indexes for table `donor`
+--
+ALTER TABLE `donor`
+  ADD PRIMARY KEY (`OIB_donora`),
+  ADD UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_donora`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `followers`
+--
+ALTER TABLE `followers`
+  ADD KEY `fk_followers_donor1` (`donor_OIB_donora`);
+
+--
+-- Indexes for table `following`
+--
+ALTER TABLE `following`
+  ADD KEY `donor_OIB_donora` (`donor_OIB_donora`) USING BTREE;
+
+--
+-- Indexes for table `komentari`
+--
+ALTER TABLE `komentari`
+  ADD KEY `id_bolnica_fk` (`idbolnica_bol`);
+
+--
+-- Indexes for table `lokacija`
+--
+ALTER TABLE `lokacija`
+  ADD PRIMARY KEY (`id_lokacije`);
+
+--
+-- Indexes for table `moj_event`
+--
+ALTER TABLE `moj_event`
+  ADD KEY `OIB_donora_idx` (`OIB_donora_don`),
+  ADD KEY `lokacija_fk` (`id_lokacije`);
+
+--
+-- Indexes for table `obavijesti`
+--
+ALTER TABLE `obavijesti`
+  ADD PRIMARY KEY (`id_obavijesti`),
+  ADD KEY `OIBdonor_fk` (`OIBdonora`);
+
+--
+-- Indexes for table `poruke`
+--
+ALTER TABLE `poruke`
+  ADD PRIMARY KEY (`OIB_primatelja`),
+  ADD UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_primatelja`);
+
+--
+-- Indexes for table `zahtjev`
+--
+ALTER TABLE `zahtjev`
+  ADD PRIMARY KEY (`idzahtjev`),
+  ADD UNIQUE KEY `idzahtjev_UNIQUE` (`idzahtjev`),
+  ADD KEY `fk_zahtjev_bolnica1_idx` (`id_bolnica`);
+
+--
+-- Indexes for table `zaliha`
+--
+ALTER TABLE `zaliha`
+  ADD PRIMARY KEY (`krvna_grupa`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `donacija`
+--
+ALTER TABLE `donacija`
+  MODIFY `id_donacija` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `lokacija`
+--
+ALTER TABLE `lokacija`
+  MODIFY `id_lokacije` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `obavijesti`
+--
+ALTER TABLE `obavijesti`
+  MODIFY `id_obavijesti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
+
+--
+-- AUTO_INCREMENT for table `zahtjev`
+--
+ALTER TABLE `zahtjev`
+  MODIFY `idzahtjev` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
