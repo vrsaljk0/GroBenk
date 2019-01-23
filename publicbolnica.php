@@ -20,6 +20,7 @@
   $result = $run or die ("Failed to query database". mysqli_error($conn));
   $row_donor = mysqli_fetch_assoc($result);
   $ime = $row_donor['ime_prezime_donora'];
+  $username = $row_donor['username'];
   $date = date('Y-m-d');
 
   $query ="select * from bolnica where idbolnica = '$id_bolnice'";
@@ -29,7 +30,7 @@
 
   if(isset($_POST['komentar'])){
     $tekst = $_POST['tekst'];
-    $sql = "INSERT INTO komentari values ('$ime', '$id_bolnice', '$tekst', '$date')";
+    $sql = "INSERT INTO komentari values ('$username', '$ime', '$id_bolnice', '$tekst', '$date')";
     $run = mysqli_query($conn, $sql);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
   }
@@ -57,7 +58,19 @@
   $result = $run or die ("Failed to query database". mysqli_error($conn));
 
   while($row = mysqli_fetch_array($run)){
-    echo '<i>'.$row['autor'].' komentirao je '. $row['datum_kom'].' :<br><br></i>';
+    if(is_numeric ($row['user_autora'])){ //radi se o bolnici
+      echo '<a href="publicbolnica.php?id_bolnice='.urlencode($row['user_autora']).'">'.$row['autor'].'</a>';
+    }
+    else {
+      $username = $row['user_autora'];
+      $don = "SELECT * from donor where username = '$username'";
+      $run2 = mysqli_query($conn, $don);
+      $result = $run2 or die ("Failed to query database". mysqli_error($conn));
+      $row_don = mysqli_fetch_array($run2);
+      //echo '<img src="donori/'.$row_don['image'].'">';
+      echo '<a href="publicprofile.php?username='.urlencode($username).'">'.$row['autor'].'</a>';
+    }
+    echo' komentirao je '.$row['datum_kom'].'<br><br>';
     echo $row['tekst_komentara'].'<br><br>';
   }
   echo'<textarea name="tekst" id="tekst" form="myform"></textarea>
