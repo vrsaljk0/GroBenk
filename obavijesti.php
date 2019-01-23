@@ -114,7 +114,7 @@ if(isset($_GET['obavijest'])) {
         $runn = mysqli_query($conn, $sqll);
         $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
     }
-    header("Location:admin.php");
+    echo 'Obavijest: "'.$tekst.'" uspiješno poslana';
 }
 
 echo '
