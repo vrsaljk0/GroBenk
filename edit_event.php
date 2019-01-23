@@ -55,6 +55,7 @@
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
         }
+        header("Location:eventi.php?keyword=&trazi=Traži");
     }
 
     $sql = "SELECT * from lokacija where id_lokacije = '$id'";
@@ -70,7 +71,7 @@
             POČINJE <input type="time" name = "startt" value="'.$row['start'].'" required=""><br><br>
             ZAVRŠAVA <input type="time" name = "kraj" value="'.$row['kraj'].'" required=""><br><br>
             <input type="hidden" name = "id" value="'.$id.'" required="">
-            <img src="lokacije/'.$row['image'].'" class="avatar img-thumbnail" alt="avatar"><br><br>
+            <img src="lokacije/'.$row['image'].'" class="avatar img-thumbnail" alt="avatar", width="150"><br><br>
             <input type="file" name = "image" class="form-control"><br><br>
             <input type="hidden" name="image_text" value="'.$row['naziv_lokacije'].'">
             <input type="submit" name="uredi_event" value="Spremi promjene"><br><br>
