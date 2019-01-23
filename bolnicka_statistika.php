@@ -195,16 +195,7 @@
 
                     }
 
-                    echo'<table border="1">
-                          <tr>';
-                            $i = 0;
-                            for ($i=0; $i<8; $i++) {
-                                echo $krv[$i];
-                                echo $kol_krvi[$i];
-                                echo'<br>';
-                            }
-                          echo'</tr>
-                        </table>
+                    echo'
                         
                 <form method="post" action="">
                 <br>

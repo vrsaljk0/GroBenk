@@ -1,30 +1,9 @@
 ﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
-19.1.2019
-
-publicprofile.php
-  
--sad piše username
-
-statistika.php
-    
--dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
-    
-- sad kad sam ispravila lokaciju statistika ne pokazuje ništa
-
 donor.php
     
 - ne znam jesmo ispravile unos lozinki
-
-bolnica.php
-    
--popravit statistiku i dodat sve isto ko u admin statistici
-
-baza
-    
--dodan stupac image za lokacije i nova mapa za "lokacije" za slike
-
 
 -follow botun kod donora baca error
 - ulogiran kao donor but username = root ??
