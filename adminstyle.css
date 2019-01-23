@@ -112,6 +112,7 @@
 .admin-content {
   margin-top: 50px;
   margin-left: 30%;
+  margin-right: 30%;
 }
 
 .info {
@@ -422,12 +423,116 @@ input[type=checkbox] {
   padding: 10px;
 }
 
+textarea {
+  margin-top: 10px;
+  margin-left: 50px;
+  width: 500px;
+  height: 150px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: medium 1px 1px medium;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  color: #555555;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
 
+textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    outline-width: 0;
+}
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #9F0A00;
+  background-image: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: inline-block;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+select::-ms-expand {
+  display: none;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 1em;
+  background: #AD2D25;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #9F0A00;
+}
+.select::after {
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
 
+.toggle_obavijesti {
+  width: 70%;
+  margin-left: 47%;
+  margin-top: 20px;
+}
 
+.newbutton {
+  margin-top: 10px;
+  float: right;
+  margin-right: 30%;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #9F0A00;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
 
+.newbutton:hover {background-color: #9F0A00}
 
-
-
-
+.newbutton:active {
+  background-color: #AD2D25;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

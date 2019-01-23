@@ -44,7 +44,7 @@ echo '
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="style.css" rel="stylesheet">
-        <link href="donorstyle.css" rel="stylesheet">
+        <link href="adminstyle.css" rel="stylesheet">
     </head>';
 
     echo "
@@ -61,7 +61,7 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Tra%C5%BEi">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
@@ -118,31 +118,41 @@ if(isset($_GET['obavijest'])) {
 }
 
 echo '
-           <div id="content7" class="toggle">
-               Pošalji obavijest:
-               
-               <form id = "obavijest" method="GET" action="">
+    <div id="content7" class="toggle_obavijesti">     
+        <form id = "obavijest" method="GET" action="">
+            <span class="select">
                <select id="kgrupa" name="kgrupa">
-               <option value="0">-krvna grupa-</option>';
-            $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
-            for ($i = 0; $i < 8; $i++) {
-                echo '<option value='.$krvna_grupa[$i].'>'.$krvna_grupa[$i].'</option>';
-            }
+               <option value="0">Krvna grupa</option>
 
-            echo'</select>';
+               ';
+                $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
+                for ($i = 0; $i < 8; $i++) {
+                    echo '
+                    <option value='.$krvna_grupa[$i].'>'.$krvna_grupa[$i].'</option>';
+                }
+
+            echo'
+                </select>
+            </span>';
 
         $query = "select * from donor group by prebivaliste";
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-        echo'<select name="grad" id ="grad">
-                           <option value="0">-grad-</option>';
+        echo'
+        <span class="select">
+            <select name="grad" id ="grad">
+                <option value="0">Grad</option>';
         while ($row = mysqli_fetch_array($run)) {
-            echo '<option value="'.$row['prebivaliste'].'">'.$row['prebivaliste'].'</option>';
+            echo 
+                '<option value="'.$row['prebivaliste'].'">'.$row['prebivaliste'].'</option>';
         }
-        echo '</select>
-                      <br><textarea name="tekst" id="tekst" form="obavijest"></textarea><br>
-                      <input type="submit" name="obavijest" value="Posalji obavijest">
-                      </form>
-            </div>';
+            echo '
+            </select>
+        </span>
+            <br><textarea placeholder="Napiši obavijest..." name="tekst" id="tekst" form="obavijest"></textarea><br>
+            <input type="submit" class="newbutton" name="obavijest" value="Pošalji">
+        </form>
+    </div>
+</div>';
 ?>
