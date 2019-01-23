@@ -186,8 +186,8 @@ echo '
                 </tbody>
                 </table>
                 ';
-                echo'<input type="submit" class="submitsearch" style="margin-left:30%; margin-top:2%;" name="prihvati" value="Prihvati">
-                    <input type="submit" class="submitsearch" name="odbij_zahtjev" value="Odbij">
+                echo'<input type="submit" class="zbtn" style="margin-left:30%; margin-top:2%;" name="prihvati" value="Prihvati">
+                    <input type="submit" class="zbtn" name="odbij_zahtjev" value="Odbij">
             </form>';
     echo '
     </div>

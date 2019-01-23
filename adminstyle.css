@@ -526,13 +526,35 @@ select::-ms-expand {
   background-color: #9F0A00;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 5px #999;
 }
 
 .newbutton:hover {background-color: #9F0A00}
 
 .newbutton:active {
   background-color: #AD2D25;
-  box-shadow: 0 5px #666;
+  box-shadow: 0 0px #666;
   transform: translateY(4px);
+}
+
+.zbtn {
+  height: 40px;
+  background-color: #9F0A00; 
+  border: none;
+  color: white;
+  padding: 0px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+
+.zbtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #AD2D25;
 }
