@@ -83,7 +83,7 @@ Dobrodošao admine!
            </div>
            
 <div id="content10" class="toggle" ><br><br>
-            <form action="" "method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
             <table border = "1">
             <tr>
                 <th>DATUM</th>
@@ -102,7 +102,7 @@ Dobrodošao admine!
                 <td><input type="number" name = "postbroj" required=""></td>
                 <td><input type="time" name = "startt" required=""></td>
                 <td><input type="time" name = "kraj" required=""></td>
-                <input type="file" name = "image" class="form-control"><br><br>
+                <td><input type="file" name = "image" class="form-control"></td><br><br>
                 <input type="hidden" name="image_text" value="image_text">
                 <td><input type="submit" name="submit_event" value="Dodaj event"></td>
             </table>
@@ -122,14 +122,13 @@ Dobrodošao admine!
             <th>POŠTANSKI BROJ</th>
             <th>POČINJE</th>
             <th>ZAVRŠAVA</th>
-            <th>PRIKAŽI DETALJNIJE</th>
-            <th>UREDI</th>
+            <th>PODACI O EVENTU</th>
             <th>IZBRIŠI</th>
         </tr>';
         if(isset($_GET['trazi'])) {
         $datum = date('Y-m-d');
         $pretraga = $_GET['keyword'];
-        $query = "SELECT *from lokacija WHERE (grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')";
+        $query = "SELECT *from lokacija WHERE (grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%') order by id_lokacije desc";
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
 
@@ -138,13 +137,13 @@ Dobrodošao admine!
             while ($row = mysqli_fetch_array($result)) {
                 if ($row['datum_dogadaja'] > $datum) {
                 echo '
-                <tr>
-                    <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '<td><a href = "show_event.php?idEvent='. $row["id_lokacije"].'">Prikaži detaljnije</a></td><td><a href = "edit_event.php?idEvent='. $row["id_lokacije"].'">Uredi</a></td><td><input type="checkbox" class="case" name="check_list[]" value='.$row['id_lokacije'].' ></a></td>
+                <tr bgcolor="#e6ffe6">
+                    <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '<td><a href = "edit_event.php?idEvent='. $row["id_lokacije"].'">Uredi</a></td><td><input type="checkbox" class="case" name="check_list[]" value='.$row['id_lokacije'].' ></a></td>
                 </tr>';
                 } else {
                     echo '
                     <tr>
-                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '<td><a href = "show_event.php?idEvent='. $row["id_lokacije"].'">Prikaži detaljnije</a></td><td><a href = "edit_event.php?idEvent='. $row["id_lokacije"].'">Uredi</a></td><td></td>
+                        <td>' . $row['datum_dogadaja'] . '</td><td> ' . $row['grad'] . '</td><td>' . $row['naziv_lokacije'] . '</td><td>' . $row['adresa_lokacije'] . '</td><td>' . $row['postanski_broj'] . '</td><td>' . $row['start'] . '</td><td>' . $row['kraj'] . '<td><a href = "show_event.php?idEvent='. $row["id_lokacije"].'">Prikaži detaljnije</a></td><td></td>
                     </tr>';
                 }
             }
