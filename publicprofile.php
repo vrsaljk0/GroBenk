@@ -95,7 +95,7 @@
             $query = "DELETE FROM followers WHERE  donor_OIB_donora = $OIB_korisnika and OIB_prijatelja = $OIB_donora";
             $run = mysqli_query($conn, $query);
         }
-        $url = 'publicprofile.php?OIB_korisnika='.urlencode($OIB_korisnika);
+        $url = 'publicprofile.php?username='.urlencode($username);
         header("Location:$url");
     }
 
