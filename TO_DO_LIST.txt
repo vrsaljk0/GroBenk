@@ -15,6 +15,7 @@ donor.php
 bolnica.php
     -popravit statistiku i dodat sve isto ko u admin statistici
 
-baza
+eventi.php
+    -treba dodat filter za stare/nove evente
 
 
