@@ -1,4 +1,5 @@
 <?php
+require_once "dbconnect.php";
 session_start();
 $OIB = $_SESSION['id'];
 
@@ -10,7 +11,11 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
-
+$info = "SELECT username from donor WHERE OIB_donora = '$OIB'";
+$run = mysqli_query($conn, $info);
+$result = $run or die ("Failed to query database". mysqli_error($conn));
+$row = mysqli_fetch_array($result);
+$username = $row['username'];
 
 require_once "dbconnect.php";
 mysqli_set_charset($conn,"utf8");
@@ -78,7 +83,7 @@ echo '
 					  <h3>'.$username.'</h3>
 					</div>
 					<div class="dropdown-content_donor">
-					<a href="donor.php?OIB='.$OIB.'"><i class="fas fa-home"></i>&nbspMoj profil</a>
+					<a href="donor.php"><i class="fas fa-home"></i>&nbspMoj profil</a>
 					<a href="postavke.php"><i class="fas fa-cogs"></i>&nbspUredi profil</a> 
 					<a href="odjava.php"><i class="fas fa-sign-out-alt"></i>&nbspOdjavi se</a>
 					</div>
