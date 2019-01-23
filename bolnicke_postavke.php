@@ -6,7 +6,7 @@
 
 <script>
     function Ulogirajme(){
-        window.location.replace('boln_login.php');
+        window.location.replace('index.html');
     }
 </script>
 

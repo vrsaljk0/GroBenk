@@ -1,26 +1,15 @@
-﻿<script>
+﻿﻿<script>
 function OdjaviMe(){
 window.location.replace('donor.php');
 }
 </script>
-<?php
 
+<?php
 
 require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
-mysqli_set_charset($conn,"utf8");
 session_start();
-
-/** SESSION TIMEOUT */
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-    header("Location:odjava.php");
-}
-$_SESSION['LAST_ACTIVITY'] = time();
-
-if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
-
 $OIB = $_SESSION["mojOIB"];
-
 echo '
 <head>
     <meta charset="utf-8">
@@ -55,12 +44,14 @@ if(isset($_POST['submit'])){
     $prebivaliste = $_POST['prebivaliste'];
     $postanskibr = $_POST['postanski'];
     $adresa = $_POST['adresa'];
-    //$spol = $_POST['spol'];
-    $lozinka = $_POST['password'];
+    $trenutna = $_POST['trenutna'];
+    $nova1 = $_POST['nova1'];
+    $nova2 = $_POST['nova2'];
+    $password = $_POST['password'];
     $image = $_FILES['image']['name'];
     $target = "donori/".basename($image);
     $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
-
+    $flag = 0;
     if($filename !="") {
         $query = "UPDATE donor SET image = '$image'where OIB_donora='$OIB_d'";
         $run = mysqli_query($conn, $query);
@@ -80,7 +71,15 @@ if(isset($_POST['submit'])){
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
     }
-    $url = 'donor.php';
+
+    if ($trenutna === $password and $nova1 === $nova2 and !is_null($nova1)) {
+        $update_query = "update donor set password = '$nova1' where OIB_donora = '$OIB_d'";
+        $update_run = mysqli_query($conn, $update_query);
+        $flag = 1;
+
+    }
+    if($flag)$url = 'index.html';
+    else $url = 'donor.php';
     header("Location: $url");
 }
 
@@ -170,13 +169,20 @@ echo '
                 <div class="form-group">
                   <label class="col-md-3 control-label">Lozinka:</label>
                   <div class="col-md-8">
-                    <input class="form-control" type="password" name="password" value='.$row['password'].'>
+                    <input class="form-control" type="password" name="trenutna" value='.$row['password'].'>
+                     <input type="hidden" name="password" value='.$row['password'].'>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-md-3 control-label">Potvrdi lozinku:</label>
+                  <label class="col-md-3 control-label">Nova lozinka:</label>
                   <div class="col-md-8">
-                    <input class="form-control" type="password" name="password" value='.$row['password'].'>
+                    <input class="form-control" type="password" name="nova1">
+                  </div>
+                </div>
+               <div class="form-group">
+                  <label class="col-md-3 control-label">Potvrdite novu lozinku:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" name="nova2">
                   </div>
                 </div>
                 <div class="form-group">
@@ -184,7 +190,7 @@ echo '
                   <div class="col-md-8">
                     <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="submit" value="Promijeni podatke">
                     <span></span>
-                    <bottom><br><br><a href="donor.php">Nazad na moj profil</a></bottom>
+                    <bottom><br><br><a href="donor.php?OIB='.$OIB.'">Nazad na moj profil</a></bottom>
                   </div>
                 </div>
             </div>
@@ -194,3 +200,5 @@ echo '
 <hr>
 ';
 ?>
+
+
