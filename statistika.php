@@ -28,7 +28,7 @@
                   if(isset($_GET['prikazi'])){
                     $datum = date('Y-m-d');
                     $year = $_GET['godina'];
-
+                    if ($year == 0) goto jump;
                         /** ZALIHA KRVI*/
                         $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
                         $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -120,7 +120,7 @@
                         echo'<br><h3>Statistika za '.$year.' .godinu:</h3>';
 
                     } else {
-
+                        jump:
                         /** ZALIHA KRVI*/
                         $nemaKrvi = 0;
                         $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
