@@ -60,7 +60,7 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link active" href="eventi.php">Eventi</a>
+                <a class="nav-link active" href="eventi.php?keyword=&trazi=Traži">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
@@ -88,6 +88,7 @@ echo '
             }
         }
     }
+
     echo '
     <div id="content10" class="toggle" ><br><br>
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -116,9 +117,16 @@ echo '
                 </form>
         <form action="" method="GET">
             <input type="text" name = "keyword" placeholder="Pretraži evente">
-            <input type="submit" name="trazi" value="Traži">
+            Nadolazeći eventi <input type="radio" name="buduci" value="buduci">
+            Prošli eventi <input type="radio" name="prosli" value="prosli"">
+            <i class="fas fa-arrow-up"></i> 
+            <i class="fas fa-arrow-down"></i>
+            <input type="submit" name="trazi" value="Pretraži">
         </form>
-        
+        <form>
+
+        </form>
+ 
         <form action="" method="POST">
         <table border="1">
             <tr>
@@ -133,14 +141,28 @@ echo '
                 <th>IZBRIŠI</th>
             </tr>';
             if(isset($_GET['trazi'])) {
-            $datum = date('Y-m-d');
+            $radio = 0;
             $pretraga = $_GET['keyword'];
-            $query = "SELECT *from lokacija WHERE (grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%') order by id_lokacije desc";
+            $datum = date('Y-m-d');
+            if(isset($_GET['buduci']) && $pretraga ==''){
+                $query = "SELECT *from lokacija WHERE datum_dogadaja > '$datum' order by id_lokacije desc";
+            }
+           else if(isset($_GET['buduci']) && $pretraga !=''){
+               $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja > '$datum') order by id_lokacije desc";
+           }
+            else if(isset($_GET['prosli']) && $pretraga !=''){
+                $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja < '$datum') order by id_lokacije desc";
+            }
+            else if(isset($_GET['prosli']) && $pretraga ==''){
+                $query = "SELECT *from lokacija WHERE datum_dogadaja < '$datum' order by id_lokacije desc";
+            }
+            else{
+                $query = "SELECT *from lokacija WHERE (grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%') order by id_lokacije desc";
+            }
+
             $run = mysqli_query($conn, $query);
             $result = $run or die ("Failed to query database" . mysqli_error($conn));
-
             echo '<div>';
-
                 while ($row = mysqli_fetch_array($result)) {
                     if ($row['datum_dogadaja'] > $datum) {
                     echo '
@@ -154,7 +176,7 @@ echo '
                         </tr>';
                     }
                 }
-            }
+             }
                 echo'
                 
             </table><br>
