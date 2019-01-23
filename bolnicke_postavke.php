@@ -4,11 +4,6 @@
     }
 </script>
 
-<script>
-    function Ulogirajme(){
-        window.location.replace('index.html');
-    }
-</script>
 
 <?php
     require_once "dbconnect.php";
@@ -40,23 +35,24 @@
         $grad = $_POST['grad'];
         $adresa_bolnice = $_POST['adresa_bolnice'];
         $postanski_broj = $_POST['postanski_broj'];
-
+        $password = $_POST['password'];
+        $flag = 0;
         $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
                             postanski_broj = '$postanski_broj' where idbolnica = '$idbolnica'";
         $update_run = mysqli_query($conn, $update_query);
-    }
-    if (isset($_POST['promijeni_lozinku'])){
+
         $trenutna = $_POST['trenutna'];
         $nova1 = $_POST['nova1'];
         $nova2 = $_POST['nova2'];
-        if ($trenutna === $password and $nova1 === $nova2 and !is_null($nova1)) {
+        if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '') {
             $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnica'";
             $update_run = mysqli_query($conn, $update_query);
-            echo '<script type="text/javascript">',
-            'Ulogirajme();',
-            '</script>'
-            ;
+            $flag = 1;
         }
+
+        if($flag == 1)$url = 'index.html';
+        else $url = 'bolnicke_postavke.php';
+        header("Location: $url");
     }
 
 
@@ -91,14 +87,13 @@
                         Grad: <input type="text" name="grad" value="' . $row['grad'] . '"><br><br>
                         Adresa: <input type="text" name="adresa_bolnice" value="' . $row['adresa_bolnice'] . '"><br><br>
                         Poštanski broj: <input type="number" name="postanski_broj" value="' . $row['postanski_broj'] . '"><br><br><br>
-                        <input type="submit" name="updejtaj" value="Spremi promjene"><br></br>
-                    </form>
+                       
                     <b>Promjeni lozinku:</b><br>
-                    <form action="" method="POST">
-                        Trenutna lozinka: <input type="password" name="trenutna" "><br><br> 
+                        Trenutna lozinka: <input type="password" name="trenutna" value="' . $row['password'] . '"><br><br> 
                         Nova lozinka:<input type="password" name="nova1" "><br><br> 
                         Ponovni upis nove lozinke:<input type="password" name="nova2" "><br><br> 
-                        <input type="submit" name="promijeni_lozinku" value="Promijeni lozinku">
+                        <input type="hidden" name="password" value="' . $row['password'] . '"><br><br> 
+                         <input type="submit" name="updejtaj" value="Spremi promjene"><br></br>
                     </form>';
 
                   echo'</div>     
