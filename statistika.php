@@ -1,38 +1,92 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<SCRIPT language="javascript">
+    $(function(){
+
+        $("#select_all").click(function () {
+            $('.case').prop('checked', this.checked);
+        });
+
+        $(".case").click(function(){
+
+            if($(".case").length == $(".case:checked").length) {
+                $("#select_all").prop("checked", "checked");
+            } else {
+                $("#select_all").removeProp("checked");
+            }
+
+        });
+    });
+</SCRIPT>
+
 <?php
-    require_once ("dbconnect.php");
-    session_start();
-    mysqli_set_charset($conn,"utf8");
 
-    /** SESSION TIMEOUT */
-    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-        header("Location:odjava.php");
-    }
-    $_SESSION['LAST_ACTIVITY'] = time();
+require_once ("dbconnect.php");
+session_start();
+mysqli_set_charset($conn,"utf8");
 
-    if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    header("Location:odjava.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 
-    echo"Dobrodošao admine!";
+if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
-    echo '
-        <html>
-            <div>
-               <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
-               <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
-               <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
-               <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-               <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
-               <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
-           </div>';
+echo '
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BloodBank</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link href="style.css" rel="stylesheet">
+        <link href="donorstyle.css" rel="stylesheet">
+    </head>';
 
+    echo "
+    <div id='nav-placeholder' onload>
+    </div> 
 
-                  if(isset($_GET['prikazi'])){
+    <script>
+    $(function(){
+      $('#nav-placeholder').load('adminnavbar.php');
+    });
+    </script>";
+
+echo '
+<div class="admin-content">
+        <ul class="nav nav-tabs" id="myTab" >
+            <li class="nav-item">
+                <a class="nav-link" href="eventi.php">Eventi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="donacije.php">Donacije</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="obavijesti.php">Obavijesti</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="statistika.php">Statistika</a>
+            </li>
+        </ul>
+</div>
+
+<div class="col-md-8">';
+if(isset($_GET['prikazi'])){
                     $datum = date('Y-m-d');
                     $year = $_GET['godina'];
-
+                    if ($year == 0) goto jump;
                         /** ZALIHA KRVI*/
                         $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
                         $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
+                        $nemaKrvi = 0;
                         for ($i=0; $i<8; $i++) {
                             $sql = "select sum(kolicina_krvi_donacije) as suma from donacija where krvna_grupa_zal='$krv[$i]' 
                                         and (select extract(year from (select datum_dogadaja from lokacija where id_lokacije = idlokacija and datum_dogadaja < '$datum'))) = '$year' 
@@ -43,17 +97,35 @@
                                 $kol_krvi[$i] = '0';
                             } else {
                                 $kol_krvi[$i] = $row['suma'];
+                                $nemaKrvi = 1;
                             }
-
                         }
+                      if ($nemaKrvi == 0) {
+                          $nemaKrvi = 1;
+                      } else {
+                          $nemaKrvi = 0;
+                      }
 
                         /** TOP 3 GRADA ZA EVENTE I OSTATAK*/
+
+                        /** HARDCODE SRY*/
+                      $lokacija[0]['grad'] = " ";
+                      $lokacija[1]['grad'] = " ";
+                      $lokacija[2]['grad'] = " ";
+                      $lokacija[3]['grad'] = " ";
+                      $lokacija[0]['suma'] = 0;
+                      $lokacija[1]['suma'] = 0;
+                      $lokacija[2]['suma'] = 0;
+                      $lokacija[3]['suma'] = 0;
+
+                        $nemaEvenata = 0;
                         $sql = "select count(id_lokacije) as suma, grad from lokacija where extract(year from datum_dogadaja) = '$year'  
                                 and datum_dogadaja < '$datum' group by grad order by suma desc limit 3";
                         $result = mysqli_query($conn, $sql);
 
                         $i = 0;
                         $suma = 0;
+                        $nemaEvenata = mysqli_num_rows($result);
 
                         while ($row = mysqli_fetch_assoc($result))
                         {
@@ -69,6 +141,7 @@
                         
                         $lokacija[3]['grad'] = 'ostalo';
                         $lokacija[3]['suma'] = $row['suma'] - $suma;
+
 
                         /**BROJ DONACIJA USPJESNIH/ODBIJENIH/NISU_DOSLI DO SAD*/
                         $datum = date('Y-m-d');
@@ -92,11 +165,18 @@
                         $result = mysqli_query($conn, $sql);
                         $nisu_dosli = mysqli_num_rows($result);
 
+                          if (($nisu_dosli + $odbijeni + $donirali) == 0) {
+                              $nemaDonora = 1;
+                          } else {
+                              $nemaDonora = 0;
+                          }
+
                         echo'<br><h3>Statistika za '.$year.' .godinu:</h3>';
 
                     } else {
-
+                        jump:
                         /** ZALIHA KRVI*/
+                        $nemaKrvi = 0;
                         $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
                         $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
@@ -109,16 +189,35 @@
                                 $kol_krvi[$i] = '0';
                             } else {
                                 $kol_krvi[$i] = $row['suma'];
+                                $nemaKrvi = 1;
                             }
-
                         }
+                      if ($nemaKrvi == 0) {
+                          $nemaKrvi = 1;
+                      } else {
+                          $nemaKrvi = 0;
+                      }
 
                         /** TOP 3 GRADA ZA EVENTE I OSTATAK*/
+                      /** HARDCODE SRY*/
+                      $lokacija[0]['grad'] = " ";
+                      $lokacija[1]['grad'] = " ";
+                      $lokacija[2]['grad'] = " ";
+                      $lokacija[3]['grad'] = " ";
+                      $lokacija[0]['suma'] = 0;
+                      $lokacija[1]['suma'] = 0;
+                      $lokacija[2]['suma'] = 0;
+                      $lokacija[3]['suma'] = 0;
+
                         $sumaa = 0;
+                        $nemaEvenata = 0;
                         $sql = "select count(id_lokacije) as suma, grad from lokacija group by grad order by suma desc limit 3";
                         $result = mysqli_query($conn, $sql);
 
                         $i = 0;
+
+                      $nemaEvenata = mysqli_num_rows($result);
+
                         while ($row = mysqli_fetch_assoc($result))
                         {
                             $lokacija[$i]['grad'] = $row['grad'];
@@ -134,6 +233,7 @@
                         $lokacija[3]['grad'] = 'ostalo';
                         $lokacija[3]['suma'] = $row['suma'] - $sumaa;
 
+
                         /**BROJ DONACIJA USPJESNIH/ODBIJENIH/NISU_DOSLI DO SAD*/
                         $datum = date('Y-m-d');
 
@@ -142,6 +242,7 @@
                                                                                             prisutnost = 1";
                         $result = mysqli_query($conn, $sql);
                         $donirali = mysqli_num_rows($result);
+
 
                         $sql = "select OIB_donora_don from moj_event where id_lokacije in (select id_lokacije from lokacija where datum_dogadaja < '$datum') and 
                                                                                                                     prisutnost = -1";
@@ -152,6 +253,12 @@
                                                                                                                     prisutnost = 0";
                         $result = mysqli_query($conn, $sql);
                         $nisu_dosli = mysqli_num_rows($result);
+
+                        if (($nisu_dosli + $odbijeni + $donirali) == 0) {
+                            $nemaDonora = 1;
+                        } else {
+                            $nemaDonora = 0;
+                        }
 
                     echo'<br><h3>Generalna statistika</h3>';
                 }
@@ -184,14 +291,15 @@
 
       function drawChart() {
             
-          var Apoz = <?php echo $kol_krvi[0]; ?>;
+          var Apoz = <?php echo $kol_krvi[0]?>;;
           var Aneg = <?php echo $kol_krvi[1]?>;
-          var Bpoz = <?php echo $kol_krvi[2]?>;
+          var Bpoz = <?php echo $kol_krvi[2]?>;;
           var Bneg = <?php echo $kol_krvi[3]?>;
           var ABpoz = <?php echo $kol_krvi[4]?>;
-          var ABneg = <?php echo $kol_krvi[5]?>;
+          var ABneg = <?php echo $kol_krvi[5]?>;;
           var Opoz = <?php echo $kol_krvi[6]?>;
           var Oneg = <?php echo $kol_krvi[7]?>;
+          var nemaKr = <?php echo $nemaKrvi?>;
 
         var data = google.visualization.arrayToDataTable([
           ['Krvna grupa', 'Kolicina'],
@@ -202,7 +310,8 @@
           ["AB+", ABpoz],
           ["AB-", ABneg],
           ["0+", Opoz],
-          ["0-", Oneg]
+          ["0-", Oneg],
+          ["Nema podataka", nemaKr]
         ]);
 
         var options = {
@@ -211,39 +320,61 @@
         var chart = new google.visualization.PieChart(document.getElementById("krv"));
         chart.draw(data, options);
 
-          var suma0 = <?php echo $lokacija[0]['suma']; ?>;
-          var suma1 = <?php echo $lokacija[1]['suma']; ?>;
-          var suma2 = <?php echo $lokacija[2]['suma']; ?>;
-          var suma3 = <?php echo $lokacija[3]['suma']; ?>;
+          var nemaEv = <?php echo $nemaEvenata?>;
 
-          var lok0 = "<?php echo $lokacija[0]['grad']; ?>";
-          var lok1 = "<?php echo $lokacija[1]['grad']; ?>";
-          var lok2 = "<?php echo $lokacija[2]['grad']; ?>";
-          var lok3 = "<?php echo $lokacija[3]['grad']; ?>";
+          if (nemaEv == 0) {
+              var data = google.visualization.arrayToDataTable([
+                  ['Grad', 'Postotak'],
+                  ["Nema podataka", 1]
+              ]);
 
-      var data = google.visualization.arrayToDataTable([
-          ['Grad', 'Postotak'],
-          [lok0, suma0],
-          [lok1, suma1],
-          [lok2, suma2],
-          [lok3, suma3]
-      ]);
+              var options = {
+                  title: "Lokacije evenata"
+              };
 
-      var options = {
-          title: "Lokacije evenata"
-      };
-      var chart = new google.visualization.PieChart(document.getElementById("lokacije"));
-      chart.draw(data, options);
+              var chart = new google.visualization.PieChart(document.getElementById("lokacije"));
+              chart.draw(data, options);
+
+          }
+          if (nemaEv != 0){
+              var suma0 = 0 + <?php echo $lokacija[0]['suma']; ?>;
+              var suma1 = 0 + <?php echo $lokacija[1]['suma']; ?>;
+              var suma2 = 0 + <?php echo $lokacija[2]['suma']; ?>;
+              var suma3 = 0 + <?php echo $lokacija[3]['suma']; ?>;
+
+              var lok0a = "<?php echo $lokacija[0]['grad']; ?>";
+              var lok1a = "<?php echo $lokacija[1]['grad']; ?>";
+              var lok2a = "<?php echo $lokacija[2]['grad']; ?>";
+              var lok3a = "<?php echo $lokacija[3]['grad']; ?>";
+
+              var data = google.visualization.arrayToDataTable([
+                  ['Grad', 'Postotak'],
+                  [lok0a, suma0],
+                  [lok1a, suma1],
+                  [lok2a, suma2],
+                  [lok3a, suma3],
+                  ["Nema podataka", 0]
+              ]);
+
+              var options = {
+                  title: "Lokacije evenata"
+              };
+
+              var chart = new google.visualization.PieChart(document.getElementById("lokacije"));
+              chart.draw(data, options);
+          }
 
           var donirali = <?php echo $donirali; ?>;
           var odbijeni = <?php echo $odbijeni; ?>;
           var nisudosli = <?php echo $nisu_dosli; ?>;
+          var nemaDo = <?php echo $nemaDonora ?>;
 
           var data = google.visualization.arrayToDataTable([
               ['tekst', 'broj'],
               ["Donirali", donirali],
               ["Odbijeni", odbijeni],
               ["Nisu došli", nisudosli],
+              ["Nema podataka", nemaDo]
           ]);
 
           var options = {
@@ -264,7 +395,5 @@
             <td><div id="donacije" style="width: 400px; height: 225px;"></div></td>
         </tr>
     </table>
-
-
-
-        </html>
+</div>
+</html>
