@@ -107,6 +107,15 @@
 
 .profil-content {
 	margin-top: 50px;
+  
+  /*margin-left: 30%;
+  margin-right: 30%;*/
+}
+
+.admin-content {
+  margin-top: 50px;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .info {
@@ -114,9 +123,10 @@
 }
 
 .nav-link {
+  margin-left: 20px;
 	font-weight:600;
-    border: none;
-    color: #DC0E0E;
+  border: none;
+  color: #DC0E0E;
 }
 
 .col-md-6 {
