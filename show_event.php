@@ -27,7 +27,9 @@
     $run = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($run);
 
-    echo 'Lokacija: '.$row['naziv_lokacije'].'<br>Datum: '.$row['datum_dogadaja'].'<br>Donori:<br><br>';
+    echo'
+    <img src="lokacije/'.$row['image'].'", width="250"><br>
+    Lokacija: '.$row['naziv_lokacije'].'<br>Datum: '.$row['datum_dogadaja'].'<br>Donori:<br><br>';
 
     $sql = "SELECT ime_prezime_donora from donor where OIB_donora in (select OIB_donora_don from
                                        moj_event where id_lokacije='$id' and prisutnost='1')";
