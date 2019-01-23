@@ -67,7 +67,7 @@
                     $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
                     $kol_krvip = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-                    /***KOLICINE PRIMLJENIH KRVNIH GRUPA***/
+                    /***KOLICINE ZATRAŽENIH KRVNIH GRUPA***/
                     for ($i=0; $i<8; $i++) {
                         $sql = "select sum(kolicina_krvi_zaht) as suma from zahtjev where krvna_grupa_zaht='$krv[$i]' and id_bolnica='$idbolnica' and  
                                 (select year (datum_zahtjeva)) = '$year' and datum_zahtjeva < '$datum' group by krvna_grupa_zaht";
@@ -134,7 +134,8 @@
                         $krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
                         $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-                        /***KOLICINE PRIMLJENIH KRVNIH GRUPA***/
+                        /***KOLICINE ZATRAŽENIH KRVNIH GRUPA***/
+                        $kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
                         for ($i=0; $i<8; $i++) {
                             $sql = "select sum(kolicina_krvi_zaht) as suma from zahtjev where krvna_grupa_zaht='$krv[$i]' and id_bolnica='$idbolnica' and  
                                 datum_zahtjeva < '$datum' group by krvna_grupa_zaht";
@@ -145,13 +146,14 @@
                                 $kol_krvi[$i] = '0';
                             } else {
                                 $kol_krvi[$i] = $row['suma'];
-                                $kol_krvi[$i] = number_format((float)$kol_krvip[$i], 2, '.', '');
+                                $kol_krvi[$i] = number_format((float)$kol_krvi[$i], 2, '.', '');
                                 $nemaKrvi = 1;
                             }
                         }
 
                         /***UKUPNO PRIMLJENO KRVI***/
                         $nemaPrim = 0;
+                        $kol_krviP = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
                         for ($i=0; $i<8; $i++) {
                             $sql = "select sum(kolicina_krvi_zaht) as suma from zahtjev where krvna_grupa_zaht='$krv[$i]' and id_bolnica='$idbolnica' and  
                                 datum_zahtjeva < '$datum' and odobreno = '1' group by krvna_grupa_zaht";
