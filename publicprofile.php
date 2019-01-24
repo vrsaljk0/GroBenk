@@ -111,7 +111,13 @@
     $row = mysqli_fetch_array($result);
    
     $star = '<i style="color:goldenrod;" class="fas fa-star"></i>';
-
+    if(isset($_POST['posalji_poruku'])){
+        $datum = date('Y-m-d');
+        $poruka = $_POST['poruka'];
+        $sql = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values('$OIB_korisnika', '$OIB_donora', '$poruka', '$datum', '0')";
+        $run = mysqli_query($conn, $sql);
+        $result = $run or die ("Failed to query database". mysqli_error($conn));
+    }
     echo '
     <div class="profil-img">
         <img src="donori/'.$row['image'].'">
@@ -122,9 +128,12 @@
                 else if($row['br_donacija'] <= 50) echo '<h1>'.$row['ime_prezime_donora'].''.$star.''.$star.''.$star.'</h1>';
                 echo '
                 <form action="" method="POST">
-                    <button style = "width:150px;" class="submitsearch" type="submit" name="poruka" value="Pošalji poruku">Pošalji poruku</button>
-                    <button class="submitsearch" type="submit" name="follow" id="button" onclick="ChangeButton()">'.$str.'</button>
-                </form>
+                    <button class="submitsearch" type="submit" name="follow" id="button" onclick="ChangeButton()">'.$str.'</button>';
+                    if($str == 'Unfollow'){
+                        echo'<input type="text" name="poruka" placeholder="Pošalji kratku poruku"> 
+                        <input type="submit" name="posalji_poruku" value="Posalji">';
+                    }
+                echo'</form>
             </div>
 
             <div class="row">

@@ -53,14 +53,35 @@ echo '
 					echo'
 					<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
 						<div class="dropdown-content_donor">';
-							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
+							//ajmo prvo obavijesti od admina
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1'";
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
 							if($neprocitano){
 							    echo'
 							    <form action="notification.php" method="POST">';
+							    echo'<b>ADMIN</b>';
 							    while($row = mysqli_fetch_array($result)){
 							        echo '<p>'.$row['tekst_obav'].' '.$row['datum_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
+							    }
+							    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
+							    </form>';
+							}
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1'";
+							$run = mysqli_query($conn, $sql);
+							$result = $run or die ("Failed to query database". mysqli_error($conn));
+							if($neprocitano){
+							    echo'
+							    <form action="notification.php" method="POST">';
+							    echo'<b>KORISNICI</b>';
+							    while($row = mysqli_fetch_array($result)){
+							    	$OIB_prijatelja = $row['ID_posiljatelja'];
+							    	$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
+									$run_prijatelj = mysqli_query($conn, $prijatelj);
+									$result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
+									$row_prijatelj = mysqli_fetch_array($result2);
+									$ime = $row_prijatelj['ime_prezime_donora'];
+							        echo '<p>'.$ime.' '.$row['tekst_obav'].' '.$row['datum_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
 							    }
 							    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
 							    </form>';
