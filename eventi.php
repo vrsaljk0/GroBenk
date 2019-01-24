@@ -66,7 +66,7 @@ echo '
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="donacije.php">Donacije</a>
+                <a class="nav-link" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>
@@ -88,7 +88,30 @@ echo '
             }
         }
     }
+    if(isset($_POST['submit_event'])){
+        $datum = $_POST['datum'];
+        $grad = $_POST['grad'];
+        $lokacija = $_POST['lokacija'];
+        $adresa = $_POST['adresa'];
+        $postanski_broj = $_POST['postbroj'];
+        $start = $_POST['startt'];
+        $kraj = $_POST['kraj'];
+        $image = $_FILES['image']['name'];
+        $target = "lokacije/".basename($image);
+        $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
 
+        $query = "INSERT into lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj, image) values ('$grad', '$lokacija', '$adresa', '$postanski_broj','$datum', '$start', '$kraj', '$image')";
+        $run = mysqli_query($conn, $query);
+        $result = $run or die ("Failed to query database" . mysqli_error($conn));
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $msg = "Podaci uspješno promijenjeni";
+        } else {
+            $msg = "Došlo je do greške";
+        }
+
+        header("Location:eventi.php?keyword=&trazi=Traži");
+    }
     echo '
     <div id="content10" class="toggle" ><br><br>
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -114,13 +137,11 @@ echo '
                     <input type="hidden" name="image_text" value="image_text">
                     <td><input type="submit" name="submit_event" value="Dodaj event"></td>
                 </table>
-                </form>
+            
         <form action="" method="GET">
             <input type="text" name = "keyword" placeholder="Pretraži evente">
             Nadolazeći eventi <input type="radio" name="buduci" value="buduci">
             Prošli eventi <input type="radio" name="prosli" value="prosli"">
-            <i class="fas fa-arrow-up"></i> 
-            <i class="fas fa-arrow-down"></i>
             <input type="submit" name="trazi" value="Pretraži">
         </form>
         <form>

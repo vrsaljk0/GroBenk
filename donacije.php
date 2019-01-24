@@ -61,13 +61,13 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Traži">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link active" href="donacije.php">Donacije</a>
+                <a class="nav-link active" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>
@@ -107,14 +107,8 @@ echo '
             </tr>';
             if(isset($_GET['trazi'])) {
                 $pretraga = $_GET['keyword'];
-                $date = date("Ymd");
+                $date = date("Y-m-d");
 
-
-                /** STORYTIME:
-                 *Nes je sjebano, unjela sam novi event i logicno nijedan donor nije bio prijavljen na njega. Pod donacijama mi se ponudio Jasmin,
-                 *otisla sam na njegov profil i pod njegovim oznacenim eventima je bio taj event. WHY? nemam blage, id_lokacije tog event nije uopce bio u moj_event.
-                 * id_lokacije nije foreign key u moj_event, mozda to????? al svjeednooo se to nebi smjelo dogadaat :(
-                 */
                 $query = "select lokacija.naziv_lokacije, donor.OIB_donora, donor.ime_prezime_donora, donor.krvna_grupa_don from lokacija, donor, moj_event
                           where lokacija.datum_dogadaja = '$date' and lokacija.id_lokacije = moj_event.id_lokacije and donor.OIB_donora = moj_event.OIB_donora_don and moj_event.prisutnost = '0'
                           and ((lokacija.naziv_lokacije like '%$pretraga%') or (donor.ime_prezime_donora like '%$pretraga%') or (donor.krvna_grupa_don = '$pretraga'))";
@@ -137,9 +131,6 @@ echo '
                     <input type="checkbox" name="select_all" id = "select_all">
                     
                 </form>';
-
-
-
             }
 
 
@@ -197,7 +188,6 @@ echo '
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
                         $row = mysqli_fetch_array($result);
                         $id_lokacije = $row['id_lokacije'];
-
 
                         $sql = "UPDATE moj_event SET prisutnost = '-1' WHERE OIB_donora_don = '$OIB' and id_lokacije='$id_lokacije' and prisutnost = '0'";
                         $run = mysqli_query($conn, $sql);

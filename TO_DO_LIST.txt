@@ -1,17 +1,33 @@
 ﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
-23.1.2019
+19.1.2019
 
-donornavbar.php
-    - pozabaviti se sa sustavom poruka
-    - dodati link show history di će biti pregled svih obavijesti do sad
-    - napraviti da imena donora budu linkovi na njihove profile
-donacija.php
-    - iz nekog razloga se ništa ne prikazuje nakon searcha
-eventi.php
-    - možda dodati asc i dsc sortiranje ali čini mi se da je to nepotreban overkill
-baciti oko dal se obavijesti idalje duplaju
+publicprofile.php
+  
+-sad piše username
+
+statistika.php
+    
+-dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
+    
+- sad kad sam ispravila lokaciju statistika ne pokazuje ništa
+
+donor.php
+    
+- ne znam jesmo ispravile unos lozinki
+
+bolnica.php
+    
+-popravit statistiku i dodat sve isto ko u admin statistici
+
+baza
+    
+-dodan stupac image za lokacije i nova mapa za "lokacije" za slike
+
+
+-textarea na forummu u bolnici ne dela
+
 
 FRONTEND::
 -DONOR:
@@ -21,14 +37,8 @@ FRONTEND::
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
 	-pokušat dodat sliku kraj imena
-    -dodan input type za kratku poruku i sve se sjebalo
-    -urediti obavijesti; sandi je spomenuo da bi volio da su obavijesti od admina i korisnika druge boje
-    -
 -ADMIN:
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
 	-prikaz količine krvi kod zahtjeva
-
-DONOR && BOLNICA:
-    nakon što se promijeni lozinka napravit preusmjeravanje na pop up ponovnog logina
-
+	
