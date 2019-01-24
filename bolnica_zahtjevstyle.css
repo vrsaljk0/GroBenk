@@ -112,7 +112,7 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 35px 30%;
+  margin: 35px 0px;
   cursor: pointer;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -213,5 +213,13 @@ select::-ms-expand {
   box-shadow: 0 0 5px #AD2D25;
   padding: 3%;
   border: 1px solid #AD2D25;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 170%;
+  table-layout: fixed;
 }
 
