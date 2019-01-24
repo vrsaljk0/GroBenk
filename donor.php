@@ -307,7 +307,7 @@ echo '
                     </div>
 
                     <div class="tab-pane fade" id="follow" role="tabpanel" aria-labelledby="follow-tab">';
-                        $upit = "SELECT ime_prezime_donora, OIB_donora, image from donor where
+                        $upit = "SELECT username,ime_prezime_donora, OIB_donora, image from donor where
                                 OIB_donora in (select OIB_prijatelja from following where
                                 donor_OIB_donora = '$OIB')";
 
@@ -319,12 +319,12 @@ echo '
                                 <div class="follow-img">
                                     <img src="donori/'.$row['image'].'">
                                 </div>
-                                <a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a>
+                                <a href="publicprofile.php?username='.urlencode($row['username']).'">'.$row['ime_prezime_donora'].'</a>
                             </div><br>
                             ';
                         }
 
-                        $upit = "SELECT ime_prezime_donora, OIB_donora, image from donor where
+                        $upit = "SELECT username, ime_prezime_donora, OIB_donora, image from donor where
                                                OIB_donora in (select OIB_prijatelja from followers where
                                                donor_OIB_donora = '$OIB')";
                         $rezultat = mysqli_query($conn, $upit);
@@ -336,7 +336,7 @@ echo '
                                 <div class="follow-img">
                                     <img src="donori/'.$row['image'].'">
                                 </div>
-                                <a href="publicprofile.php?OIB_korisnika='.urlencode($row['OIB_donora']).'">'.$row['ime_prezime_donora'].'</a>
+                                <a href="publicprofile.php?username='.urlencode($row['username']).'">'.$row['ime_prezime_donora'].'</a>
                             </div><br>';
                         }
                         echo'
