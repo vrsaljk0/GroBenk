@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 23, 2019 at 11:56 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 24, 2019 at 12:42 AM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,10 +28,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
-  `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `username` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `admin`
@@ -46,21 +48,24 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 -- Table structure for table `bolnica`
 --
 
-CREATE TABLE `bolnica` (
+DROP TABLE IF EXISTS `bolnica`;
+CREATE TABLE IF NOT EXISTS `bolnica` (
   `idbolnica` int(10) UNSIGNED NOT NULL,
-  `naziv_bolnice` varchar(45) NOT NULL,
-  `grad` varchar(45) NOT NULL,
-  `adresa_bolnice` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `naziv_bolnice` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `grad` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `adresa_bolnice` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
   `postanski_broj` int(11) DEFAULT NULL,
-  `password` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `password` varchar(10) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`idbolnica`),
+  UNIQUE KEY `idbolnica_UNIQUE` (`idbolnica`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `bolnica`
 --
 
 INSERT INTO `bolnica` (`idbolnica`, `naziv_bolnice`, `grad`, `adresa_bolnice`, `postanski_broj`, `password`) VALUES
-(101, 'KBC Susak', 'Rijeka', 'Kreï¿½imirova 42', 51001, '101'),
+(101, 'KBC Susak', 'Rijeka', 'Kreï¿½imirova 47', 51001, '105'),
 (102, 'KBC Sisak', 'Sisak', 'Sisacka 13', 57474, 'kbcri56'),
 (103, 'KBC Zagreb', 'Zagreb', 'Ilica 15', 50000, 'zajc45'),
 (104, 'KBC', 'Zadar', 'Zadarska 13', 43000, 'dubdub'),
@@ -72,13 +77,18 @@ INSERT INTO `bolnica` (`idbolnica`, `naziv_bolnice`, `grad`, `adresa_bolnice`, `
 -- Table structure for table `donacija`
 --
 
-CREATE TABLE `donacija` (
-  `id_donacija` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `donacija`;
+CREATE TABLE IF NOT EXISTS `donacija` (
+  `id_donacija` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `kolicina_krvi_donacije` float UNSIGNED NOT NULL,
-  `krvna_grupa_zal` varchar(45) NOT NULL,
+  `krvna_grupa_zal` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
   `OIB_donora` double UNSIGNED NOT NULL,
-  `idlokacija` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idlokacija` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_donacija`),
+  UNIQUE KEY `id_donacija_UNIQUE` (`id_donacija`),
+  KEY `fk_donacija_donor_idx` (`OIB_donora`),
+  KEY `fk_donacija_lokacija1_idx` (`idlokacija`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `donacija`
@@ -99,22 +109,26 @@ INSERT INTO `donacija` (`id_donacija`, `kolicina_krvi_donacije`, `krvna_grupa_za
 -- Table structure for table `donor`
 --
 
-CREATE TABLE `donor` (
+DROP TABLE IF EXISTS `donor`;
+CREATE TABLE IF NOT EXISTS `donor` (
   `OIB_donora` double UNSIGNED NOT NULL,
-  `krvna_grupa_don` varchar(100) NOT NULL,
-  `ime_prezime_donora` varchar(45) NOT NULL,
+  `krvna_grupa_don` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `ime_prezime_donora` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
   `datum_rodenja` date NOT NULL,
-  `prebivaliste` varchar(45) NOT NULL,
+  `prebivaliste` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
   `postanski_broj` int(10) UNSIGNED NOT NULL,
   `broj_mobitela` int(10) UNSIGNED NOT NULL,
-  `mail_donora` varchar(45) DEFAULT NULL,
-  `spol` varchar(2) NOT NULL,
-  `adresa_donora` varchar(45) DEFAULT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(10) DEFAULT NULL,
+  `mail_donora` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  `spol` varchar(2) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `adresa_donora` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  `username` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `password` varchar(10) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
   `br_donacija` int(11) DEFAULT NULL,
-  `image` varchar(300) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `image` varchar(300) COLLATE utf8mb4_croatian_ci NOT NULL,
+  PRIMARY KEY (`OIB_donora`),
+  UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_donora`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `donor`
@@ -127,7 +141,7 @@ INSERT INTO `donor` (`OIB_donora`, `krvna_grupa_don`, `ime_prezime_donora`, `dat
 (13115585172, 'AB+', 'Maja Vrsaljko', '1998-11-01', 'Zadar', 23000, 924563780, 'mvrsaljko@riteh.hr', 'Z', 'Benkovac 22', 'maja2', 'majab91', 0, 'image11.png'),
 (18814952778, 'B+', 'Tyrion Lannister', '1968-06-10', 'Kings Landing', 51000, 997763321, 'tyrion123@gmail.com', 'M', 'Casterly Rock', 'tyrion', 'got123', 27, 'image12.jpg'),
 (24821182322, 'B-', 'Patricija Dadi?', '1992-05-23', 'Rijeka', 51000, 998751246, 'patry@gmail.com', 'Z', 'Kapelska', 'patricija', '123456', 11, 'image5.png'),
-(25905508615, 'AB-', 'Katarina Ani?', '2019-01-12', 'Zagreb', 51000, 914537810, 'anica_frketic@gmail.com', 'Z', 'Vojni put 14', 'katarina', 'anica123', 17, 'image1.jpg'),
+(25905508615, 'AB-', 'Katarina Ani?', '2019-01-12', 'Zagreb', 51000, 914537810, 'anica_frketic@gmail.com', 'Z', 'Vojni put 14', 'katarina', 'anica6', 17, 'image1.jpg'),
 (29389527738, '0+', 'Maja Vukelix', '1987-12-21', 'Kaï¿½tel Sućurac', 21213, 924789234, 'majavuk@hotmail.com', 'Z', 'Suva?a 10', 'maja', 'maja123', 14, 'image6.jpg'),
 (46834013129, 'B-', 'Marija čćčćčćč', '2018-08-31', 'Zagreb', 51000, 567345, 'cucic@gmail.com', 'Z', 'Ilica 12', 'mare', 'marica', 0, 'image5.png'),
 (47903334648, '0-', 'Jasmin Stankovi?', '1990-05-08', 'Rijeka', 51000, 925563594, 'jasmin456@gmail.com', 'Z', 'Adami?eva 3', 'jasmin', 'jasmin123', 14, 'image8.jpg'),
@@ -143,10 +157,12 @@ INSERT INTO `donor` (`OIB_donora`, `krvna_grupa_don`, `ime_prezime_donora`, `dat
 -- Table structure for table `followers`
 --
 
-CREATE TABLE `followers` (
+DROP TABLE IF EXISTS `followers`;
+CREATE TABLE IF NOT EXISTS `followers` (
   `donor_OIB_donora` double UNSIGNED NOT NULL,
-  `OIB_prijatelja` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `OIB_prijatelja` double DEFAULT NULL,
+  KEY `fk_followers_donor1` (`donor_OIB_donora`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `followers`
@@ -160,8 +176,9 @@ INSERT INTO `followers` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 (25905508615, 62039216922),
 (25905508615, 57523379503),
 (57523379503, 13115585171),
-(13115585172, 25905508615),
-(29389527738, 25905508615);
+(29389527738, 25905508615),
+(25905508615, 13115585172),
+(25905508615, 10528147607);
 
 -- --------------------------------------------------------
 
@@ -169,10 +186,12 @@ INSERT INTO `followers` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 -- Table structure for table `following`
 --
 
-CREATE TABLE `following` (
+DROP TABLE IF EXISTS `following`;
+CREATE TABLE IF NOT EXISTS `following` (
   `donor_OIB_donora` double UNSIGNED NOT NULL,
-  `OIB_prijatelja` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `OIB_prijatelja` double DEFAULT NULL,
+  KEY `donor_OIB_donora` (`donor_OIB_donora`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `following`
@@ -186,8 +205,9 @@ INSERT INTO `following` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 (62039216922, 29389527738),
 (62039216922, 25905508615),
 (13115585171, 57523379503),
-(25905508615, 13115585172),
-(25905508615, 29389527738);
+(25905508615, 29389527738),
+(13115585172, 25905508615),
+(10528147607, 25905508615);
 
 -- --------------------------------------------------------
 
@@ -195,35 +215,45 @@ INSERT INTO `following` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 -- Table structure for table `komentari`
 --
 
-CREATE TABLE `komentari` (
-  `id_autora` int(11) NOT NULL,
-  `autor` varchar(100) NOT NULL,
+DROP TABLE IF EXISTS `komentari`;
+CREATE TABLE IF NOT EXISTS `komentari` (
+  `user_autora` varchar(300) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `autor` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
   `idbolnica_bol` int(10) UNSIGNED NOT NULL,
-  `tekst_komentara` varchar(300) DEFAULT NULL,
-  `datum_kom` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `tekst_komentara` varchar(300) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  `datum_kom` date NOT NULL,
+  KEY `id_bolnica_fk` (`idbolnica_bol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `komentari`
 --
 
-INSERT INTO `komentari` (`id_autora`, `autor`, `idbolnica_bol`, `tekst_komentara`, `datum_kom`) VALUES
-(0, 'KBC Rijeka', 101, 'Hvala svima na donacijama! Ovdje možete ostavljati svoje komentare, prijedloge i slično!', '2018-12-27'),
-(0, 'Katarina Frketic', 101, 'Svaka čast na organizaciji, moje omiljeno mjesto za doniranje krvi', '2019-01-02'),
-(0, 'Domagoj Buljubasic', 101, 'Pozdrav plavoj sestri sa šaltera 5 hehe xD', '2019-01-02'),
-(0, 'Domagoj Buljubasic', 101, 'gegep', '2019-01-04'),
-(0, 'Ana Anic', 103, 'hiiii', '2019-01-08'),
-(0, 'Ana Anic', 103, 'hiiii', '2019-01-08'),
-(0, 'Ana Anic', 102, 'bok bok', '2019-01-08'),
-(0, 'Katarina Ani?', 101, 'test test\r\n', '2019-01-08'),
-(0, 'KBC Susak', 101, 'dobro jutro', '2019-01-09'),
-(0, 'Katarina Ani?', 101, 'test12', '2019-01-09'),
-(0, 'KBC Susak', 101, 'lalalalla', '2019-01-09'),
-(0, 'Katarina Ani?', 103, 'nenenen', '2019-01-09'),
-(0, 'KBC Susak', 101, 'HEHE\r\n', '2019-01-10'),
-(0, 'KBC Susak', 101, 'test 12', '2019-01-10'),
-(0, 'KBC Susak', 101, 'lalala', '2019-01-10'),
-(0, 'Katarina Ani?', 101, 'fztztfzt', '2019-01-10');
+INSERT INTO `komentari` (`user_autora`, `autor`, `idbolnica_bol`, `tekst_komentara`, `datum_kom`) VALUES
+('', 'KBC Rijeka', 101, 'Hvala svima na donacijama! Ovdje možete ostavljati svoje komentare, prijedloge i slično!', '2018-12-27'),
+('', 'Katarina Frketic', 101, 'Svaka čast na organizaciji, moje omiljeno mjesto za doniranje krvi', '2019-01-02'),
+('', 'Domagoj Buljubasic', 101, 'Pozdrav plavoj sestri sa šaltera 5 hehe xD', '2019-01-02'),
+('', 'Domagoj Buljubasic', 101, 'gegep', '2019-01-04'),
+('', 'Ana Anic', 103, 'hiiii', '2019-01-08'),
+('', 'Ana Anic', 103, 'hiiii', '2019-01-08'),
+('', 'Ana Anic', 102, 'bok bok', '2019-01-08'),
+('', 'Katarina Ani?', 101, 'test test\r\n', '2019-01-08'),
+('101', 'KBC Susak', 101, 'dobro jutro', '2019-01-09'),
+('', 'Katarina Ani?', 101, 'test12', '2019-01-09'),
+('101', 'KBC Susak', 101, 'lalalalla', '2019-01-09'),
+('', 'Katarina Ani?', 103, 'nenenen', '2019-01-09'),
+('101', 'KBC Susak', 101, 'HEHE\r\n', '2019-01-10'),
+('101', 'KBC Susak', 101, 'test 12', '2019-01-10'),
+('101', 'KBC Susak', 101, 'lalala', '2019-01-10'),
+('', 'Katarina Ani?', 101, 'fztztfzt', '2019-01-10'),
+('101', 'KBC Susak', 101, 'hehehe', '2019-01-23'),
+('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
+('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
+('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
+('', 'Katarina Ani?', 101, 'hejjj', '2019-01-23'),
+('', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23'),
+('domagoj', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23'),
+('101', 'KBC Susak', 101, 'ćao ćao', '2019-01-23');
 
 -- --------------------------------------------------------
 
@@ -231,17 +261,19 @@ INSERT INTO `komentari` (`id_autora`, `autor`, `idbolnica_bol`, `tekst_komentara
 -- Table structure for table `lokacija`
 --
 
-CREATE TABLE `lokacija` (
-  `id_lokacije` int(11) UNSIGNED NOT NULL,
-  `grad` varchar(45) NOT NULL,
-  `naziv_lokacije` varchar(45) DEFAULT NULL,
-  `adresa_lokacije` varchar(45) DEFAULT NULL,
+DROP TABLE IF EXISTS `lokacija`;
+CREATE TABLE IF NOT EXISTS `lokacija` (
+  `id_lokacije` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `grad` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `naziv_lokacije` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  `adresa_lokacije` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
   `postanski_broj` int(10) UNSIGNED DEFAULT NULL,
   `datum_dogadaja` date NOT NULL,
   `start` time NOT NULL,
   `kraj` time NOT NULL,
-  `image` varchar(300) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `image` varchar(300) COLLATE utf8mb4_croatian_ci NOT NULL,
+  PRIMARY KEY (`id_lokacije`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `lokacija`
@@ -273,11 +305,14 @@ INSERT INTO `lokacija` (`id_lokacije`, `grad`, `naziv_lokacije`, `adresa_lokacij
 -- Table structure for table `moj_event`
 --
 
-CREATE TABLE `moj_event` (
+DROP TABLE IF EXISTS `moj_event`;
+CREATE TABLE IF NOT EXISTS `moj_event` (
   `OIB_donora_don` double UNSIGNED NOT NULL,
   `id_lokacije` int(11) UNSIGNED NOT NULL,
-  `prisutnost` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `prisutnost` tinyint(4) NOT NULL,
+  KEY `OIB_donora_idx` (`OIB_donora_don`),
+  KEY `lokacija_fk` (`id_lokacije`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `moj_event`
@@ -312,90 +347,191 @@ INSERT INTO `moj_event` (`OIB_donora_don`, `id_lokacije`, `prisutnost`) VALUES
 -- Table structure for table `obavijesti`
 --
 
-CREATE TABLE `obavijesti` (
-  `id_obavijesti` int(11) NOT NULL,
+DROP TABLE IF EXISTS `obavijesti`;
+CREATE TABLE IF NOT EXISTS `obavijesti` (
+  `id_obavijesti` int(11) NOT NULL AUTO_INCREMENT,
   `OIBdonora` double NOT NULL,
-  `tekst_obav` varchar(100) COLLATE utf8_croatian_ci NOT NULL,
+  `ID_posiljatelja` double UNSIGNED NOT NULL,
+  `tekst_obav` varchar(100) COLLATE utf8mb4_croatian_ci NOT NULL,
   `datum_obav` date NOT NULL,
-  `procitano` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_croatian_ci;
+  `procitano` int(11) NOT NULL,
+  PRIMARY KEY (`id_obavijesti`),
+  KEY `OIBdonor_fk` (`OIBdonora`)
+) ENGINE=InnoDB AUTO_INCREMENT=494 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `obavijesti`
 --
 
-INSERT INTO `obavijesti` (`id_obavijesti`, `OIBdonora`, `tekst_obav`, `datum_obav`, `procitano`) VALUES
-(1, 24821182322, 'heyyy', '2019-01-05', 0),
-(2, 47903334648, 'heyyy', '2019-01-05', 0),
-(3, 24821182322, 'heyyy', '2019-01-05', 0),
-(4, 47903334648, 'heyyy', '2019-01-05', 0),
-(5, 10528147607, 'A++++', '2019-01-05', 0),
-(6, 62039216922, 'A++++', '2019-01-05', 0),
-(7, 99218368216, 'A++++', '2019-01-05', 0),
-(8, 10528147607, 'A++++', '2019-01-05', 0),
-(9, 62039216922, 'A++++', '2019-01-05', 0),
-(10, 99218368216, 'A++++', '2019-01-05', 0),
-(11, 10528147607, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
-(12, 13115585171, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
-(13, 25905508615, 'bok ja sam obavijest za zagreb', '2019-01-05', 1),
-(14, 62039216922, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
-(15, 10528147607, 'lalalala', '2019-01-07', 0),
-(16, 62039216922, 'lalalala', '2019-01-07', 0),
-(17, 99218368216, 'lalalala', '2019-01-07', 0),
-(18, 10528147607, 'Obavijest 1', '2019-01-07', 0),
-(19, 13115585171, 'Obavijest 1', '2019-01-07', 0),
-(20, 25905508615, 'Obavijest 1', '2019-01-07', 1),
-(21, 62039216922, 'Obavijest 1', '2019-01-07', 0),
-(22, 10528147607, 'Obavijest2', '2019-01-07', 0),
-(23, 13115585171, 'Obavijest2', '2019-01-07', 0),
-(24, 25905508615, 'Obavijest2', '2019-01-07', 1),
-(25, 62039216922, 'Obavijest2', '2019-01-07', 0),
-(26, 10528147607, 'Obavijest3', '2019-01-07', 0),
-(27, 13115585171, 'Obavijest3', '2019-01-07', 0),
-(28, 13115585172, 'Obavijest3', '2019-01-07', 0),
-(29, 18814952778, 'Obavijest3', '2019-01-07', 0),
-(30, 24821182322, 'Obavijest3', '2019-01-07', 0),
-(31, 25905508615, 'Obavijest3', '2019-01-07', 1),
-(32, 29389527738, 'Obavijest3', '2019-01-07', 0),
-(33, 47903334648, 'Obavijest3', '2019-01-07', 0),
-(34, 57523379503, 'Obavijest3', '2019-01-07', 0),
-(35, 62039216922, 'Obavijest3', '2019-01-07', 0),
-(36, 79220235879, 'Obavijest3', '2019-01-07', 0),
-(37, 92279595902, 'Obavijest3', '2019-01-07', 0),
-(38, 99218368216, 'Obavijest3', '2019-01-07', 0),
-(364, 10528147607, 'zahrebca', '2019-01-09', 0),
-(365, 13115585171, 'zahrebca', '2019-01-09', 0),
-(366, 25905508615, 'zahrebca', '2019-01-09', 1),
-(367, 62039216922, 'zahrebca', '2019-01-09', 0),
-(368, 10528147607, 'zahrebca', '2019-01-09', 0),
-(369, 13115585171, 'zahrebca', '2019-01-09', 0),
-(370, 25905508615, 'zahrebca', '2019-01-09', 1),
-(371, 62039216922, 'zahrebca', '2019-01-09', 0),
-(372, 18814952778, 'got', '2019-01-09', 0),
-(373, 57523379503, 'ae', '2019-01-09', 0),
-(374, 79220235879, 'ae', '2019-01-09', 0),
-(375, 92279595902, 'ae', '2019-01-09', 0),
-(376, 99218368216, 'ae', '2019-01-09', 0),
-(377, 6781251619, 'apoz', '2019-01-09', 0),
-(378, 10528147607, 'apoz', '2019-01-09', 0),
-(379, 62039216922, 'apoz', '2019-01-09', 0),
-(380, 99218368216, 'apoz', '2019-01-09', 0),
-(381, 10528147607, 'apozag', '2019-01-09', 0),
-(382, 62039216922, 'apozag', '2019-01-09', 0),
-(383, 10528147607, 'lalal', '2019-01-10', 0),
-(384, 13115585171, 'lalal', '2019-01-10', 0),
-(385, 25905508615, 'lalal', '2019-01-10', 1),
-(386, 46834013129, 'lalal', '2019-01-10', 0),
-(387, 62039216922, 'lalal', '2019-01-10', 0),
-(388, 57523379503, '', '2019-01-10', 0),
-(389, 79220235879, '', '2019-01-10', 0),
-(390, 92279595902, '', '2019-01-10', 0),
-(391, 99218368216, '', '2019-01-10', 0),
-(392, 10528147607, 'lalalalallala', '2019-01-10', 0),
-(393, 13115585171, 'lalalalallala', '2019-01-10', 0),
-(394, 25905508615, 'lalalalallala', '2019-01-10', 0),
-(395, 46834013129, 'lalalalallala', '2019-01-10', 0),
-(396, 62039216922, 'lalalalallala', '2019-01-10', 0);
+INSERT INTO `obavijesti` (`id_obavijesti`, `OIBdonora`, `ID_posiljatelja`, `tekst_obav`, `datum_obav`, `procitano`) VALUES
+(1, 24821182322, 1, 'heyyy', '2019-01-05', 0),
+(2, 47903334648, 1, 'heyyy', '2019-01-05', 0),
+(3, 24821182322, 1, 'heyyy', '2019-01-05', 0),
+(4, 47903334648, 1, 'heyyy', '2019-01-05', 0),
+(5, 10528147607, 1, 'A++++', '2019-01-05', 0),
+(6, 62039216922, 1, 'A++++', '2019-01-05', 0),
+(7, 99218368216, 1, 'A++++', '2019-01-05', 0),
+(8, 10528147607, 1, 'A++++', '2019-01-05', 0),
+(9, 62039216922, 1, 'A++++', '2019-01-05', 0),
+(10, 99218368216, 1, 'A++++', '2019-01-05', 0),
+(11, 10528147607, 1, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
+(12, 13115585171, 1, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
+(13, 25905508615, 1, 'bok ja sam obavijest za zagreb', '2019-01-05', 1),
+(14, 62039216922, 1, 'bok ja sam obavijest za zagreb', '2019-01-05', 0),
+(15, 10528147607, 1, 'lalalala', '2019-01-07', 0),
+(16, 62039216922, 1, 'lalalala', '2019-01-07', 0),
+(17, 99218368216, 1, 'lalalala', '2019-01-07', 0),
+(18, 10528147607, 1, 'Obavijest 1', '2019-01-07', 0),
+(19, 13115585171, 1, 'Obavijest 1', '2019-01-07', 0),
+(20, 25905508615, 1, 'Obavijest 1', '2019-01-07', 1),
+(21, 62039216922, 1, 'Obavijest 1', '2019-01-07', 0),
+(22, 10528147607, 1, 'Obavijest2', '2019-01-07', 0),
+(23, 13115585171, 1, 'Obavijest2', '2019-01-07', 0),
+(24, 25905508615, 1, 'Obavijest2', '2019-01-07', 1),
+(25, 62039216922, 1, 'Obavijest2', '2019-01-07', 0),
+(26, 10528147607, 1, 'Obavijest3', '2019-01-07', 0),
+(27, 13115585171, 1, 'Obavijest3', '2019-01-07', 0),
+(28, 13115585172, 1, 'Obavijest3', '2019-01-07', 0),
+(29, 18814952778, 1, 'Obavijest3', '2019-01-07', 0),
+(30, 24821182322, 1, 'Obavijest3', '2019-01-07', 0),
+(31, 25905508615, 1, 'Obavijest3', '2019-01-07', 1),
+(32, 29389527738, 1, 'Obavijest3', '2019-01-07', 0),
+(33, 47903334648, 1, 'Obavijest3', '2019-01-07', 0),
+(34, 57523379503, 1, 'Obavijest3', '2019-01-07', 0),
+(35, 62039216922, 1, 'Obavijest3', '2019-01-07', 0),
+(36, 79220235879, 1, 'Obavijest3', '2019-01-07', 0),
+(37, 92279595902, 1, 'Obavijest3', '2019-01-07', 0),
+(38, 99218368216, 1, 'Obavijest3', '2019-01-07', 0),
+(364, 10528147607, 1, 'zahrebca', '2019-01-09', 0),
+(365, 13115585171, 1, 'zahrebca', '2019-01-09', 0),
+(366, 25905508615, 1, 'zahrebca', '2019-01-09', 1),
+(367, 62039216922, 1, 'zahrebca', '2019-01-09', 0),
+(368, 10528147607, 1, 'zahrebca', '2019-01-09', 0),
+(369, 13115585171, 1, 'zahrebca', '2019-01-09', 0),
+(370, 25905508615, 1, 'zahrebca', '2019-01-09', 1),
+(371, 62039216922, 1, 'zahrebca', '2019-01-09', 0),
+(372, 18814952778, 1, 'got', '2019-01-09', 0),
+(373, 57523379503, 1, 'ae', '2019-01-09', 0),
+(374, 79220235879, 1, 'ae', '2019-01-09', 0),
+(375, 92279595902, 1, 'ae', '2019-01-09', 0),
+(376, 99218368216, 1, 'ae', '2019-01-09', 0),
+(377, 6781251619, 1, 'apoz', '2019-01-09', 0),
+(378, 10528147607, 1, 'apoz', '2019-01-09', 0),
+(379, 62039216922, 1, 'apoz', '2019-01-09', 0),
+(380, 99218368216, 1, 'apoz', '2019-01-09', 0),
+(381, 10528147607, 1, 'apozag', '2019-01-09', 0),
+(382, 62039216922, 1, 'apozag', '2019-01-09', 0),
+(383, 10528147607, 1, 'lalal', '2019-01-10', 0),
+(384, 13115585171, 1, 'lalal', '2019-01-10', 0),
+(385, 25905508615, 1, 'lalal', '2019-01-10', 1),
+(386, 46834013129, 1, 'lalal', '2019-01-10', 0),
+(387, 62039216922, 1, 'lalal', '2019-01-10', 0),
+(388, 57523379503, 1, '', '2019-01-10', 0),
+(389, 79220235879, 1, '', '2019-01-10', 0),
+(390, 92279595902, 1, '', '2019-01-10', 0),
+(391, 99218368216, 1, '', '2019-01-10', 0),
+(392, 10528147607, 1, 'lalalalallala', '2019-01-10', 0),
+(393, 13115585171, 1, 'lalalalallala', '2019-01-10', 0),
+(394, 25905508615, 1, 'lalalalallala', '2019-01-10', 1),
+(395, 46834013129, 1, 'lalalalallala', '2019-01-10', 0),
+(396, 62039216922, 1, 'lalalalallala', '2019-01-10', 0),
+(397, 6781251619, 1, 'fsdfd', '2019-01-23', 0),
+(398, 10528147607, 1, 'fsdfd', '2019-01-23', 0),
+(399, 13115585171, 1, 'fsdfd', '2019-01-23', 0),
+(400, 13115585172, 1, 'fsdfd', '2019-01-23', 0),
+(401, 18814952778, 1, 'fsdfd', '2019-01-23', 0),
+(402, 24821182322, 1, 'fsdfd', '2019-01-23', 0),
+(403, 25905508615, 1, 'fsdfd', '2019-01-23', 1),
+(404, 29389527738, 1, 'fsdfd', '2019-01-23', 0),
+(405, 46834013129, 1, 'fsdfd', '2019-01-23', 0),
+(406, 47903334648, 1, 'fsdfd', '2019-01-23', 0),
+(407, 57523379503, 1, 'fsdfd', '2019-01-23', 0),
+(408, 62039216922, 1, 'fsdfd', '2019-01-23', 0),
+(409, 79220235879, 1, 'fsdfd', '2019-01-23', 0),
+(410, 92279595902, 1, 'fsdfd', '2019-01-23', 0),
+(411, 99218368216, 1, 'fsdfd', '2019-01-23', 0),
+(412, 6781251619, 1, '1 2 3 test', '2019-01-23', 0),
+(413, 10528147607, 1, '1 2 3 test', '2019-01-23', 0),
+(414, 62039216922, 1, '1 2 3 test', '2019-01-23', 0),
+(415, 99218368216, 1, '1 2 3 test', '2019-01-23', 0),
+(416, 25905508615, 1, 'ja sam jebena obavijest', '2019-01-23', 0),
+(417, 57523379503, 1, 'ja sam jebena obavijest', '2019-01-23', 0),
+(418, 25905508615, 1, 'heyyyy', '2019-01-23', 0),
+(419, 57523379503, 1, 'heyyyy', '2019-01-23', 0),
+(420, 25905508615, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(421, 57523379503, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(422, 25905508615, 1, 'dobra večer drugovi', '2019-01-23', 1),
+(423, 57523379503, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(424, 6781251619, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(425, 10528147607, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(426, 13115585171, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(427, 13115585172, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(428, 18814952778, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(429, 24821182322, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(430, 25905508615, 1, 'dobra večer drugovi', '2019-01-23', 1),
+(431, 29389527738, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(432, 46834013129, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(433, 47903334648, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(434, 57523379503, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(435, 62039216922, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(436, 79220235879, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(437, 92279595902, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(438, 99218368216, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(439, 6781251619, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(440, 10528147607, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(441, 13115585171, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(442, 13115585172, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(443, 18814952778, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(444, 24821182322, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(445, 25905508615, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(446, 29389527738, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(447, 46834013129, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(448, 47903334648, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(449, 57523379503, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(450, 62039216922, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(451, 79220235879, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(452, 92279595902, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(453, 99218368216, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(454, 6781251619, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(455, 10528147607, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(456, 13115585171, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(457, 13115585172, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(458, 18814952778, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(459, 24821182322, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(460, 25905508615, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(461, 29389527738, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(462, 46834013129, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(463, 47903334648, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(464, 57523379503, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(465, 62039216922, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(466, 79220235879, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(467, 92279595902, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(468, 99218368216, 1, 'dobra večer drugovi', '2019-01-23', 0),
+(469, 24821182322, 1, 'kuda idu izgubljene djevojkeeEEee', '2019-01-23', 0),
+(470, 29389527738, 25905508615, 'hejj kako si', '2019-01-24', 0),
+(471, 29389527738, 25905508615, 'oj oj ', '2019-01-24', 0),
+(472, 25905508615, 13115585172, 'bok ja sam tvoj novi pratitelj', '2019-01-24', 0),
+(473, 25905508615, 13115585172, 'sori ak smaram', '2019-01-24', 0),
+(474, 25905508615, 13115585172, ' 1  2 test', '2019-01-24', 0),
+(475, 25905508615, 13115585172, 'sori ak smaram', '2019-01-24', 0),
+(476, 25905508615, 10528147607, 'mala dao bi ti svu krv', '2019-01-24', 0),
+(477, 25905508615, 10528147607, 'RITEH DOLJE', '2019-01-24', 0),
+(478, 6781251619, 1, '1 2 3 4 4', '2019-01-24', 0),
+(479, 10528147607, 1, '1 2 3 4 4', '2019-01-24', 0),
+(480, 13115585171, 1, '1 2 3 4 4', '2019-01-24', 0),
+(481, 13115585172, 1, '1 2 3 4 4', '2019-01-24', 0),
+(482, 18814952778, 1, '1 2 3 4 4', '2019-01-24', 0),
+(483, 24821182322, 1, '1 2 3 4 4', '2019-01-24', 0),
+(484, 25905508615, 1, '1 2 3 4 4', '2019-01-24', 0),
+(485, 29389527738, 1, '1 2 3 4 4', '2019-01-24', 0),
+(486, 46834013129, 1, '1 2 3 4 4', '2019-01-24', 0),
+(487, 47903334648, 1, '1 2 3 4 4', '2019-01-24', 0),
+(488, 57523379503, 1, '1 2 3 4 4', '2019-01-24', 0),
+(489, 62039216922, 1, '1 2 3 4 4', '2019-01-24', 0),
+(490, 79220235879, 1, '1 2 3 4 4', '2019-01-24', 0),
+(491, 92279595902, 1, '1 2 3 4 4', '2019-01-24', 0),
+(492, 99218368216, 1, '1 2 3 4 4', '2019-01-24', 0),
+(493, 18814952778, 1, 'glupa obavijest', '2019-01-24', 0);
 
 -- --------------------------------------------------------
 
@@ -403,11 +539,14 @@ INSERT INTO `obavijesti` (`id_obavijesti`, `OIBdonora`, `tekst_obav`, `datum_oba
 -- Table structure for table `poruke`
 --
 
-CREATE TABLE `poruke` (
+DROP TABLE IF EXISTS `poruke`;
+CREATE TABLE IF NOT EXISTS `poruke` (
   `OIB_primatelja` double UNSIGNED NOT NULL,
   `OIB_prijatelja` int(11) NOT NULL,
-  `tekst_poruke` varchar(300) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `tekst_poruke` varchar(300) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`OIB_primatelja`),
+  UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_primatelja`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 -- --------------------------------------------------------
 
@@ -415,14 +554,18 @@ CREATE TABLE `poruke` (
 -- Table structure for table `zahtjev`
 --
 
-CREATE TABLE `zahtjev` (
-  `idzahtjev` int(8) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `zahtjev`;
+CREATE TABLE IF NOT EXISTS `zahtjev` (
+  `idzahtjev` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_bolnica` int(10) UNSIGNED NOT NULL,
   `kolicina_krvi_zaht` float UNSIGNED NOT NULL,
-  `krvna_grupa_zaht` varchar(45) NOT NULL,
+  `krvna_grupa_zaht` varchar(45) COLLATE utf8mb4_croatian_ci NOT NULL,
   `datum_zahtjeva` date DEFAULT NULL,
-  `odobreno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `odobreno` int(11) NOT NULL,
+  PRIMARY KEY (`idzahtjev`),
+  UNIQUE KEY `idzahtjev_UNIQUE` (`idzahtjev`),
+  KEY `fk_zahtjev_bolnica1_idx` (`id_bolnica`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `zahtjev`
@@ -439,7 +582,9 @@ INSERT INTO `zahtjev` (`idzahtjev`, `id_bolnica`, `kolicina_krvi_zaht`, `krvna_g
 (27, 101, 5.5, 'A-', '2018-12-12', 1),
 (29, 101, 0.4, 'B+', '2019-01-09', 0),
 (30, 101, 0.4, 'B+', '2019-01-09', 0),
-(31, 101, 0.5, 'A+', '2019-01-10', 0);
+(31, 101, 0.5, 'A+', '2019-01-10', 1),
+(32, 101, 0.5, 'A+', '2019-01-23', 0),
+(33, 101, 0.5, 'A+', '2019-01-23', 0);
 
 -- --------------------------------------------------------
 
@@ -447,17 +592,19 @@ INSERT INTO `zahtjev` (`idzahtjev`, `id_bolnica`, `kolicina_krvi_zaht`, `krvna_g
 -- Table structure for table `zaliha`
 --
 
-CREATE TABLE `zaliha` (
-  `krvna_grupa` varchar(10) NOT NULL,
-  `kolicina_grupe` varchar(45) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `zaliha`;
+CREATE TABLE IF NOT EXISTS `zaliha` (
+  `krvna_grupa` varchar(10) COLLATE utf8mb4_croatian_ci NOT NULL,
+  `kolicina_grupe` varchar(45) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`krvna_grupa`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `zaliha`
 --
 
 INSERT INTO `zaliha` (`krvna_grupa`, `kolicina_grupe`) VALUES
-('A+', '0.7'),
+('A+', '0.19999999999999996'),
 ('A-', '0'),
 ('AB+', '0'),
 ('AB-', '1.6'),
@@ -465,127 +612,6 @@ INSERT INTO `zaliha` (`krvna_grupa`, `kolicina_grupe`) VALUES
 ('B-', '0'),
 ('0+', '0'),
 ('0-', '0');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`username`);
-
---
--- Indexes for table `bolnica`
---
-ALTER TABLE `bolnica`
-  ADD PRIMARY KEY (`idbolnica`),
-  ADD UNIQUE KEY `idbolnica_UNIQUE` (`idbolnica`);
-
---
--- Indexes for table `donacija`
---
-ALTER TABLE `donacija`
-  ADD PRIMARY KEY (`id_donacija`),
-  ADD UNIQUE KEY `id_donacija_UNIQUE` (`id_donacija`),
-  ADD KEY `fk_donacija_donor_idx` (`OIB_donora`),
-  ADD KEY `fk_donacija_lokacija1_idx` (`idlokacija`);
-
---
--- Indexes for table `donor`
---
-ALTER TABLE `donor`
-  ADD PRIMARY KEY (`OIB_donora`),
-  ADD UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_donora`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- Indexes for table `followers`
---
-ALTER TABLE `followers`
-  ADD KEY `fk_followers_donor1` (`donor_OIB_donora`);
-
---
--- Indexes for table `following`
---
-ALTER TABLE `following`
-  ADD KEY `donor_OIB_donora` (`donor_OIB_donora`) USING BTREE;
-
---
--- Indexes for table `komentari`
---
-ALTER TABLE `komentari`
-  ADD KEY `id_bolnica_fk` (`idbolnica_bol`);
-
---
--- Indexes for table `lokacija`
---
-ALTER TABLE `lokacija`
-  ADD PRIMARY KEY (`id_lokacije`);
-
---
--- Indexes for table `moj_event`
---
-ALTER TABLE `moj_event`
-  ADD KEY `OIB_donora_idx` (`OIB_donora_don`),
-  ADD KEY `lokacija_fk` (`id_lokacije`);
-
---
--- Indexes for table `obavijesti`
---
-ALTER TABLE `obavijesti`
-  ADD PRIMARY KEY (`id_obavijesti`),
-  ADD KEY `OIBdonor_fk` (`OIBdonora`);
-
---
--- Indexes for table `poruke`
---
-ALTER TABLE `poruke`
-  ADD PRIMARY KEY (`OIB_primatelja`),
-  ADD UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_primatelja`);
-
---
--- Indexes for table `zahtjev`
---
-ALTER TABLE `zahtjev`
-  ADD PRIMARY KEY (`idzahtjev`),
-  ADD UNIQUE KEY `idzahtjev_UNIQUE` (`idzahtjev`),
-  ADD KEY `fk_zahtjev_bolnica1_idx` (`id_bolnica`);
-
---
--- Indexes for table `zaliha`
---
-ALTER TABLE `zaliha`
-  ADD PRIMARY KEY (`krvna_grupa`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `donacija`
---
-ALTER TABLE `donacija`
-  MODIFY `id_donacija` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `lokacija`
---
-ALTER TABLE `lokacija`
-  MODIFY `id_lokacije` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `obavijesti`
---
-ALTER TABLE `obavijesti`
-  MODIFY `id_obavijesti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
-
---
--- AUTO_INCREMENT for table `zahtjev`
---
-ALTER TABLE `zahtjev`
-  MODIFY `idzahtjev` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
