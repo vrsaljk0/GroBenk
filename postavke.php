@@ -66,13 +66,13 @@ if(isset($_POST['submit'])){
     else {
         $query = "UPDATE donor SET OIB_donora = '$OIB_d', ime_prezime_donora = '$ime', datum_rodenja='$datum_rod',
                       prebivaliste = '$prebivaliste', postanski_broj='$postanskibr', broj_mobitela='$brojmob', mail_donora='$email',
-                      adresa_donora='$adresa', password='$lozinka', krvna_grupa_don = '$krvna_grupa', username = '$username'
+                      adresa_donora='$adresa', krvna_grupa_don = '$krvna_grupa', username = '$username'
                       where OIB_donora='$OIB_d'";
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
     }
 
-    if ($trenutna === $password and $nova1 === $nova2 and !is_null($nova1)) {
+    if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '' && $nova2!='') {
         $update_query = "update donor set password = '$nova1' where OIB_donora = '$OIB_d'";
         $update_run = mysqli_query($conn, $update_query);
         $flag = 1;
