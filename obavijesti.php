@@ -17,6 +17,11 @@
 
         });
     });
+
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+
 </SCRIPT>
 
 <?php
@@ -34,6 +39,7 @@ if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
 echo '
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>BloodBank</title>
@@ -114,7 +120,12 @@ if(isset($_GET['obavijest'])) {
         $runn = mysqli_query($conn, $sqll);
         $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
     }
-    echo 'Obavijest: "'.$tekst.'" uspiješno poslana';
+    echo '
+    <div class="alert" id="alert">
+      <span class="closebtn" onclick="myFunction();">&times;</span> 
+      Obavijest: "'.$tekst.'" uspiješno poslana
+    </div>
+    ';
 }
 
 echo '
