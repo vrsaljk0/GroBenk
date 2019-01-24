@@ -62,6 +62,7 @@ session_start();
                 $flag = 1;
                 $_SESSION['bolnica_loggedin'] = true;
                 $_SESSION['id'] = $row['idbolnica'];
+                $_SESSION['naziv_bolnice'] = $row['naziv_bolnice'];
                 $_SESSION['admin_loggedin'] = false;
                 $_SESSION['donor_loggedin'] = false;
             }
