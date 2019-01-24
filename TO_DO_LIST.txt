@@ -20,6 +20,8 @@ baza
 
 -textarea na forummu u bolnici ne dela
 
+-kod postavki bolnice samo izvuc i id i napravit nazad na moj profil
+
 
 FRONTEND::
 -DONOR:
@@ -33,4 +35,13 @@ FRONTEND::
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
 	-prikaz količine krvi kod zahtjeva
+	-eventi sredit tablicu
+
+-BOLNICA:
+	-public profile i još malo navbar sredit
+
+-NASLOVA:
+	-SVE HAHAHA
+	-neki alert kad je kriva lozinka
+	-kod sign up-a da ne prođe ako vec postoji taj username
 	
