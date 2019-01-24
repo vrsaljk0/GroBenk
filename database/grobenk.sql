@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 24, 2019 at 12:42 AM
+-- Generation Time: Jan 24, 2019 at 02:34 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -231,29 +231,28 @@ CREATE TABLE IF NOT EXISTS `komentari` (
 
 INSERT INTO `komentari` (`user_autora`, `autor`, `idbolnica_bol`, `tekst_komentara`, `datum_kom`) VALUES
 ('', 'KBC Rijeka', 101, 'Hvala svima na donacijama! Ovdje možete ostavljati svoje komentare, prijedloge i slično!', '2018-12-27'),
-('', 'Katarina Frketic', 101, 'Svaka čast na organizaciji, moje omiljeno mjesto za doniranje krvi', '2019-01-02'),
-('', 'Domagoj Buljubasic', 101, 'Pozdrav plavoj sestri sa šaltera 5 hehe xD', '2019-01-02'),
-('', 'Domagoj Buljubasic', 101, 'gegep', '2019-01-04'),
-('', 'Ana Anic', 103, 'hiiii', '2019-01-08'),
-('', 'Ana Anic', 103, 'hiiii', '2019-01-08'),
-('', 'Ana Anic', 102, 'bok bok', '2019-01-08'),
-('', 'Katarina Ani?', 101, 'test test\r\n', '2019-01-08'),
+('domagoj', 'Domagoj Buljubasic', 101, 'Pozdrav plavoj sestri sa šaltera 5 hehe xD', '2019-01-02'),
+('domagoj', 'Domagoj Buljubasic', 101, 'gegep', '2019-01-04'),
+('anica6', 'Katarina Ani?', 101, 'test test\r\n', '2019-01-08'),
 ('101', 'KBC Susak', 101, 'dobro jutro', '2019-01-09'),
-('', 'Katarina Ani?', 101, 'test12', '2019-01-09'),
+('anica6', 'Katarina Ani?', 101, 'test12', '2019-01-09'),
 ('101', 'KBC Susak', 101, 'lalalalla', '2019-01-09'),
-('', 'Katarina Ani?', 103, 'nenenen', '2019-01-09'),
+('anica6', 'Katarina Ani?', 103, 'nenenen', '2019-01-09'),
 ('101', 'KBC Susak', 101, 'HEHE\r\n', '2019-01-10'),
 ('101', 'KBC Susak', 101, 'test 12', '2019-01-10'),
 ('101', 'KBC Susak', 101, 'lalala', '2019-01-10'),
-('', 'Katarina Ani?', 101, 'fztztfzt', '2019-01-10'),
+('anica6', 'Katarina Ani?', 101, 'fztztfzt', '2019-01-10'),
 ('101', 'KBC Susak', 101, 'hehehe', '2019-01-23'),
 ('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
 ('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
 ('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23'),
-('', 'Katarina Ani?', 101, 'hejjj', '2019-01-23'),
-('', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23'),
+('anica6', 'Katarina Ani?', 101, 'hejjj', '2019-01-23'),
 ('domagoj', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23'),
-('101', 'KBC Susak', 101, 'ćao ćao', '2019-01-23');
+('domagoj', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23'),
+('101', 'KBC Susak', 101, 'ćao ćao', '2019-01-23'),
+('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24'),
+('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24'),
+('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24');
 
 -- --------------------------------------------------------
 
