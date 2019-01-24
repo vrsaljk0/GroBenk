@@ -505,6 +505,48 @@ select::-ms-expand {
   transition: .25s all ease;
 }
 
+/* Custom Select za statistiku */
+.select_statistika {
+    position: relative;
+    display: inline-block;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+}
+select_statistika {
+    width: 100%;
+    margin: 0;
+    padding: 0 0 0 .5em;
+    color: #ffffff;
+    cursor: pointer;
+}
+select_statistika::-ms-expand {
+    display: none;
+}
+/* Arrow */
+.select_statistika::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 1em;
+    background: #AD2D25;
+    pointer-events: none;
+}
+/* Transition */
+.select_statistika:hover::after {
+    color: #AD2D25;
+}
+.select_statistika::after {
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+
 .toggle_obavijesti {
   width: 70%;
   margin-left: 47%;
