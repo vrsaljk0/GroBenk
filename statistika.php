@@ -172,7 +172,7 @@ if(isset($_GET['prikazi'])){
                               $nemaDonora = 0;
                           }
 
-                        echo'<br><h3 style="width:1650px;background-color:#9F0A00;color: #ffffff;text-align: center;width:100vw;margin-left: -16px;">Statistika za '.$year.' .godinu:</h3>';
+                        echo'<br><h2 style="margin-left: -16px"">Statistika za '.$year.' .godinu:</h2><br>';
 
                     } else {
                         jump:
