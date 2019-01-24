@@ -253,7 +253,7 @@ echo '
 
                             $date = date("Ymd");
                             $dolazim = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj FROM lokacija WHERE grad IN 
-                                       (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja > '$date' AND id_lokacije NOT IN 
+                                       (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja >= '$date' AND id_lokacije NOT IN 
                                        (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
                             $run = mysqli_query($conn, $dolazim);
                             $result = $run or die ("Failed to query database". mysqli_error($conn));
