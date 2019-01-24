@@ -44,25 +44,73 @@
         $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
 
-    echo'
-          <html>
-                 <head><title>Profil bolnice</title></head>
-                 <body>
-                     <div id="info">
-                        <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="200" height="200"><br><br>     
-                     </div>
-                        <a href="posalji_zahtjev.php" >Pošalji zahtjev&nbsp;</a><br><br>
-                        <a href="otkazi_zahtjev.php" >Otkazi zahtjev&nbsp;</a><br><br>
-                        <a href="bolnicka_statistika.php">&nbsp;Statistika&nbsp;</a><br><br>
-                        <a href="bolnicke_postavke.php">&nbsp;Postavke&nbsp;</a><br><br>
-                        <a href="forum.php">&nbsp;Forum&nbsp;</a><br><br>
-                        <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>                          
-                      <div id="posalji_zahtjev" align="center">
-                        Pošalji novi zahtjev
-                        <form action="" method="POST">
-                            Kolicina potrebne krvi <input type="number" name="kolicina" step="0.01"><br><br>
-                            Krvna grupa <input type="text" name="grupa"><br><br>
-                            <input type="submit" name="posalji_zahtjev" value="Posalji zahtjev">
-                      </form>'
+echo'
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BloodBank</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <link href="bolnica_zahtjevstyle.css" rel="stylesheet">
+</head>';
 
+echo "
+<div id='nav-placeholder' onload>
+</div> 
+
+<script>
+$(function(){
+  $('#nav-placeholder').load('bolnicanavbar.php');
+});
+</script>";
+
+echo' 
+ <div class="profil-img">
+    <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg">
+    <div class="profil-info">
+        <div class="profil-content">
+            <ul class="nav nav-tabs" id="myTab" >
+                <li class="nav-item">
+                    <a class="nav-link" href="forum.php">Forum</a>
+                </li>
+                <li class="nav-item">
+                   <a class="nav-link active" href="posalji_zahtjev.php">Pošalji zahtjev</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="otkazi_zahtjev.php">Otkaži zahtjev</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bolnicka_statistika.php">Statistika</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-8">
+
+
+            <div class="form-style-6">
+                <h1>Pošalji novi zahtjev</h1>
+                <form action="" method="POST">
+                <input type="number" name="kolicina" step="0.01" placeholder="Količina potrebne krvi (L)" />
+                    <span class="select">
+                        <select id="kgrupa" name="grupa">
+                        <option value="0">Krvna grupa</option>';
+                        $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
+                        for ($i = 0; $i < 8; $i++) {
+                            echo '
+                            <option value='.$krvna_grupa[$i].'>'.$krvna_grupa[$i].'</option>';
+                        }
+                        echo'
+                        </select>
+                    </span>
+                    <input type="submit" class="zbtn" name="posalji_zahtjev" value="Pošalji zahtjev">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>';                          
 ?>
