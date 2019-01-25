@@ -21,7 +21,7 @@ echo '
         <div class="dropdown_donor">
           <button class="dropbtn_donor"><i class="fas fa-hospital"></i></button>
           <div class="dropdown-content_donor">
-            <a href="bolnicke_postavke.php?idbolnica='.urlencode($idbolnica).'"><i class="fas fa-cogs"></i>&nbspPostavke</a> 
+            <a href="bolnicke_postavke.php"><i class="fas fa-cogs"></i>&nbspPostavke</a> 
             <a href="odjava.php"><i class="fas fa-sign-out-alt"></i>&nbspOdjavi se</a>
           </div>
         </div>
