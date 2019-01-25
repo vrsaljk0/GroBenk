@@ -137,15 +137,13 @@ echo '
                     <input type="hidden" name="image_text" value="image_text">
                     <td><input type="submit" name="submit_event" value="Dodaj event"></td>
                 </table>
+                </form>
             
         <form action="" method="GET">
             <input type="text" name = "keyword" placeholder="Pretraži evente">
             Nadolazeći eventi <input type="radio" name="buduci" value="buduci">
             Prošli eventi <input type="radio" name="prosli" value="prosli"">
             <input type="submit" name="trazi" value="Pretraži">
-        </form>
-        <form>
-
         </form>
  
         <form action="" method="POST">

@@ -45,6 +45,7 @@ echo '
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="style.css" rel="stylesheet">
         <link href="donorstyle.css" rel="stylesheet">
+        <link href="adminstyle.css" rel="stylesheet">
     </head>';
 
     echo "
@@ -61,13 +62,13 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Tra%C5%BEi">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="donacije.php">Donacije</a>
+                <a class="nav-link" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>
@@ -171,7 +172,7 @@ if(isset($_GET['prikazi'])){
                               $nemaDonora = 0;
                           }
 
-                        echo'<br><h3>Statistika za '.$year.' .godinu:</h3>';
+                        echo'<br><h2 style="margin-left: -16px"">Statistika za '.$year.' .godinu:</h2><br>';
 
                     } else {
                         jump:
@@ -260,18 +261,18 @@ if(isset($_GET['prikazi'])){
                             $nemaDonora = 0;
                         }
 
-                    echo'<br><h3>Generalna statistika</h3>';
+                    echo'<br><h2 style="margin-left: -16px">Generalna statistika</h2><br>';
                 }
 
 
 
                 echo'
             
-            <br>
+            
             <form method="GET" action="">
+            <span class="select_statistika" style="margin-left: -16px;">
                 <select id="godina" name="godina">
-                <option value="0">-odaberi godinu-</option>';
-
+                <option value="0">Odaberi godinu</option>';
                 $now = new \DateTime('now');
                 $years = $now->format('Y')-4;
                 for ($i = 0; $i < 5; $i++) {
@@ -279,8 +280,9 @@ if(isset($_GET['prikazi'])){
                     $years++;
                 }
                 ?>
-            </select> <br>
-            <input type="submit" name="prikazi" value="prikazi">
+                </select>
+            </span>
+            <input type="submit" class="zbtn" name="prikazi" value="Prikaži" style="position: absolute;height:48px">
             </form></div><br>
 
     <!-- maznula odavde: https://developers.google.com/chart/interactive/docs/gallery/piechart -->
@@ -389,10 +391,10 @@ if(isset($_GET['prikazi'])){
     </script>
 
     <table>
-        <tr>
-            <td><div id="krv" style="width: 400px; height: 225px;"></div></td>
-            <td><div id="lokacije" style="width: 400px; height: 225px;"></div></td>
-            <td><div id="donacije" style="width: 400px; height: 225px;"></div></td>
+        <tr >
+            <td><div id="krv" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
+            <td><div id="lokacije" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
+            <td><div id="donacije" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
         </tr>
     </table>
 </div>

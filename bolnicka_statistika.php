@@ -36,23 +36,52 @@
     $row = mysqli_fetch_array($result);
     $naziv_bolnice = $row['naziv_bolnice'];
 
-    echo'
-        <html>
-             <head><title>Profil bolnice</title></head>
-             <body>
-                 <div id="info">
-                    <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="200" height="200"><br><br>
-                
-                 </div>
-                 
-                 <div id="linkovi">
-                    <a href="posalji_zahtjev.php" >Pošalji zahtjev&nbsp;</a><br><br>
-                    <a href="otkazi_zahtjev.php" >Otkazi zahtjev&nbsp;</a><br><br>
-                    <a href="bolnicka_statistika.php">&nbsp;Statistika&nbsp;</a><br><br>
-                    <a href="bolnicke_postavke.php">&nbsp;Postavke&nbsp;</a><br><br>
-                    <a href="forum.php">&nbsp;Forum&nbsp;</a><br><br>
-                    <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>                          
-                 </div>';
+   echo '
+      <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>BloodBank</title>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+          <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+          <link href="style.css" rel="stylesheet">
+          <link href="bolnica_zahtjevstyle.css" rel="stylesheet">
+      </head>';
+
+      echo "
+      <div id='nav-placeholder' onload>
+      </div> 
+
+      <script>
+      $(function(){
+        $('#nav-placeholder').load('bolnicanavbar.php');
+      });
+      </script>";
+
+  echo' 
+   <div class="profil-img">
+      <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg">
+      <div class="profil-info">
+          <div class="profil-content">
+              <ul class="nav nav-tabs" id="myTab" >
+                  <li class="nav-item">
+                      <a class="nav-link" href="forum.php">Forum</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="posalji_zahtjev.php">Pošalji zahtjev</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="otkazi_zahtjev.php">Otkaži zahtjev</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="bolnicka_statistika.php">Statistika</a>
+                  </li>
+              </ul>
+          </div>
+
+          <div class="col-md-8">';
 
                     if(isset($_POST['prikazi'])){
 
@@ -195,19 +224,11 @@
 
                     }
 
-                    echo'<table border="1">
-                          <tr>';
-                            $i = 0;
-                            for ($i=0; $i<8; $i++) {
-                                echo $krv[$i];
-                                echo $kol_krvi[$i];
-                                echo'<br>';
-                            }
-                          echo'</tr>
-                        </table>
+                    echo'
                         
                 <form method="post" action="">
                 <br>
+                <span class="select">
                 <select id="godina" name="godina">
                 <option value="0">-odaberi godinu-</option>';
 
@@ -217,8 +238,8 @@
                         echo '<option value='.$years.'>-'.$years.'.godina-</option>';
                         $years++;
                     }
-                echo '</select> <br>
-                <input type="submit" name="prikazi" value="prikazi">
+                echo '</select></span> <br>
+                <input type="submit" class="zbtn" name="prikazi" value="Prikaži">
                 </form>';
                 ?>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -326,7 +347,8 @@
                             <td><div id="primljeno" style="width: 400px; height: 225px;"></div></td>
                         </tr>
                     </table>    
-    
-             </body>
+          </div>
+      </div>
+  </div>
 
-
+                    
