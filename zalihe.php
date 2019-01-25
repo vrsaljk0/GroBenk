@@ -1,11 +1,41 @@
 <?php
 $percent = "20%";
+
+require_once "dbconnect.php";
+session_start();
+mysqli_set_charset($conn,"utf8");
+
+/** SESSION TIMEOUT */
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    header("Location:odjava.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
+if (!$_SESSION['bolnica_loggedin']) header("Location:denied_permission.php");
+
+$_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
+
+
+/** ZALIHA KRVI*/
+$nemaKrvi = 0;
+$krv = array('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', '0+', '0-');
+$kol_krvi = array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+for ($i=0; $i<8; $i++) {
+    $sql = "select kolicina_grupe as kolicina from zaliha where krvna_grupa = '$krv[$i]'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $kol_krvi[$i] = $row['kolicina'];
+}
 ?>
-<head>
+
+    <head>
 	<script src="jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="http://kbc-rijeka.hr/wp-includes/js/jquery/jquery.js?ver=1.11.3"></script>
 	<link rel="stylesheet" href="http://kbc-rijeka.hr/wp-content/themes/medicenter-child/zalihe.css" type="text/css">
 	<style>
+	
+    
 	#supplies {
 	    position: relative;
 	    padding: 30px 0 30px 20px;
@@ -124,7 +154,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: <?= $percent ?>;
+	    height: 50%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -132,7 +162,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 70%;
+	    height: <?= $kol_krvi[0] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -140,7 +170,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 50%;
+	    height: <?= $kol_krvi[1] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -148,7 +178,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 70%;
+	    height: <?= $kol_krvi[2] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -156,7 +186,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 50%;
+	    height: <?= $kol_krvi[3] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -164,7 +194,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 70%;
+	    height: <?= $kol_krvi[4] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -172,7 +202,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 50%;
+	    height: <?= $kol_krvi[5] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -180,7 +210,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 70%;
+	    height: <?= $kol_krvi[6] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -188,7 +218,7 @@ $percent = "20%";
 	    position: absolute;
 	    bottom: 0;
 	    width: 100%;
-	    height: 50%;
+	    height: <?= $kol_krvi[7] ?>%;
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
@@ -276,3 +306,5 @@ $percent = "20%";
 		<div style="clear: both;"></div>
 </div>
 </body>
+
+
