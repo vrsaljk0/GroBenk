@@ -36,51 +36,85 @@
       $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
   }
+echo '
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BloodBank</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link href="style.css" rel="stylesheet">
+        <link href="donorstyle.css" rel="stylesheet">
+    </head>';
 
-  echo'<b>'.$row['naziv_bolnice'].'</b>
-  <br>Grad:'.$row['grad'].'
-  <br>Adresa:'.$row['adresa_bolnice'].'
-  <br>Poštanski broj:'.$row['postanski_broj'].'<br><br>
-  <h4>Aktualni eventi u okolici:</h4>';
+echo "
+    <div id='nav-placeholder' onload>
+    </div> 
 
-  $sql = "SELECT * from lokacija where grad in (select grad from bolnica where idbolnica = '$id_bolnice') and 
-          datum_dogadaja >= '$date'";
-  $run = mysqli_query($conn, $sql);
-  $result = $run or die ("Failed to query database". mysqli_error($conn));
+    <script>
+    $(function(){
+      $('#nav-placeholder').load('donornavbar.php');
+    });
+    </script>";
 
-  while($row = mysqli_fetch_array($run)){
-    echo ' '.$row['datum_dogadaja'].' '. $row['naziv_lokacije'].'  '. $row['start'].'-'. $row['kraj'].'<br><br></i>';
-  }
-
-  echo'<br><br>
-  <h4>Forum:</h4>';
-
-  $sql = "SELECT * from komentari where idbolnica_bol = '$id_bolnice'";
-  $run = mysqli_query($conn, $sql);
-  $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-  while($row = mysqli_fetch_array($run)){
-    if(is_numeric ($row['user_autora'])){ //radi se o bolnici
-      echo '<a href="publicbolnica.php?id_bolnice='.urlencode($row['user_autora']).'">'.$row['autor'].'</a>';
-    }
-    else {
-      $username = $row['user_autora'];
-      $don = "SELECT * from donor where username = '$username'";
-      $run2 = mysqli_query($conn, $don);
-      $result = $run2 or die ("Failed to query database". mysqli_error($conn));
-      $row_don = mysqli_fetch_array($run2);
-      //echo '<img src="donori/'.$row_don['image'].'">';
-      echo '<a href="publicprofile.php?username='.urlencode($username).'">'.$row['autor'].'</a>';
-    }
-    echo' komentirao je '.$row['datum_kom'].'<br><br>';
-    echo $row['tekst_komentara'].'<br><br>';
-  }
-  echo'<textarea name="tekst" id="tekst" form="myform"></textarea>
-                          <form action="" method="POST" id="myform">
-                            <input type="submit" value="Komentiraj" name="komentar"> 
-                          </form>
-                          ';
-
+echo'
+<div class="profil-img">
+  <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg">
+  <div class="profil-info">
+    <div class="profil-title">
+    <h1>'.$row['naziv_bolnice'].'</h1>
+    </div>
+    <div class="profil-content">
+          <ul class="nav nav-tabs" id="myTab" >
+              <li class="nav-item">
+                  <a class="nav-link active" href="publicbolnica.php?id_bolnice='.urlencode($id_bolnice).'">Općenito</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="publicforum.php?id_bolnice='.urlencode($id_bolnice).'">Forum</a>
+              </li>
+          </ul>
+      </div>
+      <div class="col-md-8">
+          <div class="tab-content profile-tab" id="myTabContent">
+              <div class="row">
+                  <div class="col-md-6">
+                      <label>Naziv bolnice:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <p class="info">'.$row['naziv_bolnice'].'</p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label>Adresa:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <p class="info">'.$row['adresa_bolnice'].'</p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label>Grad:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <p class="info">'.$row['grad'].'</p>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label>Poštanski broj:</label>
+                  </div>
+                  <div class="col-md-6">
+                      <p class="info">'.$row['postanski_broj'].'</p>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>';
 ?>
 
 
