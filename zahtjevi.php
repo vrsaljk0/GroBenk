@@ -45,7 +45,7 @@ echo '
                 <a class="nav-link active" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="donacije.php">Donacije</a>
+                <a class="nav-link" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>
