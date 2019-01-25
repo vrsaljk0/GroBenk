@@ -62,7 +62,7 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Tra%C5%BEi">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
