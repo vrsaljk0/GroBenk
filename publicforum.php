@@ -36,6 +36,8 @@
       $run = mysqli_query($conn, $sql);
       $result = $run or die ("Failed to query database". mysqli_error($conn));
     }
+    $url = 'publicforum.php?id_bolnice='.urlencode($id_bolnice);
+    header("Location:$url");
   }
   $results_per_page = 3;
 echo '

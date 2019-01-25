@@ -112,7 +112,7 @@
    
     $star = '<i style="color:goldenrod;" class="fas fa-star"></i>';
     if(isset($_POST['posalji_poruku'])){
-        $datum = date('Y-m-d');
+        $datum = date('Y-m-d H:i:s');
         $poruka = $_POST['poruka'];
         $sql = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values('$OIB_korisnika', '$OIB_donora', '$poruka', '$datum', '0')";
         $run = mysqli_query($conn, $sql);

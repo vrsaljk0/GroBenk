@@ -2,7 +2,7 @@
 require_once "dbconnect.php";
 session_start();
 $OIB = $_SESSION['id'];
-$datum = date('Y-m-d');
+$datum = date('Y-m-d H:i:s');
 
 echo 'ISPIS SVIH PORUKA<br><br><br>';
 $info = "SELECT *from donor where OIB_donora = '$OIB'";
