@@ -9,7 +9,7 @@
     }
     $_SESSION['LAST_ACTIVITY'] = time();
 
-    if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
+    if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
     echo'Dobrodošao admine!
 
     <div>

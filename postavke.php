@@ -10,6 +10,7 @@ require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
 session_start();
 $OIB = $_SESSION["mojOIB"];
+if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 echo '
 <head>
     <meta charset="utf-8">

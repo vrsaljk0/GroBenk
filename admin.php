@@ -3,6 +3,7 @@
 require_once "dbconnect.php";
 session_start();
 mysqli_set_charset($conn,"utf8");
+if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
 echo '
     <head>
         <meta charset="utf-8">

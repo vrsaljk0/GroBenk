@@ -23,7 +23,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
-if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
+if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 
 echo "
     <div id='nav-placeholder' onload>

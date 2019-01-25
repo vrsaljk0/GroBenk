@@ -34,7 +34,7 @@
     }
     $_SESSION['LAST_ACTIVITY'] = time();
 
-    if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
+    if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 
     $username = $_GET['username'];
     $OIB_donora =  $_SESSION['mojOIB'];
