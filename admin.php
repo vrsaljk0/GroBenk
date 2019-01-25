@@ -32,10 +32,10 @@ echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Pretraži">Eventi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php?keyword=&trazi=Tra%C5%BEi">Zahtjevi</a>
+                <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="donacije.php">Donacije</a>
