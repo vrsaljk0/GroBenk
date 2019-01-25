@@ -51,7 +51,7 @@
         }
 
         if($flag == 1)$url = 'index.html';
-        else $url = 'bolnicke_postavke.php';
+        else $url = 'bolnica.php';
         header("Location: $url");
     }
 
@@ -133,7 +133,7 @@ echo'
                   <div class="col-md-8">
                     <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="updejtaj" value="Promijeni podatke">
                     <span></span>
-                    <bottom><br><br><a href="donor.php?OIB='.$OIB.'">Nazad na moj profil</a></bottom>
+                    <bottom><br><br><a href="bolnica.php">Nazad na moj profil</a></bottom>
                   </div>
                 </div>
             </div>
