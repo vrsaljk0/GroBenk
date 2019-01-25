@@ -57,6 +57,9 @@ echo'
         <div class="profil-content">
             <ul class="nav nav-tabs" id="myTab" >
                 <li class="nav-item">
+                    <a class="nav-link active" href="bolnicaopcenito.php">Općenito</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="forum.php">Forum</a>
                 </li>
                 <li class="nav-item">
