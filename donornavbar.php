@@ -22,6 +22,13 @@ mysqli_set_charset($conn,"utf8");
 //$_SEESION["current"] = $_SERVER['REQUEST_URI'];
 
 echo '
+<html>
+<head>
+<style>
+
+</style>
+</head>
+
 <nav class="navbar navbar-expand-md navbar-light bg-white ">
 <div class="container-fluid">
 	<a class="navbar-brand" href="index.html"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
@@ -52,7 +59,7 @@ echo '
 					}
 					echo'
 					<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
-						<div class="dropdown-content_donor">';
+						<div class="dropdown-content_donor"  style="min-width: 280px; max-height: 250px; overflow-y:scroll;">';
 							//ajmo prvo obavijesti od admina
 							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1'";
 							$run = mysqli_query($conn, $sql);
@@ -60,9 +67,10 @@ echo '
 							if($neprocitano){
 							    echo'
 							    <form action="notification.php" method="POST">';
-							    echo'<b>ADMIN</b>';
+							    echo'<b>ADMIN</b><br>';
 							    while($row = mysqli_fetch_array($result)){
-							        echo '<p>'.$row['tekst_obav'].' '.$row['datum_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
+							    	echo '<i>'.$row['datum_obav'].'</i> ';
+							        echo $row['tekst_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
 							    }
 							    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
 							    </form>';
@@ -73,7 +81,7 @@ echo '
 							if($neprocitano){
 							    echo'
 							    <form action="notification.php" method="POST">';
-							    echo'<b>KORISNICI</b>';
+							    echo'<b>KORISNICI</b><br>';
 							    while($row = mysqli_fetch_array($result)){
 							    	$OIB_prijatelja = $row['ID_posiljatelja'];
 							    	$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
@@ -81,9 +89,12 @@ echo '
 									$result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
 									$row_prijatelj = mysqli_fetch_array($result2);
 									$ime = $row_prijatelj['ime_prezime_donora'];
-							        echo '<p>'.$ime.' '.$row['tekst_obav'].' '.$row['datum_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
+									$username_prijatelja = $row_prijatelj['username'];
+									echo '<i>'.$row['datum_obav'].'</i> <a  href="publicprofile.php?username='.urlencode($username_prijatelja).'"><font color="FF00CC">'.$row_prijatelj['ime_prezime_donora'].'</font></a>
+										 '.$row['tekst_obav'].' <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
 							    }
-							    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
+							    echo '<a href="history.php">Prikaži sve</a>
+							    <input type="hidden" name="OIB" value="'.$OIB.'">
 							    </form>';
 							}
 							else{
@@ -92,11 +103,7 @@ echo '
 						echo'
 						</div>
 				 </div>
-				 <div class="dropdown_donor">
-                  <button class="dropbtn_donor"><i class="far fa-envelope"></i></button>
-                  <div class="dropdown-content_donor">
-                  </div>
-                </div>
+				 
 
 				<div class="dropdown_donor" style="cursor:pointer;">
 					<button class="dropbtn_donor"><i class="fas fa-user-circle"></i></button>
@@ -113,7 +120,9 @@ echo '
 		</ul>
 	</div>
 </div>
-</nav>';
+</nav>
+</html>'
+						;
 
 ?>
 
