@@ -98,7 +98,7 @@ echo'
 
             $this_page_first_result = ($page-1)*$results_per_page;
 
-            $sql = "SELECT * FROM komentari where idbolnica_bol = '$idbolnica' LIMIT " . $this_page_first_result . ',' . $results_per_page;
+            $sql = "SELECT * FROM komentari where idbolnica_bol = '$idbolnica' order by datum_kom desc LIMIT " . $this_page_first_result . ',' . $results_per_page;
             $run = mysqli_query($conn, $sql);
 
             if($page == 1) {
