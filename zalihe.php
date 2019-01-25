@@ -11,7 +11,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
-if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
+if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 
 $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
 
@@ -26,6 +26,7 @@ for ($i=0; $i<8; $i++) {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $kol_krvi[$i] = $row['kolicina'];
+    if($kol_krvi[$i] > 100) $kol_krvi[$i] = 100;
 }
 ?>
 
@@ -37,6 +38,8 @@ for ($i=0; $i<8; $i++) {
 	
     
 	#supplies {
+		width: 70%;
+		margin-left: 18%;
 	    position: relative;
 	    padding: 30px 0 30px 20px;
 	    font-family: Arial, Helvetica, sans-serif;
@@ -142,6 +145,10 @@ for ($i=0; $i<8; $i++) {
 	    z-index: 2;
 	}
 
+	#supplies .measure one {
+		border-style: solid;
+	}
+
 	#supplies .measure .outer {
 	    position: relative;
 	    bottom: 0;
@@ -222,6 +229,18 @@ for ($i=0; $i<8; $i++) {
 	    background: url(http://kbc-rijeka.hr/wp-content/themes/medicenter-child/images/fill.png) no-repeat;
 	    overflow: hidden;
 	}
+
+	.kol {
+		width: 55%;
+		margin-left: 19%;
+		margin-top: -35px;
+	}
+
+	.kol td {
+		padding: 0px 10px;
+		text-align: center;
+		width: 77px;
+	}
 	</style>
 
 </head>
@@ -229,8 +248,8 @@ for ($i=0; $i<8; $i++) {
 <body>
 <div id="supplies">
 	<div class="high"><span>Prevelike zalihe</span></div>
-	<div class="low"><span>Premale zalihe</span></div>
-	<div style="clear: both;"></div>
+		<div class="low"><span>Premale zalihe</span></div>
+		<div style="clear: both;"></div>
 		<div class="measure one">
 		<div class="name">A+</div>
 		<div class="top" style="bottom: 80px"></div>
@@ -250,60 +269,75 @@ for ($i=0; $i<8; $i++) {
 		<div class="bottom" style="bottom: 23px"></div>
 	</div>
 		<div class="measure one">
-		<div class="name">O+</div>
+		<div class="name">B+</div>
 		<div class="top" style="bottom: 80px"></div>
 		<div class="bag"></div>
 		<div class="outer">
-			<div data-percent="21" class="inneropoz"></div>
+			<div data-percent="21" class="innerbpoz"></div>
 		</div>
 		<div class="bottom" style="bottom: 36px"></div>
 	</div>
 		<div class="measure one">
-		<div class="name">O-</div>
+		<div class="name">B-</div>
 		<div class="top" style="bottom: 72px"></div>
 		<div class="bag"></div>
 		<div class="outer">
-			<div data-percent="60" class="inneroneg"></div>
-		</div>
-		<div class="bottom" style="bottom: 20px"></div>
-	</div>
-		<div class="measure one">
-		<div class="name">B+</div>
-		<div class="top" style="bottom: 83px"></div>
-		<div class="bag"></div>
-		<div class="outer">
-			<div data-percent="29" class="innerbpoz"></div>
-		</div>
-		<div class="bottom" style="bottom: 32px"></div>
-	</div>
-		<div class="measure one">
-		<div class="name">B-</div>
-		<div class="top" style="bottom: 80px"></div>
-		<div class="bag"></div>
-		<div class="outer">
-			<div data-percent="50" class="innerbneg"></div>
+			<div data-percent="60" class="innerbneg"></div>
 		</div>
 		<div class="bottom" style="bottom: 20px"></div>
 	</div>
 		<div class="measure one">
 		<div class="name">AB+</div>
-		<div class="top" style="bottom: 75px"></div>
+		<div class="top" style="bottom: 83px"></div>
 		<div class="bag"></div>
 		<div class="outer">
-			<div data-percent="46" class="innerabpoz"></div>
+			<div data-percent="29" class="innerabpoz"></div>
+		</div>
+		<div class="bottom" style="bottom: 32px"></div>
+	</div>
+		<div class="measure one">
+		<div class="name">AB-</div>
+		<div class="top" style="bottom: 80px"></div>
+		<div class="bag"></div>
+		<div class="outer">
+			<div data-percent="50" class="innerabneg"></div>
 		</div>
 		<div class="bottom" style="bottom: 20px"></div>
 	</div>
 		<div class="measure one">
-		<div class="name">AB-</div>
+		<div class="name">O+</div>
+		<div class="top" style="bottom: 75px"></div>
+		<div class="bag"></div>
+		<div class="outer">
+			<div data-percent="46" class="inneropoz"></div>
+		</div>
+		<div class="bottom" style="bottom: 20px"></div>
+	</div>
+		<div class="measure one">
+		<div class="name">O-</div>
 		<div class="top" style="bottom: 73px"></div>
 		<div class="bag"></div>
 		<div class="outer">
-			<div data-percent="30" class="innerabneg"></div>
+			<div data-percent="30" class="inneroneg"></div>
 		</div>
 		<div class="bottom" style="bottom: 20px"></div>
 	</div>
 		<div style="clear: both;"></div>
+</div>
+<div class="kol">
+	<!--<span>akid</span><span>akid</span><span>akid</span><span>akid</span><span>akid</span><span>akid</span><span>akid</span><span>akid</span>-->
+	<table>
+		<tr>
+			<td><b><?= $kol_krvi[0] ?> L</b></td>
+			<td><b><?= $kol_krvi[1] ?> L</b></td>
+			<td><b><?= $kol_krvi[2] ?> L</b></td>
+			<td><b><?= $kol_krvi[3] ?> L</b></td>
+			<td><b><?= $kol_krvi[4] ?> L</b></td>
+			<td><b><?= $kol_krvi[5] ?> L</b></td>
+			<td><b><?= $kol_krvi[6] ?> L</b></td>
+			<td><b><?= $kol_krvi[7] ?> L</b></td>
+		</tr>
+	</table>
 </div>
 </body>
 

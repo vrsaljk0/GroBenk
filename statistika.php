@@ -44,7 +44,6 @@ echo '
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="style.css" rel="stylesheet">
-        <link href="donorstyle.css" rel="stylesheet">
         <link href="adminstyle.css" rel="stylesheet">
     </head>';
 
@@ -57,6 +56,15 @@ echo '
       $('#nav-placeholder').load('adminnavbar.php');
     });
     </script>";
+
+    echo "
+    <div id='supplies' onload></div>
+    <script>
+    $(function(){
+      $('#supplies').load('zalihe.php');
+    });
+    </script>"
+    ;
 
 echo '
 <div class="admin-content">
@@ -391,11 +399,13 @@ if(isset($_GET['prikazi'])){
     </script>
 
     <table>
-        <tr >
+        <tr>
             <td><div id="krv" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
             <td><div id="lokacije" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
             <td><div id="donacije" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
         </tr>
     </table>
+</div>
+<div style="height:200px;">
 </div>
 </html>

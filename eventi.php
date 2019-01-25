@@ -43,7 +43,7 @@ echo '
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="style.css" rel="stylesheet">
-        <link href="donorstyle.css" rel="stylesheet">
+        <link href="adminstyle.css" rel="stylesheet">
     </head>';
 
     echo "
@@ -55,6 +55,15 @@ echo '
       $('#nav-placeholder').load('adminnavbar.php');
     });
     </script>";
+
+    echo "
+    <div id='supplies' onload></div>
+    <script>
+    $(function(){
+      $('#supplies').load('zalihe.php');
+    });
+    </script>"
+    ;
 
 echo '
 <div class="admin-content">
@@ -203,6 +212,8 @@ echo '
                 <input type="checkbox" name="select_all" id = "select_all"><br><br>
                 <input type="submit" name="delete" value="Izbrisi evente">
             </form>
+    </div>
+    <div style="height:200px;">
     </div>
 </div>';
 ?>

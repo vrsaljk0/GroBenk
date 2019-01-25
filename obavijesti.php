@@ -63,6 +63,15 @@ echo '
     });
     </script>";
 
+    echo "
+    <div id='supplies' onload></div>
+    <script>
+    $(function(){
+      $('#supplies').load('zalihe.php');
+    });
+    </script>"
+    ;
+
 echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
@@ -165,6 +174,8 @@ echo '
             <br><textarea placeholder="Napiši obavijest..." name="tekst" id="tekst" form="obavijest"></textarea><br>
             <input type="submit" class="newbutton" name="obavijest" value="Pošalji">
         </form>
+    </div>
+    <div style="height:200px;">
     </div>
 </div>';
 ?>

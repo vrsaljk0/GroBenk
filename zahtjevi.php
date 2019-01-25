@@ -35,6 +35,15 @@ echo '
     });
     </script>";
 
+    echo "
+    <div id='supplies' onload></div>
+    <script>
+    $(function(){
+      $('#supplies').load('zalihe.php');
+    });
+    </script>"
+    ;
+
 echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
@@ -190,6 +199,8 @@ echo '
                     <input type="submit" class="zbtn" name="odbij_zahtjev" value="Odbij">
             </form>';
     echo '
+    </div>
+    <div style="height:200px;">
     </div>
 </div>';
 ?>
