@@ -127,7 +127,7 @@ echo '
                     }
                     foreach ($OIB_obavijesti as $OIB) {
                         $tekst_obav = 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!';
-                        $sql = "insert into obavijesti (OIBdonora, tekst_obav, datum_obav, procitano) values ('$OIB', '$tekst_obav', '$now', '0')";
+                        $sql = "insert into obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values ('$OIB', '1', '$tekst_obav', '$now', '0')";
                         $run = mysqli_query($conn, $sql);
                         $result = $run or die ("Failed to query database". mysqli_error($conn));
                     }
@@ -146,7 +146,7 @@ echo '
                 $result = $run or die ("Failed to query database". mysqli_error($conn));
             }
         }
-        //header("Location:admin.php");
+        //header("Location:zahtjev.php");
     }
     $i = 0;
     echo '
