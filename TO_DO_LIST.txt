@@ -1,16 +1,25 @@
 ﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
-23.1.2019
+statistika.php
+    
+-dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
+    
+- sad kad sam ispravila lokaciju statistika ne pokazuje ništa
 
-donornavbar.php
-    - pozabaviti se sa sustavom poruka
-    - dodati link show history di će biti pregled svih obavijesti do sad
+donor.php
+    
+- ne znam jesmo ispravile unos lozinki
+- obavjesti/poruke, ako nema poruka od npr.korisnika da ne pise "Korisnik" nego samo bude prazno
 
-donacija.php
-    - iz nekog razloga se ništa ne prikazuje nakon searcha
-eventi.php
-   - baciti oko dal se obavijesti idalje duplaju
+bolnica.php
+    
+-popravit statistiku i dodat sve isto ko u admin statistici
+
+baza
+
+-provjerit evente kod donora jer ne ispisuje kako treba
+
 
 FRONTEND::
 -DONOR:
@@ -20,14 +29,15 @@ FRONTEND::
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
 	-pokušat dodat sliku kraj imena
-    -dodan input type za kratku poruku i sve se sjebalo
-    -urediti obavijesti; sandi je spomenuo da bi volio da su obavijesti od admina i korisnika druge boje
-    -
 -ADMIN:
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
 	-prikaz količine krvi kod zahtjeva
+	-eventi sredit tablicu
 
-DONOR && BOLNICA:
-    nakon što se promijeni lozinka napravit preusmjeravanje na pop up ponovnog logina
 
+-NASLOVA:
+	-SVE HAHAHA
+	-neki alert kad je kriva lozinka
+	-kod sign up-a da ne prođe ako vec postoji taj username
+	
