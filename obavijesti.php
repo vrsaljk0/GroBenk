@@ -126,8 +126,7 @@ if(isset($_GET['obavijest'])) {
       Obavijest: "'.$tekst.'" uspiješno poslana
     </div>
     ';
-    $url = 'obavijesti.php';
-    header("Location:$url");
+
 }
 
 echo '
