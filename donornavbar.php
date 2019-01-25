@@ -98,7 +98,8 @@ echo '
 							    </form>';
 							}
 							else{
-							    echo"Nema novih obavijesti";
+							    echo'Nema novih obavijesti
+							       <a href="history.php">Prikaži sve</a>';
 							}
 						echo'
 						</div>

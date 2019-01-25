@@ -117,6 +117,8 @@
         $sql = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values('$OIB_korisnika', '$OIB_donora', '$poruka', '$datum', '0')";
         $run = mysqli_query($conn, $sql);
         $result = $run or die ("Failed to query database". mysqli_error($conn));
+        $url = 'publicprofile.php?username='.urlencode($username);
+        header("Location:$url");
     }
     echo '
     <div class="profil-img">
