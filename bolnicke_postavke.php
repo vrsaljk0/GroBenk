@@ -56,47 +56,91 @@
     }
 
 
-    echo'
-        <html>
-             <head><title>Profil bolnice</title></head>
-             <body>
-                 <div id="info">
-                    <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="200" height="200"><br><br>
-                
-                 </div>
-                 <div id="linkovi">
-                    <a href="posalji_zahtjev.php" >Pošalji zahtjev&nbsp;</a><br><br>
-                    <a href="otkazi_zahtjev.php" >Otkazi zahtjev&nbsp;</a><br><br>
-                    <a href="bolnicka_statistika.php">&nbsp;Statistika&nbsp;</a><br><br>
-                    <a href="bolnicke_postavke.php">&nbsp;Postavke&nbsp;</a><br><br>
-                    <a href="forum.php">&nbsp;Forum&nbsp;</a><br><br>
-                    <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>                          
-                 </div>
-             
-                  <div id="postavke" align="middle">
-                    <b>Uredi postavke:</b>';
+echo'
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BloodBank</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <link href="donorstyle.css" rel="stylesheet">
+    <base target="_self">
+    <meta name="google" value="notranslate">
+    <link rel="shortcut icon" href="/images/cp_ico.png">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
 
-                    $sql = "select * from bolnica where idbolnica = '$idbolnica'";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $password = $row['password'];
+<div class="container">
+    <form action="" method="POST">
+      <h1>Uredi profil</h1>
+      <hr>
+        <div class="row">
+            <div class="col-md-3">
+            </div>
 
-                    echo'
-                    <form action="" method="POST">
-                        Naziv bolnice: <input type="text" name="naziv_bolnice" value="' . $row['naziv_bolnice'] . '"> <br><br>
-                        Grad: <input type="text" name="grad" value="' . $row['grad'] . '"><br><br>
-                        Adresa: <input type="text" name="adresa_bolnice" value="' . $row['adresa_bolnice'] . '"><br><br>
-                        Poštanski broj: <input type="number" name="postanski_broj" value="' . $row['postanski_broj'] . '"><br><br><br>
-                       
-                    <b>Promjeni lozinku:</b><br>
-                        Trenutna lozinka: <input type="password" name="trenutna" value="' . $row['password'] . '"><br><br> 
-                        Nova lozinka:<input type="password" name="nova1" "><br><br> 
-                        Ponovni upis nove lozinke:<input type="password" name="nova2" "><br><br> 
-                        <input type="hidden" name="password" value="' . $row['password'] . '"><br><br> 
-                         <input type="submit" name="updejtaj" value="Spremi promjene"><br></br>
-                    </form>';
-
-                  echo'</div>     
-             </body>';
+            <div class="col-md-9 personal-info">
+            <h3>Osobni podaci</h3>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Naziv bolnice:</label>
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control" name="naziv_bolnice" value="'.$row['naziv_bolnice'].'">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Grad:</label>
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control"  name="grad" value="'.$row['grad'].'">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Adresa:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name="adresa_bolnice" value='.$row['adresa_bolnice'].'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Poštanski broj:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="number" name="postanski_broj" value="'.$row['postanski_broj'].'">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Trenutna lozinka:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" name="trenutna" value='.$row['password'].'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Nova lozinka:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" name="nova1">
+                  </div>
+                </div>
+               <div class="form-group">
+                  <label class="col-md-3 control-label">Potvrdite novu lozinku:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="password" name="nova2">
+                    <input class="form-control" type="hidden" name="password" value="' . $row['password'] . '"><br><br>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="updejtaj" value="Promijeni podatke">
+                    <span></span>
+                    <bottom><br><br><a href="donor.php?OIB='.$OIB.'">Nazad na moj profil</a></bottom>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>  
+';
 
 ?>
