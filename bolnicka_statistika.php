@@ -1,16 +1,4 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-    function OdjaviMe(){
-        window.location.replace('odjava.php');
-    }
-</script>
-
-<script>
-    function Ulogirajme(){
-        window.location.replace('boln_login.php');
-    }
-</script>
-
 <?php
     require_once "dbconnect.php";
     session_start();

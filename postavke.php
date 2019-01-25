@@ -1,10 +1,4 @@
-﻿﻿<script>
-function OdjaviMe(){
-window.location.replace('donor.php');
-}
-</script>
-
-<?php
+﻿<?php
 
 require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";

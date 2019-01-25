@@ -1,10 +1,3 @@
-<script>
-    function OdjaviMe(){
-        window.location.replace('odjava.php');
-    }
-</script>
-
-
 <?php
     require_once "dbconnect.php";
     session_start();
@@ -50,7 +43,7 @@
             $flag = 1;
         }
 
-        if($flag == 1)$url = 'index.html';
+        if($flag == 1)$url = 'index.php';
         else $url = 'bolnica.php';
         header("Location: $url");
     }

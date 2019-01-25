@@ -1,19 +1,3 @@
-<script>
-        function OdjaviMe(){
-            window.location.replace('odjava.php');
-        }
-        function toggleVisibility(button) {
-            if(button == "button1")var x = document.getElementById("pratim");
-            else var x = document.getElementById("prate_me");
-
-            if(x.style.display === "block") {
-                x.style.display = "none";
-            }
-            else {
-                x.style.display = "block";
-            }
-        }
-</script>
 <?php
 
 echo '
