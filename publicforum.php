@@ -13,7 +13,7 @@
   if (!$_SESSION['donor_loggedin']) header("Location:denied_permission.php");
 
   $id_bolnice = $_GET['id_bolnice'];
-  $OIB = $_SESSION['mojOIB'];
+  $OIB = $_SESSION['id'];
 
   $query ="select * from donor where OIB_donora = '$OIB'";
   $run = mysqli_query($conn, $query);
@@ -21,7 +21,8 @@
   $row_donor = mysqli_fetch_assoc($result);
   $ime = $row_donor['ime_prezime_donora'];
   $username = $row_donor['username'];
-  $date = date('Y-m-d');
+
+  $date = date('Y-m-d H:i:s');
 
   $query ="select * from bolnica where idbolnica = '$id_bolnice'";
   $run = mysqli_query($conn, $query);
@@ -150,7 +151,7 @@ echo'
                                           echo'<a href="publicprofile.php?username='.urlencode($row['user_autora']).'"><b>'.$row['autor'].'</b></a>';
                                         }
                                         echo'
-                                        je komentirao:
+                                        komentira:
                                     </div>
                                     <h6 class="text-muted time">'. $row['datum_kom'].'</h6>
                                 </div>
