@@ -1,28 +1,57 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<SCRIPT language="javascript">
+    $(function(){
+
+        $("#select_all").click(function () {
+            $('.case').prop('checked', this.checked);
+        });
+
+        $(".case").click(function(){
+
+            if($(".case").length == $(".case:checked").length) {
+                $("#select_all").prop("checked", "checked");
+            } else {
+                $("#select_all").removeProp("checked");
+            }
+
+        });
+    });
+</SCRIPT>
+
 <?php
-    require_once ("dbconnect.php");
-    session_start();
-    mysqli_set_charset($conn,"utf8");
+require_once ("dbconnect.php");
+session_start();
+mysqli_set_charset($conn,"utf8");
 
-    /** SESSION TIMEOUT */
-    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-        header("Location:odjava.php");
-    }
-    $_SESSION['LAST_ACTIVITY'] = time();
+/** SESSION TIMEOUT */
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    header("Location:odjava.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 
-    if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
-    echo'Dobrodošao admine!
+if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
 
+echo '
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BloodBank</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <link href="donorstyle.css" rel="stylesheet">
+    <base target="_self">
+    <meta name="google" value="notranslate">
+    <link rel="shortcut icon" href="/images/cp_ico.png">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>';
 
-    <div>
-       <a href="eventi.php?keyword=&trazi=Traži" >Eventi&nbsp;</a>
-       <a href="zahtjevi.php">&nbsp;Zahtjevi&nbsp;</a>
-       <a href="donacije.php?keyword=&trazi=Traži">&nbsp;Donacije&nbsp;</a>
-       <a href="obavijesti.php">&nbsp;Obavijesti&nbsp;</a>
-       <a href="statistika.php">&nbsp;Statistika&nbsp;</a>
-       <a href="odjava.php">&nbsp;Odjavi se&nbsp;</a>
-   </div><br><br>';
-    /** kadgod se klikne na uredi_event link se sjebe i vise ne zna sta je idEvent
-      stavila sam u formu hidden input jer inace nez kako da saljem taj id :((((  */
+   
     $id = $_GET['idEvent'];
 
     if(isset($_POST['uredi_event'])) {
@@ -62,19 +91,71 @@
     $run = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($run);
 
-    echo'<form action=" "method="POST" enctype="multipart/form-data">    
-            DATUM <input type="date" name = "datum" value="'.$row['datum_dogadaja'].'" required=""><br><br>
-            GRAD <input type="text" name = "grad" value="'.$row['grad'].'" required=""><br><br>
-            LOKACIJA <input type="text" name = "lokacija" value="'.$row['naziv_lokacije'].'" required=""><br><br>
-            ADRESA <input type="text" name = "adresa" value="'.$row['adresa_lokacije'].'" required=""><br><br>
-            POŠTANSKI BROJ <input type="number" name = "postbroj" value="'.$row['postanski_broj'].'" required=""><br><br>
-            POČINJE <input type="time" name = "startt" value="'.$row['start'].'" required=""><br><br>
-            ZAVRŠAVA <input type="time" name = "kraj" value="'.$row['kraj'].'" required=""><br><br>
-            <input type="hidden" name = "id" value="'.$id.'" required="">
-            <img src="lokacije/'.$row['image'].'" class="avatar img-thumbnail" alt="avatar", width="150"><br><br>
-            <input type="file" name = "image" class="form-control"><br><br>
-            <input type="hidden" name="image_text" value="'.$row['naziv_lokacije'].'">
-            <input type="submit" name="uredi_event" value="Spremi promjene"><br><br>
-        </form>';
+echo'
+<div class="container">
+    <form action=" "method="POST" enctype="multipart/form-data">
+      <h1>Uredi event</h1>
+      <hr>
+        <div class="row">
+            <div class="col-md-3">
+             <div class="text-center">
+                <img src="lokacije/'.$row['image'].'" class="avatar img-thumbnail" alt="avatar">
+                <h6>Promijeni sliku profila</h6>
+                <input type="file" name = "image" class="form-control">
+                <input type="hidden" name="image_text" value="'.$row['naziv_lokacije'].'">
+              </div>
+            </div>
+
+            <div class="col-md-9 personal-info">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Datum:</label>
+                  <div class="col-lg-8">
+                    <input type="date" class="form-control" name = "datum" value="'.$row['datum_dogadaja'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Grad:</label>
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control"  name="grad" value="'.$row['grad'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Lokacija:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name = "lokacija" value="'.$row['naziv_lokacije'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Adresa:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" name = "adresa" value="'.$row['adresa_lokacije'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Počinje:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="time" name = "startt" value="'.$row['start'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Završava:</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="time" name = "kraj" value="'.$row['kraj'].'" required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-8">
+                    <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="updejtaj" value="Promijeni podatke">
+                    <span></span>
+                    <bottom><br><br><a href="#">Nazad</a></bottom>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>  
+';
 
 ?>

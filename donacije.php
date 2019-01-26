@@ -57,14 +57,6 @@ echo '
     });
     </script>";
 
-    echo "
-    <div id='supplies' onload></div>
-    <script>
-    $(function(){
-      $('#supplies').load('zalihe.php');
-    });
-    </script>"
-    ;
 
 echo '
 <div class="admin-content">
@@ -85,8 +77,18 @@ echo '
                 <a class="nav-link" href="statistika.php">Statistika</a>
             </li>
         </ul>
-</div>
+</div>'; 
 
+echo "
+<div id='supplies' onload></div>
+<script>
+$(function(){
+  $('#supplies').load('zalihe.php');
+});
+</script>"
+;
+
+echo '
 <div class="col-md-8">
     <br><h3>Trenutno stanje zaliha:</h3>';
 

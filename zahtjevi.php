@@ -35,15 +35,6 @@ echo '
     });
     </script>";
 
-    echo "
-    <div id='supplies' onload></div>
-    <script>
-    $(function(){
-      $('#supplies').load('zalihe.php');
-    });
-    </script>"
-    ;
-
 echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >
@@ -63,8 +54,18 @@ echo '
                 <a class="nav-link" href="statistika.php">Statistika</a>
             </li>
         </ul>
-</div>
+</div>';
 
+
+echo "
+<div id='supplies' onload></div>
+<script>
+$(function(){
+  $('#supplies').load('zalihe.php');
+});
+</script>"
+;
+echo '
 <div id="d" class="col-md-8">';
     if(isset($_GET['prihvati'])){
         if(!empty($_GET['check_list'])){

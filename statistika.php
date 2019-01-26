@@ -57,15 +57,6 @@ echo '
     });
     </script>";
 
-    echo "
-    <div id='supplies' onload></div>
-    <script>
-    $(function(){
-      $('#supplies').load('zalihe.php');
-    });
-    </script>"
-    ;
-
 echo '
 <div class="admin-content">
         <ul class="nav nav-tabs" id="myTab" >

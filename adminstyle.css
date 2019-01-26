@@ -318,7 +318,7 @@
   overflow-y: auto;
   width: 100%;
 }
-
+/*
 .table-fixed thead,
 .table-fixed tbody,
 .table-fixed tr,
@@ -336,7 +336,7 @@
 .table-fixed tbody td,
 .table-fixed thead > tr > th {
   float: left;
-}
+}*/
 
 .thth {
   width: 21.5%;
@@ -627,4 +627,177 @@ select_statistika::-ms-expand {
 
 .closebtn:hover {
   color: black;
+}
+
+.table-fixed2 tbody {
+  height: 400px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+.table-fixed tr:after {
+  content: "";
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.table-fixed tbody td,
+.table-fixed thead > tr > th {
+  float: left;
+}
+
+.tht {
+  font-size: .9em;
+  font-weight: 400;
+  letter-spacing: 1px;
+  vertical-align: top;
+  background: #9F0A00;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.eventi-table {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.eventi-td1 input{
+  width: 100%;
+}
+
+.eventi-td2 input{
+  width: 100%;
+}
+
+.event-t td {
+ border: 1px solid #ccc;
+}
+
+.event-t td {
+  border-bottom: 2px solid #9F0A00;
+}
+
+.event-t {
+  border-top: 2px solid #9F0A00;
+}
+
+.newevent {
+  font-weight: 500;
+  font-size: 25;
+}
+
+.eventi-pretrazi {
+  margin: 8px 0;
+  background-color: #9F0A00;
+  color: white;
+  border: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+}
+
+.prevent {
+  font-weight: 500;
+  font-size: 20;
+}
+
+/* Customize the label (the container) */
+.containerreg {
+  margin: 0 20px;
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.containerreg input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmarkreg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.containerreg:hover input ~ .checkmarkreg {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.containerreg input:checked ~ .checkmarkreg {
+  background-color: #A62020;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmarkreg:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.containerreg input:checked ~ .checkmarkreg:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.containerreg .checkmarkreg:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.thh {
+  width: 13%;
+  font-size: .9em;
+  font-weight: 400;
+  letter-spacing: 1px;
+  vertical-align: top;
+  background: #9F0A00;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.trr {
+  width: 13%;
+  font-size: 15;
+  font-weight: 500;
+  letter-spacing: 1px;
+  vertical-align: top;
+}
+
+.back {
+  width: 85%;
+}
+
+.back tr {
+  border-bottom: 1px solid #9F0A00;
 }
