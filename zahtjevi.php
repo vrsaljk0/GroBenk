@@ -1,3 +1,13 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<SCRIPT language="javascript">
+    
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+
+</SCRIPT>
+
 <?php
 
 require_once "dbconnect.php";
@@ -95,10 +105,13 @@ echo '
                     $update_zahtjev = "UPDATE zahtjev SET odobreno = '1' WHERE idzahtjev = '$id'";
                     $run = mysqli_query($conn, $update_zahtjev);
                 }
-                else{
-                    echo "Trenutno nema dovoljno krvi za ovaj zahtjev";
-                    /** obavijest za sve donore koji imaju tu krv a mogu donirat
-                     */
+                else {
+                    echo '
+                        <div class="alert" id="alert">
+                            <span class="closebtn" onclick="myFunction();">&times;</span> 
+                            Trenutno nema dovoljno količine krvne grupe <b>'.$krvna_gr.'</b> za ovaj zahtjev. Poslana je obavijest donorima.
+                        </div>
+                    ';
 
                     $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_gr'";
                     $run = mysqli_query($conn, $sql);
@@ -166,13 +179,13 @@ echo '
         echo '<form action="" method="GET">
                <table class="table table-fixed">
                     <thead class="t">
-                        <tr class="trtr">
-                            <th class="thth1">#</th>
-                            <th class="thth">Bolnica</th>
-                            <th class="thth">Količina krvi</th>
-                            <th class="thth">Krvna grupa</th>
-                            <th class="thth">Datum zahtijevanja</th>
-                            <th class="thth2">✔</th>
+                        <tr style="background-color:#9F0A00;"  class="trtr">
+                            <th style="border-bottom:none;" class="thth1">#</th>
+                            <th style="border-bottom:none;" class="thth">Bolnica</th>
+                            <th style="border-bottom:none;" class="thth">Količina krvi</th>
+                            <th style="border-bottom:none;" class="thth">Krvna grupa</th>
+                            <th style="border-bottom:none;" class="thth">Datum zahtijevanja</th>
+                            <th style="border-bottom:none;" class="thth2">✔</th>
                         </tr>
                     </thead>
                 <tbody>';
