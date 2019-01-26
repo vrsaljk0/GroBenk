@@ -103,7 +103,7 @@ echo '
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
 
-                    $OIB_obavijest[] = 0;
+                    $OIB_obavijesti[] = 0;
                     $i = 0;
                     while($row = mysqli_fetch_array($result)){
                         $oib = $row['OIB_donora'];
@@ -128,7 +128,7 @@ echo '
                             $row2 = mysqli_fetch_assoc($result2);
                             $datum = $row2['datum_dogadaja'];
 
-                            if (date('Y-m-d', strtotime("+3 months", strtotime($datum))) <= $now) {
+                            if (date('Y-m-d', strtotime("+4 months", strtotime($datum))) <= $now) {
                                 $OIB_obavijesti[$i] = $row['OIB_donora'];
                                 $i++;
                             }
