@@ -23,7 +23,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="popupstyle.css" rel="stylesheet">
-    <link href="kontakt.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navigation -->
@@ -36,73 +35,110 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     });
 </script>
 
-<div class="" width="100%">
-    <img src="kontakt/krvv.jpg" width="100%" height="400px">
-</div>
+<div id="slides" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1" ></li>
+        <li data-target="#slides" data-slide-to="2" ></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="kontakt/krvv.jpg">
+            <div class="carousel-caption">
+                <h1>Kontaktirajte nas</h1>
+                <h3>Dostupni smo vam 24 sata dnevno, svih 365 dana u godini.</h3>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="kontakt/svijet.jpg">
+            <div class="carousel-caption">
+                <h1>Koristite društvene mreže?</h1>
+                <h2> Zapratite nas i prvi saznajte važne obavijesti i novosti!</h2>
+                <a href="https://www.instagram.com/_grobenk_/?hl=hr" > <img src="kontakt\instagram.png" style="width:70px;height:70px"></a>
+                <a href="https://www.facebook.com/GroBenk-2747386995485580/?modal=admin_todo_tour"> <img src="kontakt\facebook.png" style="width:70px;height:70px"></a>
 
-
-<div style="border:1px solid black;padding:10px;width:85%;margin:0 auto;" >
-    <h2>IN PROGRESS</h2>
-    <a href="https://www.facebook.com/GroBenk-2747386995485580/?modal=admin_todo_tour"> <img src="kontakt\facebook.png" width="40"><br><br> </a>
-    <img src="kontakt\gmail.png" width="40"> kontakt@grobenk.hr<br><br>
-    <a href="https://www.instagram.com/_grobenk_/?hl=hr"> <img src="kontakt\instagram.png" width="40"><br><br> </a>
-    <img src="kontakt\telefon.png" width="40"> 051234456<br><br>
-    <img src="kontakt\lokacija.png" width="40">tu ce pisat lokacija, klikom na ikonicu ode na onu fancccy mapu?<br><br>
-blabla
-    <br><br><br><br><br><br><br><br>
-</div>
-
-<br>
-<br>
-<br>
-
-
-    <div class="container-fluid padding">
-        <div class="row welcome text-center">
-            <div class="col-12">
-                <h1 class="display-4">Meet the hospitalsss</h1>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="kontakt/novinari.jpg">
+            <div class="carousel-caption">
+                <h1>Novinarski i PR upiti</h1>
+                <h2>Za sve novinarske i medijske upite i zahtjeve za sponzorstvo pošaljite nam e-mail.</h2>
+                <img src="kontakt\gmail.png" style="width:70px;height:70px"> <font size="4">kontakt@grobenk.hr</font>
             </div>
         </div>
     </div>
+</div>
 
 
+<div style="padding:10px;width:100%;background-color:white;height:450px">
 
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Rijeka</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Sušak</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Zadar</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
-                </div>
-            </div>
+    <div style="padding:40px;width:24%;float:left;border-right: 6px solid #DC0E0E;">
+    <table style="table-layout: auto;">
+        <tr>
+            <td style="background-color: #A60202" colspan="2"> <h2><font color="white">Glavni ured</font></h2></td>
+        </tr>
+
+        <tr>
+            <td><img src="kontakt\lokacija.png" width="40"></td>
+            <td style="text-align:left;">Vukovarska ul. 58, 51000, Rijeka</td>
+        </tr>
+
+        <tr>
+            <td><img src="kontakt\gmail.png" width="40"> </td>
+            <td style="text-align:left;">kontakt@grobenk.hr</td>
+        </tr>
+
+
+        <tr>
+            <td><img src="kontakt\tel.png" width="35" style="margin-left: 5px"> </td>
+            <td style="text-align:left;">051 651 444</td>
+        </tr>
+    </table> <br><br>
+
+        <h5>Pronađite nas na društvenim mrežama:</h5>
+        <div align="center">
+            <a href="https://www.facebook.com/GroBenk-2747386995485580/?modal=admin_todo_tour"> <img src="kontakt\facebook.png" width="40"></a>
+            <a href="https://www.instagram.com/_grobenk_/?hl=hr"> <img src="kontakt\instagram.png" width="40"><br><br> </a>
         </div>
+
     </div>
 
-</div>
+    <div style="padding:40px;width:60%;float:left">
+        <table style="table-layout: auto;">
+            <tr>
+                <td style="background-color: #A60202" colspan="4"> <h2><font color="white">Poslovnice</font></h2></td>
+            </tr>
+        <tr>
+            <td colspan="2"><h2>Grobnik</h2> </td>
+            <td colspan="2"><h2>Benkovac</h2> </td>
+        </tr>  
+        <tr>   
+            <td ><img src="kontakt\lokacija.png" width="40"></td>
+            <td style="text-align:left;">Dražičkih boraca 64</td>
+            <td ><img src="kontakt\lokacija.png" width="40"></td>
+            <td style="text-align:left;">Ante Starčević 10</td>
+        </tr>
+        <tr>
+            <td><img src="kontakt\gmail.png" width="40"> </td>
+            <td style="text-align:left;">grobnik@grobenk.hr</td>
+            <td><img src="kontakt\gmail.png" width="40"> </td>
+            <td style="text-align:left;">benkovac@grobenk.hr</td>
+        </tr>
+        <tr>
+            <td><img src="kontakt\tel.png" width="35" style="margin-left: 5px"> </td>
+            <td style="text-align:left;">051 296 992</td>
+            <td><img src="kontakt\tel.png" width="35" style="margin-left: 5px"> </td>
+            <td style="text-align:left;">023 229 923</td>
+        </tr>
+        </tr>
+
+        </table>
+
+
+    </div>
+
+
 </body>
 </html>
 
