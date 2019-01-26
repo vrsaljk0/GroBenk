@@ -32,8 +32,7 @@ FRONTEND::
 -ADMIN:
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
-	-prikaz količine krvi kod zahtjeva
-	-eventi sredit tablicu
+	-alert kod zahtjeva kad nema dovoljno kolicine krvi
 
 
 -NASLOVA:

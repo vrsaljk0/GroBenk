@@ -89,17 +89,8 @@ $(function(){
 ;
 
 echo '
-<div class="col-md-8">
-    <br><h3>Trenutno stanje zaliha:</h3>';
-
-    $zaliha_q = "SELECT * from zaliha";
-    $run = mysqli_query($conn, $zaliha_q);
-    $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-    while($red = mysqli_fetch_array($result)){
-        $kol_krvi = number_format((float)$red['kolicina_grupe'], 2, '.', '');
-        echo $red['krvna_grupa'].' ' . $kol_krvi.'<br><br>';
-    }
+<div style="margin-left:20%" class="col-md-8">';
+    
     $date = date("Y-m-d");
 
     $query = "select lokacija.naziv_lokacije, donor.OIB_donora, donor.ime_prezime_donora, donor.krvna_grupa_don from lokacija, donor, moj_event
@@ -109,22 +100,26 @@ echo '
 
     echo'<div id="content30" class="toggle"  ><br><br>';
 
-
-
         echo '<form action="" method="GET">
-            <input type="text" name = "keyword" placeholder="Pretraži donacije">
-            <input type="submit" name="trazi" value="Traži">
+            <input type="text" class="eventi-pretrazi" name = "keyword" placeholder="Pretraži donacije">
+            <input style="margin-left:10px;" type="submit" class="zbtn" name="trazi" value="Traži">
         </form>
-        
+        <br><span class="newevent">Nove donacije:</span><br>
+    
         <form action="" method="GET">
-        <table border="1">
-            <tr>
-                <th>LOKACIJA</th>
-                <th>OIB</th>
-                <th>IME I PREZIME</th>
-                <th>KRVNA GRUPA</th>
-                <th>AŽURIRAJ?glupo zvuci</th>
-            </tr>';
+
+<div id="table-wrapper">
+    <div id="table-scroll">
+        <table id="dond" class="event-t">
+            <thead><tr>
+                <th style="border-left: 2px solid #9F0A00;" class="tht">LOKACIJA</th>
+                <th class="tht">OIB</th>
+                <th class="tht">IME I PREZIME</th>
+                <th class="tht">KRVNA GRUPA</th>
+                <th style="border-right:2px solid #9F0A00;" class="tht">UNESI</th>
+            </tr></thead>
+        
+            ';
         if (isset($_GET['trazi'])) {
             $pretraga = $_GET['keyword'];
             $date = date("Y-m-d");
@@ -138,16 +133,20 @@ echo '
 
             while ($row = mysqli_fetch_array($result)) {
                 echo '
-                            <tr>
-                                <td>' . $row['naziv_lokacije'] . '</td><td> ' . $row['OIB_donora'] . '</td><td>' . $row['ime_prezime_donora'] . '</td><td>' . $row['krvna_grupa_don'] . '</td><td><input type="checkbox" class="case" name="check_list[]" value=' . $row['OIB_donora'] . '></td>
-                            </tr>';
+                            <tbody><tr class="don">
+                                <td style="border-left: 2px solid #9F0A00;" border-left:none;">' . $row['naziv_lokacije'] . '</td>
+                                <td> ' . $row['OIB_donora'] . '</td>
+                                <td>' . $row['ime_prezime_donora'] . '</td>
+                                <td>' . $row['krvna_grupa_don'] . '</td>
+                                <td style="border-right:2px solid #9F0A00; padding-left:45px;"><input type="checkbox" class="case" name="check_list[]" value=' . $row['OIB_donora'] . '></td>
+                            </tr><tbody>';
             }
-            echo '</table>
-
-                    <input type="text" name="kolicina">
-                    <input type="submit" name="doniraj" value="Unesi donaciju"><br>
-                    <input type="submit" name="odbij" value="Odbij donaciju"><br><br>
-                    Označi sve:
+            echo '</table></div></div>
+            <br>
+                    <input type="text" name="kolicina">&nbsp
+                    <input type="submit" class="zbtn" name="doniraj" value="Unesi donaciju"><br><br>
+                    <input type="submit" class="zbtn" name="odbij" value="Odbij donaciju"><br><br>
+                    <span class="prevent">Označi sve&nbsp</span>
                     <input type="checkbox" name="select_all" id = "select_all">
                     
                 </form>';

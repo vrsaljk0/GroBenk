@@ -664,6 +664,10 @@ select_statistika::-ms-expand {
   color: #ffffff;
 }
 
+.event-t {
+  width: 102%;
+}
+
 .eventi-table {
   margin-left: 10%;
   margin-right: 10%;
@@ -800,4 +804,71 @@ select_statistika::-ms-expand {
 
 .back tr {
   border-bottom: 1px solid #9F0A00;
+}
+
+.follow-info {
+  height: 40px;
+}
+
+.follow-img {
+  width: 40px;
+  height: 40px;
+   
+}
+
+.follow-img img {
+  margin:0 auto;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.follow-info span {
+  margin-top: 5px;
+  margin-left: 55px;
+  display: inline-block;
+}
+
+.popis {
+  max-height: 500px;
+  overflow-y: scroll;
+  max-width: 100%;
+  position:relative;
+}
+
+.don {
+  height: 40px;
+}
+
+#dond {
+  border:2px solid #9F0A00;
+  max-height: 200px;
+  border-style: solid;
+  overflow-y: scroll;
+}
+
+#table-wrapper {
+  position:relative;
+}
+
+#table-scroll {
+  height:550px;
+  overflow:auto;  
+  margin-top:20px;
+}
+
+#table-wrapper table {
+  width:100%;
+}
+
+#table-wrapper table thead th .text {
+  position:absolute;   
+  top:-20px;
+  z-index:2;
+  height:20px;
+  width:35%;
+  border:1px solid red;
+}
+
+::placeholder {
+  color: #D6D6D6;
 }

@@ -14,7 +14,7 @@
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
 
 
-    $date = date("Ymd");
+    $date = date('Y-m-d H:i:s');
     $idbolnica = $_SESSION['id'];
 
 

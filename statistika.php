@@ -78,7 +78,7 @@ echo '
         </ul>
 </div>
 
-<div class="col-md-8">';
+<div style="margin-left:20%;" class="col-md-8">';
 if(isset($_GET['prikazi'])){
                     $datum = date('Y-m-d');
                     $year = $_GET['godina'];
@@ -389,7 +389,7 @@ if(isset($_GET['prikazi'])){
 
     </script>
 
-    <table>
+    <table style="margin-left:15%;">
         <tr>
             <td><div id="krv" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
             <td><div id="lokacije" style="margin-left:60px;width: 400px; height: 225px;"></div></td>
