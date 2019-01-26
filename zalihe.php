@@ -27,6 +27,8 @@ for ($i=0; $i<8; $i++) {
     $row = mysqli_fetch_assoc($result);
     $kol_krvi[$i] = $row['kolicina'];
     if($kol_krvi[$i] > 100) $kol_krvi[$i] = 100;
+    if (!floor($kol_krvi[$i]) and !($kol_krvi[$i]-floor($kol_krvi[$i]))) continue;
+    $kol_krvi[$i] = number_format((float)$kol_krvi[$i], 1, '.', '');
 }
 ?>
 
