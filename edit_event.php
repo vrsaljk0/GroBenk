@@ -55,12 +55,12 @@ echo '
     $id = $_GET['idEvent'];
 
     if(isset($_POST['uredi_event'])) {
-        $id = $_POST['id'];
+        echo"tu sam";
+        //$id = $_POST['id'];
         $datum = $_POST['datum'];
         $grad = $_POST['grad'];
         $lokacija = $_POST['lokacija'];
         $adresa = $_POST['adresa'];
-        $postbroj = $_POST['postbroj'];
         $startt = $_POST['startt'];
         $kraj = $_POST['kraj'];
         $image = $_FILES['image']['name'];
@@ -79,7 +79,7 @@ echo '
             }
         }
         else{
-            $sql = "UPDATE lokacija SET datum_dogadaja = '$datum', grad = '$grad', naziv_lokacije = '$lokacija', adresa_lokacije = '$adresa', postanski_broj = '$postbroj',
+            $sql = "UPDATE lokacija SET datum_dogadaja = '$datum', grad = '$grad', naziv_lokacije = '$lokacija', adresa_lokacije = '$adresa',
                             start = '$startt', kraj = '$kraj' WHERE id_lokacije = '$id'";
             $run = mysqli_query($conn, $sql);
             $result = $run or die ("Failed to query database". mysqli_error($conn));
@@ -93,7 +93,7 @@ echo '
 
 echo'
 <div class="container">
-    <form action=" "method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
       <h1>Uredi event</h1>
       <hr>
         <div class="row">
@@ -146,9 +146,9 @@ echo'
                 <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
-                    <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="updejtaj" value="Promijeni podatke">
+                    <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="uredi_event" value="Promijeni podatke">
                     <span></span>
-                    <bottom><br><br><a href="#">Nazad</a></bottom>
+                    <bottom><br><br><a href="eventi.php?keyword=&trazi=Traži">Nazad</a></bottom>
                   </div>
                 </div>
             </div>
