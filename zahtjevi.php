@@ -102,46 +102,44 @@ echo '
                     $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_gr'";
                     $run = mysqli_query($conn, $sql);
                     $result = $run or die ("Failed to query database". mysqli_error($conn));
-
-                    $OIB_obavijesti[] = 0;
-                    $i = 0;
                     while($row = mysqli_fetch_array($result)){
-                        $oib = $row['OIB_donora'];
-
-                        if ($row['spol'] == 'M') {
-                            $sql2 = "select * from lokacija where id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$oib')
+                        $mozes_donirati = 0;
+                        $OIB = $row['OIB_donora'];
+                        if($row['spol'] == 'M'){
+                            $sql2 = "select * from lokacija where id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$OIB')
                                     order by datum_dogadaja desc limit 1";
                             $run2 = mysqli_query($conn, $sql2);
                             $result2 = $run2 or die ("Failed to query database". mysqli_error($conn));
                             $row2 = mysqli_fetch_assoc($result2);
                             $datum = $row2['datum_dogadaja'];
 
-                                if (date('Y-m-d', strtotime("+3 months", strtotime($datum))) <= $now) {
-                                    $OIB_obavijesti[$i] = $row['OIB_donora'];
-                                    $i++;
-                                }
-                        } else {
-                            $sql2 = "select * from lokacija where id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$oib')
-                                     order by datum_dogadaja desc limit 1";
-                            $run2 = mysqli_query($conn, $sql2);
-                            $result2 = $run2 or die ("Failed to query database". mysqli_error($conn));
-                            $row2 = mysqli_fetch_assoc($result2);
-                            $datum = $row2['datum_dogadaja'];
+                            if (date('Y-m-d', strtotime("+3 months", strtotime($datum))) <= $now || is_null($datum)) {
+                                $mozes_donirati = 1;
+                            }
 
-                            if (date('Y-m-d', strtotime("+4 months", strtotime($datum))) <= $now) {
-                                $OIB_obavijesti[$i] = $row['OIB_donora'];
-                                $i++;
+                        }
+                        else if($row['spol'] == 'Z'){
+                            $sql3 = "select * from lokacija where id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$OIB')
+                                     order by datum_dogadaja desc limit 1";
+                            $run3 = mysqli_query($conn, $sql3);
+                            $result3 = $run3 or die ("Failed to query database". mysqli_error($conn));
+                            $row3 = mysqli_fetch_assoc($result2);
+                            $datum = $row3['datum_dogadaja'];
+
+                            if (date('Y-m-d', strtotime("+4 months", strtotime($datum))) <= $now || is_null($datum)) {
+                                $mozes_donirati = 1;
                             }
                         }
-                    }
-                    foreach ($OIB_obavijesti as $OIB) {
-                        $tekst_obav = 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!';
-                        $sql = "insert into obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values ('$OIB', '1', '$tekst_obav', '$now', '0')";
-                        $run = mysqli_query($conn, $sql);
-                        $result = $run or die ("Failed to query database". mysqli_error($conn));
-                    }
 
+                        if($mozes_donirati == 1){
+                            $tekst_obav = 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!';
+                            $sql_obavijesti = "insert into obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values ('$OIB', '1', '$tekst_obav', '$now', '0')";
+                            $run_obav = mysqli_query($conn, $sql_obavijesti);
+                            $result_obav = $run_obav or die ("Failed to query database". mysqli_error($conn));
+                        }
+                    }
                 }
+
             }
 
         }
