@@ -46,16 +46,19 @@
         $nova1 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova1']));
         $nova2 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova2']));
 
-        if (strpos($trenutna, '"') or strpos($nova1, '"') or strpos($nova2, '"') or $nova1='"') {
-            $error2 = 1;
-        } else {
+
+
             if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '') {
-                $update_query = $sqlin->prepare("update bolnica set password = ? where idbolnica = '$idbolnica'");
-                $update_query->bind_param('s', $nova1);
-                $update_query->execute();
-                $flag = 1;
+                if ((strpos($nova1, '"') or $nova1='"')) {
+                    $error2 = 1;
+                } else {
+                    $update_query = $sqlin->prepare("update bolnica set password = ? where idbolnica = '$idbolnica'");
+                    $update_query->bind_param('s', $nova1);
+                    $update_query->execute();
+                    $flag = 1;
+                }
             }
-        }
+
         if($flag == 1)$url = 'index.php';
         else $url = 'bolnica.php';
         if ($error1==0 and $error2==0)header("Location: $url");
@@ -150,9 +153,11 @@ echo'
 ';
     if ($error1) {
         echo'Pogreška u unosu podataka.<br>';
+        $error1=0;
     }
     if ($error2) {
         echo'Pogreška pri mijenjaju lozinke. Provjerite unos';
+        $error2=0;
     }
 
 ?>
