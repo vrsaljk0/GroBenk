@@ -22,6 +22,10 @@
       document.getElementById("alert").style.display = "none";
     }
 
+    function myFunctionerror() {
+        document.getElementById("alerterror").style.display = "none";
+    }
+
 </SCRIPT>
 
 <?php
@@ -92,50 +96,60 @@ $(function(){
 });
 </script>"
 ;
-
+$error=0;
 echo '
 <div class="col-md-8">';
 if(isset($_GET['obavijest'])) {
     $grad = $_GET['grad'];
     $krvna_grupa = $_GET['kgrupa'];
+
     $tekst = $_GET['tekst'];
 
     $datum = date('Y-m-d');
     $status = 0;
+    if (strlen($tekst)<5) {
+        $error=1;
+    } else {
+        if ($krvna_grupa == '0' and $grad == '0') {
+            $sql = "SELECT * from donor where 1";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
+        if ($krvna_grupa == '0' and $grad != '0') {
+            $sql = "SELECT * from donor where prebivaliste = '$grad'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
+        if ($grad == '0' and $krvna_grupa != '0') {
+            $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
+        if ($krvna_grupa != '0' and $grad != '0') {
+            $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad'";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
 
-    if ($krvna_grupa == '0' and $grad == '0') {
-        $sql = "SELECT * from donor where 1";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
-    }
-    if ($krvna_grupa == '0' and $grad != '0') {
-        $sql = "SELECT * from donor where prebivaliste = '$grad'";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
-    }
-    if ($grad == '0' and $krvna_grupa != '0') {
-        $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa'";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
-    }
-    if ($krvna_grupa!= '0' and $grad != '0'){
-        $sql = "SELECT * from donor where krvna_grupa_don = '$krvna_grupa' and prebivaliste = '$grad'";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
+        while ($row = mysqli_fetch_array($run)) {
+            $OIB = $row['OIB_donora'];
+            $sqll = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) VALUES ('$OIB', '1', '$tekst', '$datum', '$status')";
+            $runn = mysqli_query($conn, $sqll);
+            $resultt = $runn or die ("Failed to query database" . mysqli_error($conn));
+        }
     }
 
-    while ($row = mysqli_fetch_array($run)) {
-        $OIB = $row['OIB_donora'];
-        $sqll = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) VALUES ('$OIB', '1', '$tekst', '$datum', '$status')";
-        $runn = mysqli_query($conn, $sqll);
-        $resultt = $runn or die ("Failed to query database". mysqli_error($conn));
+    if($error) {
+    echo'<div class="alert" id="alerterror">
+          <span class="closebtn" onclick="myFunctionerror();">&times;</span> 
+          Obavijest mora sadržavati minimalno 5 znakova.</div>';
     }
+    else {
     echo '
     <div class="alert" id="alert">
       <span class="closebtn" onclick="myFunction();">&times;</span> 
-      Obavijest: "'.$tekst.'" uspiješno poslana
-    </div>
-    ';
+      Obavijest: "'.$tekst.'" uspiješno poslana</div>';
+    }
 
 }
 
