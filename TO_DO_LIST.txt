@@ -1,20 +1,11 @@
 ﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
-statistika.php
-    
--dodat da kad nema podataka za neku godinu da se ispise neki prazan piechart ili tekst, ovako se samo nis ne prikaze
-    
-- sad kad sam ispravila lokaciju statistika ne pokazuje ništa
-
 donor.php
     
 - ne znam jesmo ispravile unos lozinki
 - obavjesti/poruke, ako nema poruka od npr.korisnika da ne pise "Korisnik" nego samo bude prazno
 
-bolnica.php
-    
--popravit statistiku i dodat sve isto ko u admin statistici
 
 baza
 
@@ -33,10 +24,12 @@ FRONTEND::
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
 	-alert kod zahtjeva kad nema dovoljno kolicine krvi
+-BOLNICA:
+    -posalji_zahtjev.php --- alertovi kad pokusa poslat neispravni zahtjev
 
-
--NASLOVA:
+-NASLOVNA:
 	-SVE HAHAHA
 	-neki alert kad je kriva lozinka
 	-kod sign up-a da ne prođe ako vec postoji taj username
-	
+
+SQL INJECTION - rip sjebe nam ščćžđ
