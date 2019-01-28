@@ -62,13 +62,13 @@ mysqli_set_charset($conn,"utf8");
                 <p>
                     Opće je poznato da krv nije moguće proizvesti na umjetan način.<br>
                     Jedini izvor toga lijeka je čovjek - <font color="#b22222">DONOR KRVI</font>, a 1 doza krvi moze spasiti čak 3 života!<br><br>
-                    DARIVANJEM KRVI:
-                    <ul>
+                    <h5>Darivanjem krvi:</h5>
+                    <ul style="margin-left: 40px">
                         <li> vršimo kontrolu vlastitog zdravlja te pomažemo napretku tuđeg</li>
                         <li> može se započeti i prestati u svako doba između 18 i 65 (70) godina života</li>
                         <li> ne nastaju nikakve štetne tjelesne promjene ili posljedice po organizam te ne šteti zdravlju ako se provedu svi propisani postupci pri odabiru darivatelja krvi</li>
                     </ul>
-                    Svaka zdrava osoba pripadajuće dobi može bez opasnosti za svoje zdravlje darovati krv, 3 do 4 puta tijekom jedne godine.
+                    Svaka zdrava osoba pripadajuće dobi može bez opasnosti za svoje zdravlje darovati krv, 3 do 4 puta tijekom jedne godine.<br>
                     Zdrav organizam darivatelja krvi vrlo brzo u potpunosti nadoknađuje količinu i sve sastavne dijelove darovane krvi:
                     već unutar 24 sata organizam nadoknadi tekući dio krvi - plazmu i njene sastojke, broj trombocita i leukocita.
                     Eritrociti se nadoknade unutar 4 do 6 tjedana.
@@ -78,118 +78,69 @@ mysqli_set_charset($conn,"utf8");
 
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
                 <img src="img/zastodonirati.png" style="width:270px;height;270px;margin-left: -50px">
+                <img src="img/kapljicadonacije.png" style="width:200px;height;270px;margin-left: -15px">
             </div>
 
         </div>
     </div>
 
     <!--- Welcome Section -->
-    <div class="container-fluid padding">
-        <div class="row welcome text-center">
-            <div class="col-12">
-                <h1 class="display-4">Doniraj s razlogom.</h1>
+    <div class="container-fluid">
+        <div class="row jumbotron">
+            <div class="col-12" style="text-align: center">
+                <h1 class="display-4">Tko može donirati krv?</h1>
                 <hr>
             </div>
-            <div class="col-12">
-                <p class="lead">Dobrodosli na nasu donorsku stranicu yoo supp ma man</p>
-            </div>
-        </div>
-    </div>
-
-    <!--- Three Column Section -->
-    <div class="container-fluid padding">
-        <div class="row text-center padding">
-            <div class="col-xs-12 col-sm-16 col-md-4">
-                <h3>A+</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>A-</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>B+</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>B-</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>0+</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>0-</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>AB+</h3>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <h3>AB-</h3>
-            </div>
-        </div>
-    </div>
-
-    <!--- Two Column Section -->
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-lg-6">
-                <h2>Lldnlnf</h2>
-                <p>slgnlsfgaieufnsdbvsdsuososogsougn</p>
-                <p>subgiwulebviuwvjdufrhuodčshuo</p>
-                <p>sdjfbisbsuihfuosdfhosuvsoubvousbvosufuoshfuosdhvuodbvouabvuosbvuosfbvuosf</p>
-                <br>
-                <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-            <div class="col-lg-6">
-                <img src="img/slika1.jpg" class="img-fluid">
-            </div>
-        </div>
-    </div>
-
-    <!--- Fixed background -->
-
-
-    <!--- Emoji Section -->
-
-
-    <!--- Meet the team -->
-    <div class="container-fluid padding">
-        <div class="row welcome text-center">
-            <div class="col-12">
-                <h1 class="display-4">Meet the hospitalsss</h1>
-            </div>
-        </div>
-    </div>
-
-
-    <!--- Cards -->
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Rijeka</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
+            <div class="row jumbotron">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                    <img src="img/covjeculjak_donacija.png" style="width:150px;height;270px">
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Sušak</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10" style="margin-top: -30px;margin-bottom: -90px">
+                    <font size="4px">
+                        <ul style="margin-left: 40px">
+                            <li><b>Dob:</b> od 18 do 65 godina, do 60 godina ako krv daje prvi put, do 70 godina 1-2 godišnje nakon pregleda i odluke liječnika specijalista transfuzijske medicine.</li><br>
+                            <li><b>Tjelesna težina:</b> iznad 55 kg, proporcionalna visini.</li><br>
+                            <li><b>Tjelesna temperatura:</b> do 37°C.</li><br>
+                            <li><b>Krvni tlak:</b> sistolični 100 do 180 mm Hg, dijastolični 60 do 110 mm Hg.</li><br>
+                            <li><b>Puls:</b> 50 do 100 otkucaja u minuti.</li><br>
+                            <li><b>Puls:</b> 50 do 100 otkucaja u minuti.</li><br>
+                            <li><b>Hemoglobin:</b> muškarci 135 g/L, žene 125 g/L.</li><br>
+                        </ul>
+                        U Hrvatskoj, muškarci, darivatelji pune krvi smiju dati krv do 4 puta godišnje, s razmakom između darivanja od 3 mjeseca. Žene, darivateljice pune krvi, smiju dati krv do 3 puta godišnje, s razmakom između darivanja od 4 mjeseca.
+                    </font>
                 </div>
+
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="img/hospital.jpg">
-                    <div class="card-body">
-                        <h4 class="card-title">KBC Zadar</h4>
-                        <p class="card-text">PIifsibijfb</p>
-                        <a href="#" class="btn btn-outline-secondary">See Location</a>
-                    </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row jumbotron">
+            <div class="col-12" style="text-align: center">
+                <h1 class="display-4">Postupak darivanja krvi</h1>
+                <hr>
+            </div>
+            <div class="row jumbotron">
+
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10" style="margin-top: -30px;margin-bottom: -200px">
+                    <font size="4px">
+                        <ol style="margin-left: 40px">
+                            <li><b>Identifikacija donora.</b><br> Kod svakog darivanja krvi sa nekim identifikacijskim dokumentom sa slikom ( osobna iskaznica, putovnica, vozačka dozvola, indeks). Ispis podataka na evidencijski karton davatelja krvi.</li><br>
+                            <li><b>Provjera hemoglobina.</b><br> Sterilnom lancetom tehničar ubode darivatelja u jagodicu prsta i skida kap krvi koju trzajem lancete spušta u posudu sa bakrenim sulfatom poznate koncentracije. Kada kapljica tone, darivatelj može dati krv. Test sa bakrenim sulfatom je jednostavna, brza i pouzdana metoda kojom štitimo darivatelje krvi.</li><br>
+                            <li><b>Liječnički pregled</b><br> Liječnicki pregled podrazumijeva razgovor sa liječnikom, mjerenje tlaka, provjeru rada srca i po potrebi tjelesne težine. Kroz postavljanje određenih pitanja liječnik odlučuje da li osoba može darovati krv bez škodljivosti za svoje zdravstveno stanje, te bez opasnosti za potencijalne primatelje krvi. Darivatelj krvi je udobno smješten na krevetu za davanje krvi.</li><br>
+                            <li><b>Venepunkcija.</b><br> Iskusan zdravstveni tehničar odabire venu u lakatnoj jami i bezbolno uvodi iglu u venu.
+                                Sam čin darivanja krvi traje maksimalno desetak minuta.Darivatelj je u ugodnom poluležećem položaju dok laganim stiskanjem šake puni vrećicu za krv koja je sterilnom iglom i sistemom vezana za njegovu venu u lakatnoj jami. Naravno, tu vezu uspostavljaju educirani i iskusni punkteri. Sav pribor i materijal koji se koriste pri venepunkciji su sterilni i za jednokratnu uporabu. Svaka osoba daruje 450 ml pune krvi. Iz sistema se svaki put izdvajaju dvije epruvete i to jedna za potvrđivanje krvne grupe, a druga za serološka testiranja. </li><br>
+                            <li><b>Odmor </b><br> Davatelju nakon darivanja krvi slijedi kratkotrajni odmor uz osvježenje i lagani obrok. </li><br>
+                        </ol>
+                        <i style="margin-left: 40px;color: #A60202">Sveukupno, darivanje krvi vam može oduzeti oko 30 minuta vašeg vremena.</i>
+                    </font>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                    <img src="img/hemoglobindonacija.png" style="width:250px;margin-top: 60px">
+                    <img src="img/tlakdonacija.gif" style="width:250px;">
+                    <img src="img/doniranjedonacija.jpg" style="width:250px;">
                 </div>
             </div>
         </div>
