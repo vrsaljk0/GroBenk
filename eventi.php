@@ -148,12 +148,12 @@ echo '
         <input type="text" class="eventi-pretrazi" name = "keyword" placeholder="Pretraži evente">
         <span class="eventi-radio">
             <label class="containerreg"><span class="prevent">Nadolazeći eventi</span>
-                <input type="radio" name="buduci" value="buduci">
+                <input type="radio" name="radio" value="buduci">
                 <span class="checkmarkreg"></span>
             </label>
 
             <label class="containerreg"><span class="prevent">Prošli eventi</span>
-                <input type="radio" name="prosli" value="prosli"">
+                <input type="radio" name="radio" value="prosli"">
                 <span class="checkmarkreg"></span>
             </label>
         </span>
@@ -185,16 +185,16 @@ echo '
             $radio = 0;
             $pretraga = $_GET['keyword'];
             $datum = date('Y-m-d');
-            if(isset($_GET['buduci']) && $pretraga ==''){
+            if(isset($_GET['radio']) and ($_GET['radio'])=='buduci' && $pretraga ==''){
                 $query = "SELECT *from lokacija WHERE datum_dogadaja > '$datum' order by id_lokacije desc";
             }
-           else if(isset($_GET['buduci']) && $pretraga !=''){
+           else if(isset($_GET['radio'])and ($_GET['radio'])=='buduci' && $pretraga !=''){
                $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja > '$datum') order by id_lokacije desc";
            }
-            else if(isset($_GET['prosli']) && $pretraga !=''){
+            else if(isset($_GET['radio'])and ($_GET['radio'])=='prosli' && $pretraga !=''){
                 $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja < '$datum') order by id_lokacije desc";
             }
-            else if(isset($_GET['prosli']) && $pretraga ==''){
+            else if(isset($_GET['radio'])and ($_GET['radio'])=='prosli' && $pretraga ==''){
                 $query = "SELECT *from lokacija WHERE datum_dogadaja < '$datum' order by id_lokacije desc";
             }
             else{
