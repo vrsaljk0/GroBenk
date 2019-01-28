@@ -24,15 +24,17 @@
 
     $row = mysqli_fetch_array($result);
     $naziv_bolnice = $row['naziv_bolnice'];
-
+    $error= 0; //komentar mora imat minimalno 5 znakova
 
 
     if(isset($_POST['komentar'])){
         $tekst = $_POST['tekst'];
-
-        $sql = "INSERT INTO komentari values ('$idbolnica', '$naziv_bolnice', '$idbolnica', '$tekst', '$date')";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
+        if (strlen($tekst)<5) $error=1;
+        else {
+            $sql = "INSERT INTO komentari values ('$idbolnica', '$naziv_bolnice', '$idbolnica', '$tekst', '$date')";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
     }
 
     $results_per_page = 3;
@@ -197,5 +199,8 @@ echo'
         </div>
     </div>
 </div>';
+            if ($error) {
+                echo'Komentar mora imati minimalno 5 znakova';
+            }
 
 ?>
