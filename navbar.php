@@ -26,7 +26,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
                     <a class="nav-link" href="#">O nama</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Donacija</a>
+                    <a class="nav-link" href="indexdonacija.php">Donacija</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="karta.php">Kako nas pronaci</a>
