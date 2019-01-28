@@ -2,6 +2,8 @@
     require_once "dbconnect.php";
     session_start();
     mysqli_set_charset($conn,"utf8");
+    $greska = 0;
+    $greskak = 0;
 
     /** SESSION TIMEOUT */
     if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
@@ -27,12 +29,28 @@
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];
-        $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$idbolnica', '$kolicina', '$krvna_grupa', '$date', '0')";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
+        if ($kolicina <= 0) {
+            $greska = 1;
+        }
+        if($krvna_grupa=="0") {
+            $greskak = 1;
+        }
+        if ($greska == 0 and $greskak == 0){
+            $sql = "INSERT INTO zahtjev (id_bolnica, kolicina_krvi_zaht, krvna_grupa_zaht, datum_zahtjeva, odobreno) values ('$idbolnica', '$kolicina', '$krvna_grupa', '$date', '0')";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+        }
     }
 
 echo'
+<script>
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+    function myFunctionk() {
+      document.getElementById("alertk").style.display = "none";
+    }
+</script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,6 +120,27 @@ echo'
                 </form>
             </div>
         </div>
+            '; /*** NE ZNAM KAKO OVO :((((((( ZASTO NIJE KO U ADMIN OBAVIJESTIMAAAAA ***/
+
+            if($greska == 1) {
+                echo'
+                <div class="col-md-8">
+                <div class="alert" id="alert">
+                  <span class="closebtn" onclick="myFunction();">&times;</span> 
+                  Unesite ispravnu količinu krvi.
+                </div></div>';
+                $greska = 0;
+            }
+            if ($greskak == 1) {
+                echo'
+                <div class="col-md-8">
+                <div class="alert" id="alertk">
+                  <span class="closebtn" onclick="myFunctionk();">&times;</span> 
+                  Odaberite krvnu grupu.
+                </div></div>';
+                $greskak = 0;
+            }echo'
     </div>
-</div>';                          
+
+</div>';
 ?>
