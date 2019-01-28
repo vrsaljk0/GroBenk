@@ -1,8 +1,13 @@
 <?php
 require_once "dbconnect.php";
+mysqli_set_charset($conn,"utf8");
 session_start();
 $idbolnica = $_SESSION['id'];
-$naziv_bolnice =  $_SESSION['naziv_bolnice'];
+
+$sql = "select naziv_bolnice from bolnica where idbolnica='$idbolnica'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$naziv_bolnice=$row['naziv_bolnice'];
 
 
 echo '
