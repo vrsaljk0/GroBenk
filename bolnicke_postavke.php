@@ -22,49 +22,29 @@
 
     $row = mysqli_fetch_array($result);
     $naziv_bolnice = $row['naziv_bolnice'];
-    $error1 = 0; //errori provjeravaju dal negdje ima " u unosu, nisam znala kako drugacije probala sam MILIJUN stvari majkemi
-    $error2 = 0;
-    $flag = 0;
+
     if (isset($_POST['updejtaj'])) {
-
-        $naziv_bolnice = stripslashes(mysqli_real_escape_string($conn,$_POST['naziv_bolnice']));
-        $grad = stripslashes(mysqli_real_escape_string($conn,$_POST['grad']));
-        $adresa_bolnice = stripslashes(mysqli_real_escape_string($conn,$_POST['adresa_bolnice']));
-        $postanski_broj = stripslashes(mysqli_real_escape_string($conn,$_POST['postanski_broj']));
-        $password = stripslashes(mysqli_real_escape_string($conn,$_POST['password']));
-
-        if (strpos($naziv_bolnice, '"') or strpos($grad, '"') or strpos($adresa_bolnice, '"') or strpos($postanski_broj, '"') or strpos($password, '"'
-            or $naziv_bolnice='"' or $grad='"' or $adresa_bolnice='"' or $postanski_broj='"')) {
-            $error1 = 1;
-        } else {
-            $flag = 0;
-            $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
+        $naziv_bolnice = $_POST['naziv_bolnice'];
+        $grad = $_POST['grad'];
+        $adresa_bolnice = $_POST['adresa_bolnice'];
+        $postanski_broj = $_POST['postanski_broj'];
+        $password = $_POST['password'];
+        $flag = 0;
+        $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
                             postanski_broj = '$postanski_broj' where idbolnica = '$idbolnica'";
-            $update_run = mysqli_query($conn, $update_query);
-        }
-        $trenutna = stripslashes(mysqli_real_escape_string($conn,$_POST['trenutna']));
-        $nova1 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova1']));
-        $nova2 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova2']));
-
-
-
-            if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '') {
-                if ((strpos($nova1, '"') or $nova1='"')) {
-                    $error2 = 1;
-                } else {
-                    $update_query = $sqlin->prepare("update bolnica set password = ? where idbolnica = '$idbolnica'");
-                    $update_query->bind_param('s', $nova1);
-                    $update_query->execute();
-                    $flag = 1;
-                }
-            }
-
-        if($flag == 1)$url = 'index.php';
-        else $url = 'bolnica.php';
-        if ($error1==0 and $error2==0)header("Location: $url");
+    $update_run = mysqli_query($conn, $update_query);
+    $trenutna = $_POST['trenutna'];
+    $nova1 = $_POST['nova1'];
+    $nova2 = $_POST['nova2'];
+    if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '') {
+        $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnica'";
+        $update_run = mysqli_query($conn, $update_query);
+        $flag = 1;
     }
-
-
+    if($flag == 1)$url = 'index.php';
+    else $url = 'bolnica.php';
+    header("Location: $url");
+}
 echo'
 <head>
     <meta charset="utf-8">
@@ -83,7 +63,6 @@ echo'
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
-
 <div class="container">
     <form action="" method="POST">
       <h1>Uredi profil</h1>
@@ -91,7 +70,6 @@ echo'
         <div class="row">
             <div class="col-md-3">
             </div>
-
             <div class="col-md-9 personal-info">
             <h3>Osobni podaci</h3>
                 <div class="form-group">
@@ -151,13 +129,4 @@ echo'
 </div>
 <hr>  
 ';
-    if ($error1) {
-        echo'Pogreška u unosu podataka.<br>';
-        $error1=0;
-    }
-    if ($error2) {
-        echo'Pogreška pri mijenjaju lozinke. Provjerite unos';
-        $error2=0;
-    }
-
 ?>
