@@ -100,7 +100,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
             <td colspan="2">
                 <div class="mapouter" style="margin-left: -70px">
                     <div class="gmap_canvas">
-                        <iframe width="300" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Ante Starčević 10, benkovac&t=&z=7&ie=UTF8&iwloc=&output=embed&z=13" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        <iframe width="300" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Vukovarska ul. 58, 51000, Rijeka&t=&z=7&ie=UTF8&iwloc=&output=embed&z=13" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                         <a href="https://www.crocothemes.net"></a>
                     </div>
                     <style>
