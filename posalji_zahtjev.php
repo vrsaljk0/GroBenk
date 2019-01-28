@@ -120,7 +120,7 @@ echo'
                 </form>
             </div>
         </div>
-            '; /*** NE ZNAM KAKO OVO :((((((( ZASTO NIJE KO U ADMIN OBAVIJESTIMAAAAA ***/
+            ';
 
             if($greska == 1) {
                 echo'
