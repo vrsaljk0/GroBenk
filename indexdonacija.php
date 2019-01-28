@@ -133,7 +133,7 @@ mysqli_set_charset($conn,"utf8");
                                 Sam čin darivanja krvi traje maksimalno desetak minuta.Darivatelj je u ugodnom poluležećem položaju dok laganim stiskanjem šake puni vrećicu za krv koja je sterilnom iglom i sistemom vezana za njegovu venu u lakatnoj jami. Naravno, tu vezu uspostavljaju educirani i iskusni punkteri. Sav pribor i materijal koji se koriste pri venepunkciji su sterilni i za jednokratnu uporabu. Svaka osoba daruje 450 ml pune krvi. Iz sistema se svaki put izdvajaju dvije epruvete i to jedna za potvrđivanje krvne grupe, a druga za serološka testiranja. </li><br>
                             <li><b>Odmor </b><br> Davatelju nakon darivanja krvi slijedi kratkotrajni odmor uz osvježenje i lagani obrok. </li><br>
                         </ol>
-                        <i style="margin-left: 40px;color: #A60202">Sveukupno, darivanje krvi vam može oduzeti oko 30 minuta vašeg vremena.</i>
+                        <i style="margin-left: 40px;color: #A60202">Sveukupno, darivanje krvi vam može oduzeti oko 30 minuta vremena.</i>
                     </font>
                 </div>
 
