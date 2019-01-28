@@ -1,5 +1,6 @@
 <?php
 require_once "dbconnect.php";
+$lokacija = "Vukovarska ul. 58, 51000, Rijeka";
 session_start();
 mysqli_set_charset($conn,"utf8");
 
@@ -24,6 +25,8 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     <link href="style.css" rel="stylesheet">
     <link href="popupstyle.css" rel="stylesheet">
 </head>
+
+
 <body>
 <!-- Navigation -->
 <div id="nav-placeholder">
@@ -73,8 +76,8 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 
 <div style="padding:10px;width:100%;background-color:white;height:450px">
 
-    <div style="padding:40px;width:24%;float:left;border-right: 6px solid #DC0E0E;">
-    <table style="table-layout: auto;">
+    <div style="padding:40px;width:25%;float:left;border-right: 6px solid #DC0E0E;">
+    <table>
         <tr>
             <td style="background-color: #A60202" colspan="2"> <h2><font color="white">Glavni ured</font></h2></td>
         </tr>
@@ -89,30 +92,43 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
             <td style="text-align:left;">kontakt@grobenk.hr</td>
         </tr>
 
-
         <tr>
             <td><img src="kontakt\tel.png" width="35" style="margin-left: 5px"> </td>
             <td style="text-align:left;">051 651 444</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="mapouter" style="margin-left: -70px">
+                    <div class="gmap_canvas">
+                        <iframe width="300" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Ante Starčević 10, benkovac&t=&z=7&ie=UTF8&iwloc=&output=embed&z=13" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        <a href="https://www.crocothemes.net"></a>
+                    </div>
+                    <style>
+                        .mapouter{text-align:left;height:300px;width:300px;}.gmap_canvas {overflow:hidden;background:none!important;height:300px;width:300px;}
+                    </style>
+                </div>
+            </td>
         </tr>
     </table> <br><br>
 
         <h5>Pronađite nas na društvenim mrežama:</h5>
         <div align="center">
             <a href="https://www.facebook.com/GroBenk-2747386995485580/?modal=admin_todo_tour"> <img src="kontakt\facebook.png" width="40"></a>
-            <a href="https://www.instagram.com/_grobenk_/?hl=hr"> <img src="kontakt\instagram.png" width="40"><br><br> </a>
+            <a href="https://www.instagram.com/_grobenk_/?hl=hr"> <img src="kontakt\instagram.png" width="40"></a>
         </div>
 
     </div>
 
     <div style="padding:40px;width:60%;float:left">
-        <table style="table-layout: auto;">
+        <table style="table-layout: auto;" >
             <tr>
                 <td style="background-color: #A60202" colspan="4"> <h2><font color="white">Poslovnice</font></h2></td>
             </tr>
         <tr>
             <td colspan="2"><h2>Grobnik</h2> </td>
             <td colspan="2"><h2>Benkovac</h2> </td>
-        </tr>  
+        </tr>
+
         <tr>   
             <td ><img src="kontakt\lokacija.png" width="40"></td>
             <td style="text-align:left;">Dražičkih boraca 64</td>
@@ -131,15 +147,45 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
             <td><img src="kontakt\tel.png" width="35" style="margin-left: 5px"> </td>
             <td style="text-align:left;">023 229 923</td>
         </tr>
+
+        <tr>
+            <td colspan="2">
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="500" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Dražičkih boraca 64&t=&z=7&ie=UTF8&iwloc=&output=embed&z=13" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        <a href="https://www.crocothemes.net"></a>
+                    </div>
+                    <style>
+                        .mapouter{text-align:center;height:300px;width:500px;}.gmap_canvas {overflow:hidden;background:none!important;height:300px;width:500px;}
+                    </style>
+                </div>
+            </td>
+
+            <td colspan="2">
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="500" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=Ante Starčević 10, benkovac&t=&z=7&ie=UTF8&iwloc=&output=embed&z=13" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        <a href="https://www.crocothemes.net"></a>
+                    </div>
+                    <style>
+                        .mapouter{text-align:center;height:300px;width:500px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:500px;}
+                    </style>
+                </div>
+            </td>
+
         </tr>
-
         </table>
-
-
     </div>
+
+</div>
 
 
 </body>
+
+
+
+
+
 </html>
 
 
