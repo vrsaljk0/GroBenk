@@ -76,7 +76,7 @@ if(isset($_POST['posalji_poruku'])){
     $url = 'user_history.php?username='.$username;
     header("Location:$url");
 }
-$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja";
+$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja order by datum_obav DESC";
 $run_korisnici = mysqli_query($conn, $sql_korisnici);
 $result_korisnici = $run_korisnici or die ("Failed to query database". mysqli_error($conn));
 
@@ -114,7 +114,6 @@ echo '
 
 while($row = mysqli_fetch_array($result_korisnici)){
     $OIB_prijatelja = $row['ID_posiljatelja'];
-    $zadnja_poruka = $row['datum_obav'];
     $prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
     $run_prijatelj = mysqli_query($conn, $prijatelj);
     $result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
@@ -122,14 +121,19 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $ime = $row_prijatelj['ime_prezime_donora'];
     $username_prijatelja = $row_prijatelj['username'];
 
+    $sql_zadnja = "SELECT * from obavijesti WHERE (OIBdonora = '$OIB' AND ID_posiljatelja = '$OIB_prijatelja') OR (OIBdonora = '$OIB_prijatelja' AND ID_posiljatelja ='$OIB') order by datum_obav DESC LIMIT 1";
+    $run_zadnja = mysqli_query($conn, $sql_zadnja);
+    $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
+    $row_zadnja = mysqli_fetch_array($result_zadnja);
+
+
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
                         <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$zadnja_poruka.'</span></h5>
-                          <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$row_zadnja['datum_obav'].'</span></h5>
+                          <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
                 </a><br>';
