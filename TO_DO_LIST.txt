@@ -20,16 +20,31 @@ FRONTEND::
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
 	-pokušat dodat sliku kraj imena
+	-stavit scrollbar za Praćenja Pratim/Prate me
+
 -ADMIN:
 	-div reload
 	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
 	-alert kod zahtjeva kad nema dovoljno kolicine krvi
--BOLNICA:
-    -posalji_zahtjev.php --- alertovi kad pokusa poslat neispravni zahtjev
 
 -NASLOVNA:
 	-SVE HAHAHA
 	-neki alert kad je kriva lozinka
 	-kod sign up-a da ne prođe ako vec postoji taj username
 
-SQL INJECTION - rip sjebe nam ščćžđ
+""""""""""""""""""""""""""""""""""
+SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kako spada i treba alertove uredit)
+-kad se stavi prepared sql statement(inace se tako rjesavaju sql injection problemi) nam sjebe čćžšđ pa sam isla AlteRnativNim putem
+
+    BOLNICA
+        bolnice_postavke.php
+            -podaci nesmiju imat " u sebi, moraju imat minimalno 2 znaka
+            -password nesmije sadrzavat "
+
+        forum.php
+            -nova objava mora imat minimalno 5 znakova
+
+        posalji_zahtjev.php
+            zahtjev mora bit >0L
+
+

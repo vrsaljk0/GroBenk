@@ -4,6 +4,7 @@ require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
 session_start();
 $OIB = $_SESSION["mojOIB"];
+mysqli_set_charset($conn,"utf8");
 if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 echo '
 <head>
@@ -29,25 +30,28 @@ echo '
 
 
 if(isset($_POST['submit'])){
-    $ime = $_POST['ime'];
-    $krvna_grupa = $_POST['krvna_grupa'];
-    $OIB_d = $_POST['OIB'];
-    $username = $_POST['username'];
-    $email = $_POST['mail'];
-    $brojmob = $_POST['broj_mobitela'];
-    $datum_rod= $_POST['datum'];
-    $prebivaliste = $_POST['prebivaliste'];
-    $postanskibr = $_POST['postanski'];
-    $adresa = $_POST['adresa'];
-    $trenutna = $_POST['trenutna'];
-    $nova1 = $_POST['nova1'];
-    $nova2 = $_POST['nova2'];
-    $password = $_POST['password'];
+    $ime = stripslashes(mysqli_real_escape_string($conn,$_POST['ime']));
+    $krvna_grupa = stripslashes(mysqli_real_escape_string($conn,$_POST['krvna_grupa']));
+    $OIB_d = stripslashes(mysqli_real_escape_string($conn,$_POST['OIB']));
+    $username = stripslashes(mysqli_real_escape_string($conn,$_POST['username']));
+    $email = stripslashes(mysqli_real_escape_string($conn,$_POST['mail']));
+    $brojmob = stripslashes(mysqli_real_escape_string($conn,$_POST['broj_mobitela']));
+    $datum_rod= stripslashes(mysqli_real_escape_string($conn,$_POST['datum']));
+    $prebivaliste = stripslashes(mysqli_real_escape_string($conn,$_POST['prebivaliste']));
+    $postanskibr = stripslashes(mysqli_real_escape_string($conn,$_POST['postanski']));
+    $adresa = stripslashes(mysqli_real_escape_string($conn,$_POST['adresa']));
+    $trenutna = stripslashes(mysqli_real_escape_string($conn,$_POST['trenutna']));
+    $nova1 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova1']));
+    $nova2 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova2']));
+    $password = stripslashes(mysqli_real_escape_string($conn,$_POST['password']));
+
     $image = $_FILES['image']['name'];
     $target = "donori/".basename($image);
     $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
+
     $flag = 0;
-    if($filename !="") {
+
+    if($filename !="" and strpos($filename, '"')===false) {
         $query = "UPDATE donor SET image = '$image'where OIB_donora='$OIB_d'";
         $run = mysqli_query($conn, $query);
         $result = $run or die ("Failed to query database" . mysqli_error($conn));
@@ -109,7 +113,7 @@ echo '
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Krvna grupa:</label>
-                  <div class="col-lg-8">
+                  <div class="col-lg-8"> <!-- posalji_zahtjev.php select za krvnu grupu, probala sam al sjebe css (nestane sljedeci label)-->
                     <input type="text" class="form-control"  name="krvna_grupa" value="'.$row['krvna_grupa_don'].'">
                   </div>
                 </div>
