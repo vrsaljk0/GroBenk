@@ -113,12 +113,15 @@
     $star = '<i style="color:goldenrod;" class="fas fa-star"></i>';
     if(isset($_POST['posalji_poruku'])){
         $datum = date('Y-m-d H:i:s');
-        $poruka = $_POST['poruka'];
-        $sql = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values('$OIB_korisnika', '$OIB_donora', '$poruka', '$datum', '0')";
-        $run = mysqli_query($conn, $sql);
-        $result = $run or die ("Failed to query database". mysqli_error($conn));
-        $url = 'publicprofile.php?username='.urlencode($username);
-        header("Location:$url");
+        $poruka = stripslashes(mysqli_real_escape_string($conn,$_POST['poruka']));
+
+        if(strlen($poruka)>0) {
+            $sql = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) values('$OIB_korisnika', '$OIB_donora', '$poruka', '$datum', '0')";
+            $run = mysqli_query($conn, $sql);
+            $result = $run or die ("Failed to query database" . mysqli_error($conn));
+            $url = 'publicprofile.php?username=' . urlencode($username);
+            header("Location:$url");
+        }
     }
     echo '
     <div class="profil-img">

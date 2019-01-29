@@ -37,7 +37,7 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
 -kad se stavi prepared sql statement(inace se tako rjesavaju sql injection problemi) nam sjebe čćžšđ pa sam isla AlteRnativNim putem
 
     BOLNICA
-        bolnice_postavke.php
+        bolnicke_postavke.php
             -podaci nesmiju imat " u sebi, moraju imat minimalno 2 znaka
             -password nesmije sadrzavat "
 
@@ -47,4 +47,10 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
         posalji_zahtjev.php
             zahtjev mora bit >0L
 
+    DONOR
+        publicprofile.php
+            -kratka poruka mora imat strlen>0
+
+        postavke.php
+            -IN PROGRESS (vjv ce bit isto ko za bolnicke_postavke.php)
 
