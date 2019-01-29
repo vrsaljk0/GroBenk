@@ -96,7 +96,7 @@ while($row = mysqli_fetch_array($result)){
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
-                        <div class="chat_img"> <img src="'.$row_prijatelj['image'].'"> </div>
+                        <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
                           <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">Dec 25</span></h5>
                           <p>Test, which is a new approach to have all solutions 
