@@ -22,29 +22,46 @@
 
     $row = mysqli_fetch_array($result);
     $naziv_bolnice = $row['naziv_bolnice'];
-
+    $error1 = 0; //errori provjeravaju dal negdje ima " u unosu, nisam znala kako drugacije probala sam MILIJUN stvari majkemi
+    $error2 = 0;
+    $flag = 0;
     if (isset($_POST['updejtaj'])) {
-        $naziv_bolnice = $_POST['naziv_bolnice'];
-        $grad = $_POST['grad'];
-        $adresa_bolnice = $_POST['adresa_bolnice'];
-        $postanski_broj = $_POST['postanski_broj'];
-        $password = $_POST['password'];
-        $flag = 0;
-        $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
+
+        $naziv_bolnice = stripslashes(mysqli_real_escape_string($conn,$_POST['naziv_bolnice']));
+        $grad = stripslashes(mysqli_real_escape_string($conn,$_POST['grad']));
+        $adresa_bolnice = stripslashes(mysqli_real_escape_string($conn,$_POST['adresa_bolnice']));
+        $postanski_broj = stripslashes(mysqli_real_escape_string($conn,$_POST['postanski_broj']));
+        $password = stripslashes(mysqli_real_escape_string($conn,$_POST['password']));
+
+        if (strpos($naziv_bolnice, '"')===false and strpos($grad, '"')===false and strpos($adresa_bolnice, '"')===false and strpos($postanski_broj, '"')===false and strpos($password, '"')===false
+            and strlen($naziv_bolnice)>=1 and strlen($grad)>=1 and strlen($adresa_bolnice)>=1 and $postanski_broj!=0) {
+            $flag = 0;
+            $update_query = "update bolnica set naziv_bolnice = '$naziv_bolnice',grad ='$grad', adresa_bolnice = '$adresa_bolnice',
                             postanski_broj = '$postanski_broj' where idbolnica = '$idbolnica'";
-    $update_run = mysqli_query($conn, $update_query);
-    $trenutna = $_POST['trenutna'];
-    $nova1 = $_POST['nova1'];
-    $nova2 = $_POST['nova2'];
-    if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '') {
-        $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnica'";
-        $update_run = mysqli_query($conn, $update_query);
-        $flag = 1;
+            $update_run = mysqli_query($conn, $update_query);
+        } else {
+            $error1 = 1;
+        }
+        $trenutna = stripslashes(mysqli_real_escape_string($conn,$_POST['trenutna']));
+        $nova1 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova1']));
+        $nova2 = stripslashes(mysqli_real_escape_string($conn,$_POST['nova2']));
+
+            if ($trenutna === $password and $nova1 === $nova2 and $nova1 !== '') {
+                if (strpos($nova1, '"')===false ) {
+                    $update_query = "update bolnica set password = '$nova1' where idbolnica = '$idbolnica'";
+                    $update_run = mysqli_query($conn, $update_query);
+                    $flag = 1;
+                } else {
+                    $error2 = 1;
+                }
+            }
+
+        if($flag == 1)$url = 'index.php';
+        else $url = 'bolnica.php';
+        if ($error1==0 and $error2==0)header("Location: $url");
     }
-    if($flag == 1)$url = 'index.php';
-    else $url = 'bolnica.php';
-    header("Location: $url");
-}
+
+
 echo'
 <head>
     <meta charset="utf-8">
@@ -129,4 +146,13 @@ echo'
 </div>
 <hr>  
 ';
+    if ($error1) {
+        echo'Pogreška u unosu podataka.<br>';
+        $error1=0;
+    }
+    if ($error2) {
+        echo'Pogreška pri mijenjaju lozinke. Provjerite unos';
+        $error2=0;
+    }
+
 ?>
