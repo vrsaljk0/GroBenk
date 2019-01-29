@@ -1,3 +1,11 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<SCRIPT language="javascript">
+    function myFunction() {
+        document.getElementById("alert").style.display = "none";
+    }
+</SCRIPT>
+
+
 <?php
 require_once "dbconnect.php";
 mysqli_set_charset($conn,"utf8");
@@ -19,17 +27,29 @@ if(isset($_POST['submit'])){
 
     $target = "donori/".basename($image);
 
-    $reg_query="insert into donor values('$OIB','$krvna_grupa', '$ime', '$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$username', '$lozinka', '0', '$image')";
-    $reg_run=mysqli_query($conn, $reg_query);
-    $result = $reg_run or die("Failed to query database");
-
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        $msg = "Uspjesno registrirani!";
-    }else{
-        $msg = "Došlo je do greške obratite se administratoru";
-        echo "error:" .mysqli_error($conn);
-        echo ' '.$msg;
+    $provjera = "SELECT * from donor where username = '$username'";
+    $run_provjera = mysqli_query($conn, $provjera);
+    $result_provjera = $run_provjera or die ("Failed to query database". mysqli_error($conn));
+    if(mysqli_num_rows($result_provjera) != 0){
+        echo '
+        <div class="alert" id="alert">
+            <span class="closebtn" onclick="myFunction();">&times;</span> 
+            Takav username već postoji!</div>';
     }
+    else{
+        $reg_query="insert into donor values('$OIB','$krvna_grupa', '$ime', '$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$username', '$lozinka', '0', '$image')";
+        $reg_run=mysqli_query($conn, $reg_query);
+        $result = $reg_run or die("Došlo je pogreške pokušajte ponovno!");
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $msg = "Uspjesno registrirani!";
+        }else{
+            $msg = "Došlo je do greške obratite se administratoru";
+            echo "error:" .mysqli_error($conn);
+            echo ' '.$msg;
+        }
+    }
+
 
 }
 ?>

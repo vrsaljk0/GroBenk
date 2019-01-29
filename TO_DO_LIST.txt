@@ -13,7 +13,6 @@ FRONTEND::
 
 -NASLOVNA:
 	-SVE HAHAHA
-	-neki alert kad je kriva lozinka
 	-kod sign up-a da ne prođe ako vec postoji taj username ALERT!!!
 	-kriva lozinka, treba lijepi alert
 
