@@ -64,3 +64,6 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
         donacije.php
             -kolicina krvi mora bit <0, 0.7>L
 
+        obavijesti.php
+            -poruka mora sadrzavat min 5 znakova (alert je lijepi)
+

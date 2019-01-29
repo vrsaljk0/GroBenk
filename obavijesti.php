@@ -38,7 +38,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     header("Location:odjava.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
-
 if (!isset($_SESSION['admin_loggedin'])) header("Location:denied_permission.php");
 
 echo '
