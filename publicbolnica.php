@@ -9,7 +9,7 @@
     header("Location:odjava.php");
   }
   $_SESSION['LAST_ACTIVITY'] = time();
-
+  $_SESSION['vratime'] = $_SERVER['REQUEST_URI'];
   if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 
   $id_bolnice = $_GET['id_bolnice'];
@@ -65,7 +65,7 @@ echo'
   <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg">
   <div class="profil-info">
     <div class="profil-title">
-    <h1>'.$row['naziv_bolnice'].'</h1>
+    <h1>'.$row['naziv_bolnice'].'</h1><a href="karta.php?naziv='.$row['naziv_bolnice'].'&adresa='.$row['adresa_bolnice'].'"><img src="kontakt\lokacija.png" style="width:50px;height:50px"></a>
     </div>
     <div class="profil-content">
           <ul class="nav nav-tabs" id="myTab" >
