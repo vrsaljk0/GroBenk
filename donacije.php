@@ -17,6 +17,11 @@
 
         });
     });
+
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+
 </SCRIPT>
 
 <?php
@@ -153,9 +158,7 @@ echo '
                     <input type="checkbox" name="select_all" id = "select_all">
                     
                 </form>';
-            if ($error == 1) {
-                echo 'Unesite ispravnu količinu krvi.';
-            }
+
         }
 
 
@@ -164,6 +167,7 @@ echo '
             $kol = $_GET['kolicina'];
             if ($kol<=0 or $kol>0.7) {
                 $error = 1;
+                
             } else {
                 if (!empty($_GET['check_list'])) {
                     foreach ($_GET['check_list'] as $OIB) {
@@ -206,6 +210,9 @@ echo '
                 }
             }
         }
+            if ($error == 1) {
+                echo 'Unesite ispravnu količinu krvi.';
+            }
         if (isset($_GET['odbij'])) {
             $date = date("Ymd");
             if (!empty($_GET['check_list'])) {

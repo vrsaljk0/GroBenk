@@ -53,6 +53,21 @@ $sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja !='
 $run = mysqli_query($conn, $sql);
 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
+
+$sql_zadnja_admin = "SELECT * from obavijesti WHERE OIBdonora='$OIB' and ID_posiljatelja ='1' order by datum_obav DESC LIMIT 1";
+$run_zadnja_admin = mysqli_query($conn, $sql_zadnja_admin);
+$result_zadnja_admin =  $run_zadnja_admin or die ("Failed to query database". mysqli_error($conn));
+$row_zadnja_admin = mysqli_fetch_array($result_zadnja_admin);
+if(mysqli_num_rows($result_zadnja_admin) == 0){
+    $zadnji_datum_admin = "";
+    $zadnja_poruka_admin = "Trenutno nema poruka";
+}
+else{
+    $zadnji_datum_admin = $row_zadnja_admin['datum_obav'];
+    $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
+}
+
+
 echo '
 <div class="container">
 <div class="messaging">
@@ -77,9 +92,8 @@ echo '
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
-                      <h5>Admin <span class="chat_date">Dec 25</span></h5>
-                      <p>Test, which is a new approach to have all solutions 
-                        astrology under one roof.</p>
+                      <h5>Admin <span class="chat_date">'.$zadnji_datum_admin.'</span></h5>
+                      <p>'.$zadnja_poruka_admin.'</p>
                     </div>
                 </div>
                 </a><br>';
@@ -93,14 +107,20 @@ while($row = mysqli_fetch_array($result)){
     $row_prijatelj = mysqli_fetch_array($result2);
     $ime = $row_prijatelj['ime_prezime_donora'];
     $username_prijatelja = $row_prijatelj['username'];
+
+    $sql_zadnja = "SELECT * from obavijesti WHERE (OIBdonora = '$OIB' AND ID_posiljatelja = '$OIB_prijatelja') OR (OIBdonora = '$OIB_prijatelja' AND ID_posiljatelja ='$OIB') order by datum_obav DESC LIMIT 1";
+    $run_zadnja = mysqli_query($conn, $sql_zadnja);
+    $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
+    $row_zadnja = mysqli_fetch_array($result_zadnja);
+
+
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
-                        <div class="chat_img"> <img src="'.$row_prijatelj['image'].'"> </div>
+                        <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">Dec 25</span></h5>
-                          <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$row_zadnja['datum_obav'].'</span></h5>
+                          <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
                 </a><br>';

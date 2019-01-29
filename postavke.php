@@ -62,14 +62,13 @@ if(isset($_POST['submit'])){
             $msg = "Došlo je do greške obratite se administratoru";
         }
     }
-    else {
-        $query = "UPDATE donor SET OIB_donora = '$OIB_d', ime_prezime_donora = '$ime', datum_rodenja='$datum_rod',
-                      prebivaliste = '$prebivaliste', postanski_broj='$postanskibr', broj_mobitela='$brojmob', mail_donora='$email',
-                      adresa_donora='$adresa', krvna_grupa_don = '$krvna_grupa', username = '$username'
-                      where OIB_donora='$OIB_d'";
-        $run = mysqli_query($conn, $query);
-        $result = $run or die ("Failed to query database" . mysqli_error($conn));
-    }
+
+    $query = "UPDATE donor SET OIB_donora = '$OIB_d', ime_prezime_donora = '$ime', datum_rodenja='$datum_rod',
+              prebivaliste = '$prebivaliste', postanski_broj='$postanskibr', broj_mobitela='$brojmob', mail_donora='$email',
+              adresa_donora='$adresa', krvna_grupa_don = '$krvna_grupa', username = '$username'
+              where OIB_donora='$OIB_d'";
+    $run = mysqli_query($conn, $query);
+    $result = $run or die ("Failed to query database" . mysqli_error($conn));
 
     if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '' && $nova2!='') {
         $update_query = "update donor set password = '$nova1' where OIB_donora = '$OIB_d'";
@@ -103,6 +102,7 @@ echo '
               </div>
             </div>
 
+
             <div class="col-md-9 personal-info">
             <h3>Osobni podaci</h3>
                 <div class="form-group">
@@ -112,9 +112,22 @@ echo '
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label">Krvna grupa:</label>
-                  <div class="col-lg-8"> <!-- posalji_zahtjev.php select za krvnu grupu, probala sam al sjebe css (nestane sljedeci label)-->
-                    <input type="text" class="form-control"  name="krvna_grupa" value="'.$row['krvna_grupa_don'].'">
+                  <label class="col-lg-3 control-label">Krvna grupa:</label>';
+                  $moja_grupa = $row['krvna_grupa_don'];
+                  echo'<div class="col-lg-8"> <!-- posalji_zahtjev.php select za krvnu grupu, probala sam al sjebe css (nestane sljedeci label)-->
+                    <select name="krvna_grupa" value='.$moja_grupa.' class="form-control" style="width: 80px; height:28px; text-align:center;">';
+                       echo'<option value="'.$moja_grupa.'">'.$moja_grupa.'</option>';
+                       $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
+                        for ($i = 0; $i < 8; $i++) {
+                                if($moja_grupa!=$krvna_grupa[$i]) {
+                                    echo '
+                                    <option value=' . $krvna_grupa[$i] . '>' . $krvna_grupa[$i] . '</option>';
+                                }
+                        }
+
+                        echo'
+                        </select>
+
                   </div>
                 </div>
                 <div class="form-group">
