@@ -69,5 +69,9 @@ else{
     }
 }
 if($flag) header("Location:$url");
-else echo "Pogresan unos!";
+else {
+    echo '
+    Pogresna lozinka ili username.
+    <a href="index.php">Pokušajte opet.</a>';
+}
 ?>
