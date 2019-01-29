@@ -1,11 +1,3 @@
-<script>
-    function myFunction() {
-        var objDiv = document.getElementById("sve");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }
-</script>
-
-
 <?php
 require_once "dbconnect.php";
 require_once "functions.php";
@@ -28,7 +20,6 @@ echo '
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="donorstyle.css" rel="stylesheet">
@@ -50,26 +41,19 @@ echo "
       $('#nav-placeholder').load('donornavbar.php');
     });
     </script>";
+$trazi = $_POST['search_uvjet'];
 
 $OIB = $_SESSION['id'];
-$datum = date('Y-m-d H:i:s');
-
 $info = "SELECT *from donor where OIB_donora = '$OIB'";
 $run = mysqli_query($conn, $info);
 $result = $run or die ("Failed to query database". mysqli_error($conn));
 $row = mysqli_fetch_array($result);
 $moje_ime = $row['ime_prezime_donora'];
-$username = $_GET['username'];
-$moja_image = $row['image'];
-//echo $username;
 
-$prijatelj = "SELECT *from donor where username = '$username'";
-$run2 = mysqli_query($conn, $prijatelj);
-$result2 = $run2 or die ("Failed to query database". mysqli_error($conn));
-$row2 = mysqli_fetch_array($result2);
-$OIB_frenda = $row2['OIB_donora'];
-$ime_frenda = $row2['ime_prezime_donora'];
-$frend_image = $row2['image'];
+$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' AND ID_posiljatelja IN(SELECT OIB_donora from donor WHERE OIB_donora = ID_posiljatelja and ime_prezime_donora LIKE'%$trazi%') group by ID_posiljatelja";
+$run = mysqli_query($conn, $sql);
+$result = $run or die ("Failed to query database". mysqli_error($conn));
+
 
 $sql_zadnja_admin = "SELECT * from obavijesti WHERE OIBdonora='$OIB' and ID_posiljatelja ='1' order by datum_obav DESC LIMIT 1";
 $run_zadnja_admin = mysqli_query($conn, $sql_zadnja_admin);
@@ -84,25 +68,8 @@ else{
     $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
 }
 
-
-
-if(isset($_POST['posalji_poruku'])){
-    $tekst = $_POST['poruka'];
-    if($tekst!=''){
-        $message = "INSERT INTO obavijesti (OIBdonora, ID_posiljatelja, tekst_obav, datum_obav, procitano) VALUES ('$OIB_frenda', '$OIB', '$tekst', '$datum', '0')";
-        $run2 = mysqli_query($conn, $message);
-        $result2 = $run or die ("Failed to query database". mysqli_error($conn));
-
-    }
-    $url = 'user_history.php?username='.$username;
-    header("Location:$url");
-}
-$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja order by datum_obav DESC";
-$run_korisnici = mysqli_query($conn, $sql_korisnici);
-$result_korisnici = $run_korisnici or die ("Failed to query database". mysqli_error($conn));
-
 echo '
-<div class="container" id="sve" onload="myFunction();">
+<div class="container">
 <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
@@ -112,27 +79,29 @@ echo '
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Pretraži" >
+                <form action="user_search.php" method="POST">
+                <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
                 <span class="input-group-addon">
                 <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </form>
                 </span> </div>
             </div>
           </div>
           <div class="inbox_chat">
             <div class="chat_list">
+
                 <a href="admin_history.php">
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$zadnji_datum_admin.'</span></h5>
                       <p>'.$zadnja_poruka_admin.'</p>
-
                     </div>
                 </div>
                 </a><br>';
 
 
-while($row = mysqli_fetch_array($result_korisnici)){
+while($row = mysqli_fetch_array($result)){
     $OIB_prijatelja = $row['ID_posiljatelja'];
     $prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
     $run_prijatelj = mysqli_query($conn, $prijatelj);
@@ -141,34 +110,18 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $ime = $row_prijatelj['ime_prezime_donora'];
     $username_prijatelja = $row_prijatelj['username'];
 
+
     $sql_zadnja = "SELECT * from obavijesti WHERE (OIBdonora = '$OIB' AND ID_posiljatelja = '$OIB_prijatelja') OR (OIBdonora = '$OIB_prijatelja' AND ID_posiljatelja ='$OIB') order by datum_obav DESC LIMIT 1";
     $run_zadnja = mysqli_query($conn, $sql_zadnja);
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
-    $d = $row_zadnja['datum_obav'];
-    $day = date("d", strtotime($d));
-    $month = date("m", strtotime($d));
-    $year = date("Y", strtotime($d));
-
-    if($month == 1) $mjesec = "Siječanj";
-    if($month == 2) $mjesec = "Veljača";
-    if($month == 3) $mjesec = "Ožujak";
-    if($month == 4) $mjesec = "Travanj";
-    if($month == 5) $mjesec = "Svibanj";
-    if($month == 6) $mjesec = "Lipanj";
-    if($month == 7) $mjesec = "Srpanj";
-    if($month == 8) $mjesec = "Kolovoz";
-    if($month == 9) $mjesec = "Rujan";
-    if($month == 10) $mjesec = "Listopad";
-    if($month == 11) $mjesec = "Studeni";
-    if($month == 12) $mjesec = "Prosinac";
 
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
                         <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">Dec 25</span></h5>
                           <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
@@ -177,55 +130,6 @@ while($row = mysqli_fetch_array($result_korisnici)){
 
 echo '
             </div>
-          </div>
-        </div>
-
-        <div class="mesgs">
-            <div class="msg_history">';
-
-$poruke = "SELECT * from obavijesti WHERE (OIBdonora = '$OIB' AND ID_posiljatelja = '$OIB_frenda') OR (OIBdonora = '$OIB_frenda' AND ID_posiljatelja ='$OIB')";
-$run_poruke = mysqli_query($conn, $poruke);
-$result_poruke = $run_poruke or die ("Failed to query database". mysqli_error($conn));
-
-while($row_poruke = mysqli_fetch_array($result_poruke)){
-    $dat = $row_poruke['datum_obav']; 
-    $hour = date("H", strtotime($dat));
-    $min = date("i", strtotime($dat));
-    $day = date("d", strtotime($dat));
-    $month = date("m", strtotime($dat));
-    $year = date("Y", strtotime($dat));
-    if($row_poruke['ID_posiljatelja'] == $OIB){
-        echo '
-                <div class="outgoing_msg">
-                  <div class="sent_msg">
-                    <p style="background-color:#9F0A00;">'.$row_poruke['tekst_obav'].'</p>
-                    <span class="time_date"> '.$hour.':'.$min.' '.$day.'.'.$month.'.'.$year.'.</span> </div>
-                </div>
-                    ';
-    }
-    else echo '
-                <div class="incoming_msg">
-                    <div class="incoming_msg_img"> <img src="donori/'.$frend_image.'" alt="sunil"> </div>
-                        <div class="received_msg">
-                        <div class="received_withd_msg">
-                        <p>'.$row_poruke['tekst_obav'].'</p>
-                        <span class="time_date"> '.$hour.':'.$min.' '.$day.'.'.$month.'.'.$year.'.</span></div>
-                    </div>
-                </div>
-                ';
-}
-
-echo '
-          </div>
-
-
-          <div class="type_msg">
-            <div class="input_msg_write">
-                <form action="" method="POST">
-                  <input type="text" class="write_msgin" placeholder="Napiši poruku" name="poruka"/>
-                  <input style="background-color:#9F0A00;" class="msg_send_btn" type="submit" name="posalji_poruku" value="&#10148">
-                </form>
-           </div>
           </div>
         </div>
       </div>
