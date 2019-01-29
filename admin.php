@@ -38,6 +38,9 @@ echo '
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="dodajbolnicu.php">Dodaj bolnicu</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="donacije.php">Donacije</a>
             </li>
             <li class="nav-item">
