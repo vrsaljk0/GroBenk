@@ -38,6 +38,7 @@ echo '
 
     $OIB = $_SESSION['id'];
     $_SESSION["mojOIB"] = $OIB;
+    $_SESSION["vratime"] = $_SERVER['REQUEST_URI'];
 
     $info ="select *from donor where OIB_donora = '$OIB'";
     $run = mysqli_query($conn, $info);
@@ -222,7 +223,7 @@ echo '
                                                 <span class="month">'.$mjesec.'</span>
                                                 <span class="year">'.$year.'</span>
                                             </div>
-                                            <span class="h4">'.$row['naziv_lokacije'].'<span>
+                                            <span class="h4"><a href="karta.php?naziv='.$row['naziv_lokacije'].'&adresa='.$row['adresa_lokacije'].'">'.$row['naziv_lokacije'].'</a><span>
                                             <span class="event-checkbox">
                                                 <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row['id_lokacije'].' onclick="Sakrij();"/>
                                             </span><br>
@@ -276,7 +277,7 @@ echo '
                                                 <span class="month">'.$mjesec.'</span>
                                                 <span class="year">'.$year.'</span>
                                             </div>
-                                            <span class="h4">'.$row_dolazim['naziv_lokacije'].'<span>
+                                            <span class="h4"><a href="karta.php?naziv='.$row_dolazim['naziv_lokacije'].'&adresa='.$row_dolazim['adresa_lokacije'].'">'.$row_dolazim['naziv_lokacije'].'</a><span>
                                             <span class="event-checkbox">
                                                 <input class="squaredTwo" type="checkbox" name="check_list[]" value='.$row_dolazim['id_lokacije'].' onclick="Sakrij();"/>
                                             </span><br>
