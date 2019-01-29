@@ -81,14 +81,13 @@ if(isset($_POST['submit'])){
     $run = mysqli_query($conn, $query);
     $result = $run or die ("Failed to query database" . mysqli_error($conn));
 
-
     if ($run) $flag=1;
 }
 
 echo'
 
     <div style="width:30%;float:left;padding:50px;border-right: 3px solid #DC0E0E;margin-top: 30px;opacity:0.8">
-        <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="500px" >
+        <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="100%" >
     </div>
     <div style="width:69%;float:right;padding:50px;margin-top: 30px">
         <h2>Dodaj novu bolnicu</h2><br>
@@ -120,7 +119,7 @@ echo'
                     <td><input type="text" name="pass" required="" style="border-radius: 5px;"></td>
                  </tr> 
              </table><br>
-                <input type="submit" name=submit" class="zbtn" value="Dodaj bolnicu">
+                <input type="submit" name="submit" class="zbtn" value="Dodaj bolnicu">
         </form>';
 
         if ($flag) echo 'Bolnica '.$naziv.' je uspješno dodana.';
