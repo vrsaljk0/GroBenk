@@ -3,34 +3,26 @@ KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
 donor.php
     
-- ne znam jesmo ispravile unos lozinki
+- nalert dal su lozinke iste kad mijenja
 - obavjesti/poruke, ako nema poruka od npr.korisnika da ne pise "Korisnik" nego samo bude prazno
 
-
-baza
-
--provjerit evente kod donora jer ne ispisuje kako treba
 
 
 FRONTEND::
 -DONOR:
-	-probat zakeljit krvnu grupu negdje da šljašti
-	-dodat follower following ako ostane vremena
-	-napravit nešto sa pretraži jer je basic previše
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
-	-pokušat dodat sliku kraj imena
 	-stavit scrollbar za Praćenja Pratim/Prate me
 
 -ADMIN:
-	-div reload
-	-bolnički zahtjevi označi sve koji se mogu odobriti i sve one koji se ne mogu maybe
-	-alert kod zahtjeva kad nema dovoljno kolicine krvi
 
 -NASLOVNA:
 	-SVE HAHAHA
 	-neki alert kad je kriva lozinka
-	-kod sign up-a da ne prođe ako vec postoji taj username
+	-kod sign up-a da ne prođe ako vec postoji taj username ALERT!!!
+	-kriva lozinka, treba lijepi alert
+
+zabrana pristupa, malo uredit
 
 """"""""""""""""""""""""""""""""""
 SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kako spada i treba alertove uredit)
@@ -55,15 +47,23 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
             -IN PROGRESS (vjv ce bit isto ko za bolnicke_postavke.php)
 
     ADMIN
-        eventi.php
-            -datum dogadaja eventa mora bit u buducnosti (inace bezveze dodajemo, nemozemo mu dodat donore ni obrisat ga)
-            -vrijeme pocetka mora bit prije vremena zavrsavanja
-            -event mora trajat bar 1h
-            (nisam stavila nis za provjeru inputa, ako stavim " pod grad se uredno ispise, cemo vjerovat adminu??)
-
         donacije.php
-            -kolicina krvi mora bit <0, 0.7>L
+            -kolicina krvi mora bit <0, 0.7>L NE ODE NA DOBAR LINK!!!
 
-        obavijesti.php
-            -poruka mora sadrzavat min 5 znakova (alert je lijepi)
+    KARTA.PHP
+        -kod evenata i na publicu bolnice
+
+    CHAT
+        -search
+
+    SIGNUP
+        -dropdown kod krvnih krupa
+        -promjenit background
+        -button da te vrati na index.php ako si slucajno zalutao
+
+    SIGN.in
+        -kriva lozinka alert
+
+    BAZA
+        -popunit s normalnim podacima hehe
 
