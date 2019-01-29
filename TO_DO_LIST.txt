@@ -45,7 +45,7 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
             -nova objava mora imat minimalno 5 znakova
 
         posalji_zahtjev.php
-            zahtjev mora bit >0L
+            zahtjev mora bit <0, 100] L
 
     DONOR
         publicprofile.php
@@ -60,4 +60,7 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
             -vrijeme pocetka mora bit prije vremena zavrsavanja
             -event mora trajat bar 1h
             (nisam stavila nis za provjeru inputa, ako stavim " pod grad se uredno ispise, cemo vjerovat adminu??)
+
+        donacije.php
+            -kolicina krvi mora bit <0, 0.7>L
 
