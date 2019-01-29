@@ -29,7 +29,7 @@
     if(isset($_POST['posalji_zahtjev'])){
         $kolicina = $_POST['kolicina'];
         $krvna_grupa = $_POST['grupa'];
-        if ($kolicina <= 0) {
+        if ($kolicina <= 0 OR $kolicina>100) {
             $greska = 1;
         }
         if($krvna_grupa=="0") {
