@@ -12,7 +12,10 @@
     if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
     $pretraga = $_GET['trazilica'];
     $OIB = $_SESSION['mojOIB'];
-    //echo $_SESSION['mojOIB'];
+
+    if (!(strpos($pretraga, "'")===false)) {
+        $pretraga = "";
+    }
 
     echo '
     <head>
