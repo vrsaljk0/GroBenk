@@ -53,7 +53,7 @@ echo '
         <div class="inbox_people">
           <div class="headind_srch">
             <div class="recent_heading">
-              <h4 style="background-color:#9F0A00;">Povijest poruka</h4>
+              <h4 style="color:#9F0A00;">Povijest poruka</h4>
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
