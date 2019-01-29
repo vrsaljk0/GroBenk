@@ -1,20 +1,15 @@
 ﻿
 KAD VIDITE DA NES FALI NAPISITE, da ne pamtimo jer cemo zaboravit vjv
 
+user_search.php - dodati sql injections u search baru
 donor.php
     
 - nalert dal su lozinke iste kad mijenja
-- obavjesti/poruke, ako nema poruka od npr.korisnika da ne pise "Korisnik" nego samo bude prazno
-
-
-
 FRONTEND::
 -DONOR:
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
 	-stavit scrollbar za Praćenja Pratim/Prate me
-
--ADMIN:
 
 -NASLOVNA:
 	-SVE HAHAHA

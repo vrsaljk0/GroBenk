@@ -12,8 +12,8 @@ mysqli_set_charset($conn,"utf8");
 
 session_start();
 
-$username = $_GET['username'];
-$password = $_GET['password'];
+$username = $_POST['username'];
+$password = $_POST['password'];
 
 $username = stripcslashes($username);
 $password = stripcslashes($password);
