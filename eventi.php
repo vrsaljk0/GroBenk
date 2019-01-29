@@ -81,6 +81,9 @@ echo '
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link " href="dodajbolnicu.php">Dodaj bolnicu</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
             </li>
             <li class="nav-item">
@@ -240,16 +243,16 @@ echo '
             $radio = 0;
             $pretraga = $_GET['keyword'];
             $datum = date('Y-m-d');
-            if(isset($_GET['buduci']) && $pretraga ==''){
+            if(isset($_GET['radio']) and ($_GET['radio'])=='buduci' && $pretraga ==''){
                 $query = "SELECT *from lokacija WHERE datum_dogadaja > '$datum' order by id_lokacije desc";
             }
-           else if(isset($_GET['buduci']) && $pretraga !=''){
+            else if(isset($_GET['radio'])and ($_GET['radio'])=='buduci' && $pretraga !=''){
                $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja > '$datum') order by id_lokacije desc";
            }
-            else if(isset($_GET['prosli']) && $pretraga !=''){
+            else if(isset($_GET['radio'])and ($_GET['radio'])=='prosli' && $pretraga !=''){
                 $query = "SELECT *from lokacija WHERE ((grad LIKE '%$pretraga%') OR (naziv_lokacije LIKE '%$pretraga%') OR (adresa_lokacije LIKE '%$pretraga%') OR (postanski_broj LIKE '%$pretraga%') OR (datum_dogadaja LIKE '%$pretraga%')) AND (datum_dogadaja < '$datum') order by id_lokacije desc";
             }
-            else if(isset($_GET['prosli']) && $pretraga ==''){
+            else if(isset($_GET['radio'])and ($_GET['radio'])=='prosli' && $pretraga ==''){
                 $query = "SELECT *from lokacija WHERE datum_dogadaja < '$datum' order by id_lokacije desc";
             }
             else{
