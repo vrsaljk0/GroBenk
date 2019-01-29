@@ -65,15 +65,17 @@ echo '
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
 							if($neprocitano){
-							    echo'
-							    <form action="notification.php" method="POST">';
-							    echo'<b>ADMIN</b><br>';
-							    while($row = mysqli_fetch_array($result)){
-							    	echo '<i>'.$row['datum_obav'].'</i> ';
-							        echo $row['tekst_obav'].'  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
-							    }
-							    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
-							    </form>';
+								if(mysqli_num_rows($result) != 0) {
+									echo '
+							    	<form action="notification.php" method="POST">';
+										echo '<b>ADMIN</b><br>';
+										while ($row = mysqli_fetch_array($result)) {
+											echo '<i>' . $row['datum_obav'] . '</i> ';
+											echo $row['tekst_obav'] . '  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value=' . $row['id_obavijesti'] . '></p>';
+										}
+										echo '<input type="hidden" name="OIB" value="' . $OIB . '">
+							    	</form>';
+								}
 							}
 							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1'";
 							$run = mysqli_query($conn, $sql);
@@ -81,18 +83,20 @@ echo '
 							if($neprocitano){
 							    echo'
 							    <form action="notification.php" method="POST">';
-							    echo'<b>KORISNICI</b><br>';
-							    while($row = mysqli_fetch_array($result)){
-							    	$OIB_prijatelja = $row['ID_posiljatelja'];
-							    	$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
-									$run_prijatelj = mysqli_query($conn, $prijatelj);
-									$result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
-									$row_prijatelj = mysqli_fetch_array($result2);
-									$ime = $row_prijatelj['ime_prezime_donora'];
-									$username_prijatelja = $row_prijatelj['username'];
-									echo '<i>'.$row['datum_obav'].'</i> <a  href="publicprofile.php?username='.urlencode($username_prijatelja).'"><font color="FF00CC">'.$row_prijatelj['ime_prezime_donora'].'</font></a>
-										 '.$row['tekst_obav'].' <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'></p>';
-							    }
+								if(mysqli_num_rows($result) != 0) {
+									echo '<b>KORISNICI</b><br>';
+									while ($row = mysqli_fetch_array($result)) {
+										$OIB_prijatelja = $row['ID_posiljatelja'];
+										$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
+										$run_prijatelj = mysqli_query($conn, $prijatelj);
+										$result2 = $run_prijatelj or die ("Failed to query database" . mysqli_error($conn));
+										$row_prijatelj = mysqli_fetch_array($result2);
+										$ime = $row_prijatelj['ime_prezime_donora'];
+										$username_prijatelja = $row_prijatelj['username'];
+										echo '<i>' . $row['datum_obav'] . '</i> <a  href="publicprofile.php?username=' . urlencode($username_prijatelja) . '"><font color="FF00CC">' . $row_prijatelj['ime_prezime_donora'] . '</font></a>
+										 ' . $row['tekst_obav'] . ' <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value=' . $row['id_obavijesti'] . '></p>';
+									}
+								}
 							    echo '<a href="history.php">Prikaži sve</a>
 							    <input type="hidden" name="OIB" value="'.$OIB.'">
 							    </form>';
