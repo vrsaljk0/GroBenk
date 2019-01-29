@@ -17,6 +17,17 @@
 
         });
     });
+    
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+    function myFunction2() {
+      document.getElementById("alert2").style.display = "none";
+    }
+    function myFunction3() {
+      document.getElementById("alert3").style.display = "none";
+    }
+
 </SCRIPT>
 
 <?php
@@ -92,13 +103,16 @@ echo '
         }
     }
     if(isset($_POST['submit_event'])){
-        $datum = $_POST['datum'];
-        $grad = $_POST['grad'];
-        $lokacija = $_POST['lokacija'];
-        $adresa = $_POST['adresa'];
-        $postanski_broj = $_POST['postbroj'];
-        $start = $_POST['startt'];
-        $kraj = $_POST['kraj'];
+        $datum_danasnji = date('Y-m-d');
+    $datum = stripslashes(mysqli_real_escape_string($conn,$_POST['datum']));
+    $grad = stripslashes(mysqli_real_escape_string($conn,$_POST['grad']));
+    $lokacija = stripslashes(mysqli_real_escape_string($conn,$_POST['lokacija']));
+    $adresa = stripslashes(mysqli_real_escape_string($conn,$_POST['adresa']));
+    $postanski_broj = stripslashes(mysqli_real_escape_string($conn,$_POST['postbroj']));
+    $start = stripslashes(mysqli_real_escape_string($conn,$_POST['startt']));
+    $kraj = stripslashes(mysqli_real_escape_string($conn,$_POST['kraj']));
+
+
         $image = $_FILES['image']['name'];
         $target = "lokacije/".basename($image);
         $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
@@ -127,6 +141,8 @@ echo '
         header("Location:eventi.php?keyword=&trazi=Traži");
     }
 }
+
+
 
 echo '
 <div class="eventi-table">
@@ -159,13 +175,28 @@ echo '
     </form>';
 
     if ($error1 == 1) {
-        echo'Datum događanja eventa nesmije biti u prošlosti<br>';
+        echo '
+            <div style="margin-left:0;" class="alert" id="alert">
+                <span class="closebtn" onclick="myFunction();">&times;</span> 
+                Datum događanja eventa ne smije biti u prošlosti.
+            </div>
+        ';
     }
     if ($error2 == 1) {
-        echo'Vrijeme početka eventa mora biti prije završavanja eventa';
+        echo '
+            <div style="margin-left:0;" class="alert" id="alert2">
+                <span class="closebtn" onclick="myFunction2();">&times;</span> 
+                Vrijeme početka eventa mora biti prije završavanja eventa.
+            </div>
+        ';
     }
     if ($error3 == 1) {
-        echo'Event mora trajati barem 1 sat';
+        echo '
+            <div style="margin-left:0;" class="alert" id="alert3">
+                <span class="closebtn" onclick="myFunction3();">&times;</span> 
+                Event mora trajati barem 1 sat.
+            </div>
+        ';
     }
 
     echo '
