@@ -85,7 +85,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 
 <!--PopUp SignIn Form-->
 <div id="modal-wrapper" class="modal">
-    <form class="modal-content animate" action="krizanje.php" method="GET">
+    <form class="modal-content animate" action="krizanje.php" method="POST">
 
         <div class="imgcontainer">
             <span onclick="document.getElementById('modal-wrapper').style.display='none'" class="close" title="Close Popup">&times;</span>
