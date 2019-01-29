@@ -24,7 +24,6 @@ echo '
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="donorstyle.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
@@ -63,7 +62,6 @@ $row2 = mysqli_fetch_array($result2);
 $OIB_frenda = $row2['OIB_donora'];
 $ime_frenda = $row2['ime_prezime_donora'];
 $frend_image = $row2['image'];
-echo $ime_frenda;
 
 if(isset($_POST['posalji_poruku'])){
     $tekst = $_POST['poruka'];
@@ -87,7 +85,7 @@ echo '
         <div class="inbox_people">
           <div class="headind_srch">
             <div class="recent_heading">
-              <h4>Povijest poruka</h4>
+              <h4 style="color:#9F0A00;">Povijest poruka</h4>
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
@@ -99,7 +97,6 @@ echo '
           </div>
           <div class="inbox_chat">
             <div class="chat_list">
-
                 <a href="admin_history.php">
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
@@ -125,14 +122,30 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $run_zadnja = mysqli_query($conn, $sql_zadnja);
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
+    $d = $row_zadnja['datum_obav'];
+    $day = date("d", strtotime($d));
+    $month = date("m", strtotime($d));
+    $year = date("Y", strtotime($d));
 
+    if($month == 1) $mjesec = "Siječanj";
+    if($month == 2) $mjesec = "Veljača";
+    if($month == 3) $mjesec = "Ožujak";
+    if($month == 4) $mjesec = "Travanj";
+    if($month == 5) $mjesec = "Svibanj";
+    if($month == 6) $mjesec = "Lipanj";
+    if($month == 7) $mjesec = "Srpanj";
+    if($month == 8) $mjesec = "Kolovoz";
+    if($month == 9) $mjesec = "Rujan";
+    if($month == 10) $mjesec = "Listopad";
+    if($month == 11) $mjesec = "Studeni";
+    if($month == 12) $mjesec = "Prosinac";
 
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
                         <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$row_zadnja['datum_obav'].'</span></h5>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                           <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
@@ -152,12 +165,18 @@ $run_poruke = mysqli_query($conn, $poruke);
 $result_poruke = $run_poruke or die ("Failed to query database". mysqli_error($conn));
 
 while($row_poruke = mysqli_fetch_array($result_poruke)){
+    $dat = $row_poruke['datum_obav']; 
+    $hour = date("H", strtotime($dat));
+    $min = date("i", strtotime($dat));
+    $day = date("d", strtotime($dat));
+    $month = date("m", strtotime($dat));
+    $year = date("Y", strtotime($dat));
     if($row_poruke['ID_posiljatelja'] == $OIB){
         echo '
                 <div class="outgoing_msg">
                   <div class="sent_msg">
-                    <p>'.$row_poruke['tekst_obav'].'</p>
-                    <span class="time_date"> '.$row_poruke['datum_obav'].'   |    June 9</span> </div>
+                    <p style="background-color:#9F0A00;">'.$row_poruke['tekst_obav'].'</p>
+                    <span class="time_date"> '.$hour.':'.$min.' '.$day.'.'.$month.'.'.$year.'.</span> </div>
                 </div>
                     ';
     }
@@ -167,7 +186,7 @@ while($row_poruke = mysqli_fetch_array($result_poruke)){
                         <div class="received_msg">
                         <div class="received_withd_msg">
                         <p>'.$row_poruke['tekst_obav'].'</p>
-                        <span class="time_date"> '.$row_poruke['datum_obav'].' |    June 9</span></div>
+                        <span class="time_date"> '.$hour.':'.$min.' '.$day.'.'.$month.'.'.$year.'.</span></div>
                     </div>
                 </div>
                 ';
@@ -181,10 +200,10 @@ echo '
             <div class="input_msg_write">
                 <form action="" method="POST">
                   <input type="text" class="write_msgin" placeholder="Napiši poruku" name="poruka"/>
-                  <input class="msg_send_btn" type="submit" name="posalji_poruku" value="&#10148">
+                  <input style="background-color:#9F0A00;" class="msg_send_btn" type="submit" name="posalji_poruku" value="&#10148">
                 </form>
            </div>
-1          </div>
+          </div>
         </div>
       </div>
     </div></div>
