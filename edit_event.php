@@ -53,14 +53,11 @@ echo '
 
    
     $id = $_GET['idEvent'];
-
     if(isset($_POST['uredi_event'])) {
-        $id = $_POST['id'];
         $datum = $_POST['datum'];
         $grad = $_POST['grad'];
         $lokacija = $_POST['lokacija'];
         $adresa = $_POST['adresa'];
-        $postbroj = $_POST['postbroj'];
         $startt = $_POST['startt'];
         $kraj = $_POST['kraj'];
         $image = $_FILES['image']['name'];
@@ -78,13 +75,14 @@ echo '
                 $msg = "Došlo je do greške";
             }
         }
-        else{
-            $sql = "UPDATE lokacija SET datum_dogadaja = '$datum', grad = '$grad', naziv_lokacije = '$lokacija', adresa_lokacije = '$adresa', postanski_broj = '$postbroj',
+
+        $sql = "UPDATE lokacija SET datum_dogadaja = '$datum', grad = '$grad', naziv_lokacije = '$lokacija', adresa_lokacije = '$adresa',
                             start = '$startt', kraj = '$kraj' WHERE id_lokacije = '$id'";
-            $run = mysqli_query($conn, $sql);
-            $result = $run or die ("Failed to query database". mysqli_error($conn));
-        }
-        header("Location:eventi.php?keyword=&trazi=Traži");
+        $run = mysqli_query($conn, $sql);
+        $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+
+
     }
 
     $sql = "SELECT * from lokacija where id_lokacije = '$id'";
@@ -146,7 +144,7 @@ echo'
                 <div class="form-group">
                   <label class="col-md-3 control-label"></label>
                   <div class="col-md-8">
-                    <input type="submit" style="background: #9F0A00; border: 1px solid #A60202;" class="btn btn-primary" name="updejtaj" value="Promijeni podatke">
+                    <input type="submit" style="background: #9F0A00; border: 1px solid #A60202;" class="btn btn-primary" name="uredi_event" value="Promijeni podatke">
                     <span></span>
                     <bottom><br><br><a href="eventi.php?keyword=&trazi=Traži">Nazad</a></bottom>
                   </div>
