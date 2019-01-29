@@ -24,6 +24,9 @@
 require_once ("dbconnect.php");
 session_start();
 mysqli_set_charset($conn,"utf8");
+$error1 = 0;
+$error2 = 0;
+$error3 = 0;
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
     header("Location:odjava.php");
@@ -89,28 +92,41 @@ if(isset($_POST['delete'])){
     }
 }
 if(isset($_POST['submit_event'])){
-    $datum = $_POST['datum'];
-    $grad = $_POST['grad'];
-    $lokacija = $_POST['lokacija'];
-    $adresa = $_POST['adresa'];
-    $postanski_broj = $_POST['postbroj'];
-    $start = $_POST['startt'];
-    $kraj = $_POST['kraj'];
+    $datum_danasnji = date('Y-m-d');
+    $datum = stripslashes(mysqli_real_escape_string($conn,$_POST['datum']));
+    $grad = stripslashes(mysqli_real_escape_string($conn,$_POST['grad']));
+    $lokacija = stripslashes(mysqli_real_escape_string($conn,$_POST['lokacija']));
+    $adresa = stripslashes(mysqli_real_escape_string($conn,$_POST['adresa']));
+    $postanski_broj = stripslashes(mysqli_real_escape_string($conn,$_POST['postbroj']));
+    $start = stripslashes(mysqli_real_escape_string($conn,$_POST['startt']));
+    $kraj = stripslashes(mysqli_real_escape_string($conn,$_POST['kraj']));
+
     $image = $_FILES['image']['name'];
     $target = "lokacije/".basename($image);
     $filename = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME);
 
-    $query = "INSERT into lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj, image) values ('$grad', '$lokacija', '$adresa', '$postanski_broj','$datum', '$start', '$kraj', '$image')";
-    $run = mysqli_query($conn, $query);
-    $result = $run or die ("Failed to query database" . mysqli_error($conn));
-
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        $msg = "Podaci uspješno promijenjeni";
-    } else {
-        $msg = "Došlo je do greške";
+    if ($datum < $datum_danasnji) {
+        $error1 = 1;
+    }
+    if ($start > $kraj) {
+        $error2 = 1;
+    } else if (strtotime($kraj) < strtotime($start)+1800) {
+        $error3 = 1;
     }
 
-    header("Location:eventi.php?keyword=&trazi=Traži");
+    if ($error1 == 0 and $error2 == 0 and $error3 == 0) {
+        $query = "INSERT into lokacija (grad, naziv_lokacije, adresa_lokacije, postanski_broj, datum_dogadaja, start, kraj, image) values ('$grad', '$lokacija', '$adresa', '$postanski_broj','$datum', '$start', '$kraj', '$image')";
+        $run = mysqli_query($conn, $query);
+        $result = $run or die ("Failed to query database" . mysqli_error($conn));
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $msg = "Podaci uspješno promijenjeni";
+        } else {
+            $msg = "Došlo je do greške";
+        }
+        header("Location:eventi.php?keyword=&trazi=Traži");
+    }
+
 }
 
 echo '
@@ -142,9 +158,17 @@ echo '
                 <td style="border-style: none; padding-left: 10px;" ><input type="submit" class="zbtn" name="submit_event" value="Dodaj event"></td>
             </tr>
         </table>
-    </form>
-
-    <br><br>
+    </form>';
+    if ($error1 == 1) {
+        echo'Datum događanja eventa nesmije biti u prošlosti<br>';
+    }
+    if ($error2 == 1) {
+        echo'Vrijeme početka eventa mora biti prije završavanja eventa';
+    }
+    if ($error3 == 1) {
+        echo'Event mora trajati barem 1 sat';
+    }
+    echo'<br><br>
     <form action="" method="GET">
         <input type="text" class="eventi-pretrazi" name = "keyword" placeholder="Pretraži evente">
         <span class="eventi-radio">
@@ -160,7 +184,6 @@ echo '
         </span>
     <input type="submit" class="zbtn" name="trazi" value="Pretraži">
     </form>
-
 
 
     <form action="" method="POST">

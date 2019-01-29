@@ -54,3 +54,10 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
         postavke.php
             -IN PROGRESS (vjv ce bit isto ko za bolnicke_postavke.php)
 
+    ADMIN
+        eventi.php
+            -datum dogadaja eventa mora bit u buducnosti (inace bezveze dodajemo, nemozemo mu dodat donore ni obrisat ga)
+            -vrijeme pocetka mora bit prije vremena zavrsavanja
+            -event mora trajat bar 1h
+            (nisam stavila nis za provjeru inputa, ako stavim " pod grad se uredno ispise, cemo vjerovat adminu??)
+
