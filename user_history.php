@@ -63,6 +63,21 @@ $OIB_frenda = $row2['OIB_donora'];
 $ime_frenda = $row2['ime_prezime_donora'];
 $frend_image = $row2['image'];
 
+$sql_zadnja_admin = "SELECT * from obavijesti WHERE OIBdonora='$OIB' and ID_posiljatelja ='1' order by datum_obav DESC LIMIT 1";
+$run_zadnja_admin = mysqli_query($conn, $sql_zadnja_admin);
+$result_zadnja_admin =  $run_zadnja_admin or die ("Failed to query database". mysqli_error($conn));
+$row_zadnja_admin = mysqli_fetch_array($result_zadnja_admin);
+if(mysqli_num_rows($result_zadnja_admin) == 0){
+    $zadnji_datum_admin = "";
+    $zadnja_poruka_admin = "Trenutno nema poruka";
+}
+else{
+    $zadnji_datum_admin = $row_zadnja_admin['datum_obav'];
+    $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
+}
+
+
+
 if(isset($_POST['posalji_poruku'])){
     $tekst = $_POST['poruka'];
     if($tekst!=''){
@@ -101,9 +116,9 @@ echo '
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
-                      <h5>Admin <span class="chat_date">Dec 25</span></h5>
-                      <p>Test, which is a new approach to have all solutions 
-                        astrology under one roof.</p>
+                      <h5>Admin <span class="chat_date">'.$zadnji_datum_admin.'</span></h5>
+                      <p>'.$zadnja_poruka_admin.'</p>
+
                     </div>
                 </div>
                 </a><br>';
