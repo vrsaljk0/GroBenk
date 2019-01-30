@@ -3,6 +3,9 @@ require_once "dbconnect.php";
 session_start();
 mysqli_set_charset($conn,"utf8");
 
+if (isset($_POST['submit'])) {
+    header("Location:signup.php");
+}
 
 ?>
 
@@ -19,6 +22,7 @@ mysqli_set_charset($conn,"utf8");
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="popupstyle.css" rel="stylesheet">
+    <link href="adminstyle.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navigation -->
@@ -132,7 +136,7 @@ mysqli_set_charset($conn,"utf8");
                             <li><b>Venepunkcija.</b><br> Iskusan zdravstveni tehničar odabire venu u lakatnoj jami i bezbolno uvodi iglu u venu.
                                 Sam čin darivanja krvi traje maksimalno desetak minuta.Darivatelj je u ugodnom poluležećem položaju dok laganim stiskanjem šake puni vrećicu za krv koja je sterilnom iglom i sistemom vezana za njegovu venu u lakatnoj jami. Naravno, tu vezu uspostavljaju educirani i iskusni punkteri. Sav pribor i materijal koji se koriste pri venepunkciji su sterilni i za jednokratnu uporabu. Svaka osoba daruje 450 ml pune krvi. Iz sistema se svaki put izdvajaju dvije epruvete i to jedna za potvrđivanje krvne grupe, a druga za serološka testiranja. </li><br>
                             <li><b>Odmor </b><br> Davatelju nakon darivanja krvi slijedi kratkotrajni odmor uz osvježenje i lagani obrok. </li><br>
-                        </ol>
+                        </ol><br>
                         <i style="margin-left: 40px;color: #A60202">Sveukupno, darivanje krvi vam može oduzeti oko 30 minuta vremena.</i>
                     </font>
                 </div>
@@ -142,12 +146,19 @@ mysqli_set_charset($conn,"utf8");
                     <img src="img/tlakdonacija.gif" style="width:250px;">
                     <img src="img/doniranjedonacija.jpg" style="width:250px;">
                 </div>
+
             </div>
         </div>
     </div>
-
+    <div style="margin-left: 70px;">
+        <form action="" method="POST">
+            <input type="submit" name="submit" class="zbtn" value="Postanite donor" style="height:70px;font-size:20px;width: 100%">
+        </form>
+    </div>
 </div>
+
 </body>
+
 </html>
 
 
