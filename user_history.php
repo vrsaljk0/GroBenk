@@ -59,7 +59,7 @@ $run = mysqli_query($conn, $info);
 $result = $run or die ("Failed to query database". mysqli_error($conn));
 $row = mysqli_fetch_array($result);
 $moje_ime = $row['ime_prezime_donora'];
-$username = $_GET['username'];
+$username = $_GET['username']; //username od donora na kojeg sam ušla
 $moja_image = $row['image'];
 //echo $username;
 
@@ -146,7 +146,7 @@ echo '
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
-                      <p>'.$zadnja_poruka_admin.'</p>
+                      <p style="color:black;">'.$zadnja_poruka_admin.'</p>
 
                     </div>
                 </div>
@@ -206,6 +206,15 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $d = $row_zadnja['datum_obav'];
     $stanje = $row_zadnja['procitano'];
 
+    if($username_prijatelja == $username){
+        $id_zadnje_por = $row_zadnja['id_obavijesti'];
+        $ID = $row_zadnja['ID_posiljatelja'];
+        if($ID != $OIB){
+            $sql_update_zadnju = "UPDATE obavijesti SET procitano = '1' WHERE id_obavijesti = '$id_zadnje_por'";
+            $run_update = mysqli_query($conn, $sql_update_zadnju);
+            $result_update = $run_update or die ("Failed to query database". mysqli_error($conn));
+        }
+    }
 
     $day = date("d", strtotime($d));
     $month = date("m", strtotime($d));
@@ -228,7 +237,7 @@ while($row = mysqli_fetch_array($result_korisnici)){
         echo '
         <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
             <div style="border-style:solid; border-color:black; border-width: thin; background:#ebebeb;" class="chat_people">
-                <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                 <div class="chat_ib">
                   <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                   <p>'.$row_zadnja['tekst_obav'].'</p>
@@ -256,7 +265,7 @@ while($row = mysqli_fetch_array($result_korisnici)){
         echo '
             <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                 <div class="chat_people">
-                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                     <div class="chat_ib">
                       <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$row_zadnja['tekst_obav'].'</p>
@@ -305,6 +314,8 @@ while($row_poruke = mysqli_fetch_array($result_poruke)){
                 </div>
                 ';
 }
+
+
 
 echo '
           </div>

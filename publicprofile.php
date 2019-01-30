@@ -159,14 +159,6 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label>OIB:</label>
-                </div>
-                <div class="col-md-6">
-                    <p class="info">'.$row['OIB_donora'].'</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
                     <label>Korisnicko ime:</label>
                 </div>
                 <div class="col-md-6">

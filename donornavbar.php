@@ -45,7 +45,7 @@ echo '
 			</li>
 			<li>
 				<div class="dropdown_donor">';
-					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
+					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' order by datum_obav DESC";
 					$run = mysqli_query($conn, $sql);
 					$result = $run or die ("Failed to query database". mysqli_error($conn));
 					$broj_obav = mysqli_num_rows($result);
@@ -90,7 +90,7 @@ echo '
 						                    	<input style="margin-top:5px;" class="squaredTwo" type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'>
 						                    </span>
 
-						                    <img style="width:50px; height:50px;" src="donori/admin.png">
+						                    <img style="width:50px; height:50px; object-fit:cover;" " src="donori/admin.png">
 											<span style="display: inline-block; width:350px; padding-left: 15px; margin-left:60px margin-right:60px;;">
 											'.$row['tekst_obav'].'
 											</span>

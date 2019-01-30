@@ -62,11 +62,18 @@ if(mysqli_num_rows($result_zadnja_admin) == 0){
     $zadnji_datum_admin = "";
     $zadnja_poruka_admin = "Trenutno nema poruka";
     $stanje_admin = "1";
+
 }
 else{
     $zadnji_datum_admin = $row_zadnja_admin['datum_obav'];
     $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
     $stanje_admin = $row_zadnja_admin['procitano'];
+    $id_zadnje_admin = $row_zadnja_admin['id_obavijesti'];
+
+    $sql_update = "UPDATE obavijesti set procitano='1' where id_obavijesti='$id_zadnje_admin'";
+    $run_update = mysqli_query($conn, $sql_update);
+    $result_zadnja =  $run_update or die ("Failed to query database". mysqli_error($conn));
+
 }
 
 
@@ -158,7 +165,7 @@ while($row = mysqli_fetch_array($result)){
             echo '
             <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                 <div style="background-color:#FFD3D3" class="chat_people">
-                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                     <div class="chat_ib">
                       <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p style="color:black;">'.$row_zadnja['tekst_obav'].'</p>
@@ -171,7 +178,7 @@ while($row = mysqli_fetch_array($result)){
         echo '
             <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                 <div class="chat_people">
-                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                     <div class="chat_ib">
                       <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$row_zadnja['tekst_obav'].'</p>
