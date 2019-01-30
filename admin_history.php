@@ -142,6 +142,8 @@ while($row = mysqli_fetch_array($result)){
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
     $stanje = $row_zadnja['procitano'];
+    $ID = $row_zadnja['ID_posiljatelja'];
+    if($ID == $OIB) $stanje = 1;
 
     $d = $row_zadnja['datum_obav'];
     $day = date("d", strtotime($d));
