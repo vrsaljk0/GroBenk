@@ -66,7 +66,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
             <img src="kontakt/novinari.jpg">
             <div class="carousel-caption">
                 <h1>Novinarski i PR upiti</h1>
-                <h2>Za sve novinarske, medijske upite i zahtjeve za sponzorstvo pošaljite nam e-mail.</h2>
+                <h2>Za sve novinarske i medijske upite i zahtjeve za sponzorstvo pošaljite nam e-mail.</h2>
                 <img src="kontakt\gmail.png" style="width:70px;height:70px"> <font size="4">kontakt@grobenk.hr</font>
             </div>
         </div>
