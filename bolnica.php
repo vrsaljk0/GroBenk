@@ -13,6 +13,19 @@
 
     $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
 
+    $date = date("Ymd");
+    $idbolnica = $_SESSION['id'];
+
+    $info ="select *from bolnica where  idbolnica = '$idbolnica'";
+    $run = mysqli_query($conn, $info);
+    $result = $run or die ("Failed to query database". mysqli_error($conn));
+
+    $row = mysqli_fetch_array($result);
+    $naziv_bolnice = $row['naziv_bolnice'];
+    $grad = $row['grad'];
+    $adresa_bolnice = $row['adresa_bolnice'];
+    $postanski_broj = $row['postanski_broj'];
+
     echo '
     <head>
         <meta charset="utf-8">
@@ -45,7 +58,7 @@ echo'
         <div class="profil-content">
             <ul class="nav nav-tabs" id="myTab" >
                 <li class="nav-item">
-                    <a class="nav-link active" href="bolnicaopcenito.php">Općenito</a>
+                    <a class="nav-link active" id="bolnica-tab" data-toggle="tab" href="#bolnica" role="tab" aria-controls="home" aria-selected="true">O meni</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="forum.php">Forum</a>
@@ -61,6 +74,45 @@ echo'
                 </li>
             </ul>
         </div>
+
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="bolnica" role="tabpanel" aria-labelledby="bolnica-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Naziv bolnice:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="info">'.$row['naziv_bolnice'].'</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Adresa:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="info">'.$row['adresa_bolnice'].'</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Grad:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="info">'.$row['grad'].'</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Poštanski broj:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="info">'.$row['postanski_broj'].'</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
 </div>';
 ?>
