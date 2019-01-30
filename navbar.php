@@ -22,9 +22,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">O nama</a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="indexdonacija.php">Donacija</a>
                 </li>

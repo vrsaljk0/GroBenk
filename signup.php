@@ -10,12 +10,13 @@
 
 
 <?php
+$errorusername=0;
+$errorunos = 0;
 require_once "dbconnect.php";
 mysqli_set_charset($conn,"utf8");
 
 if(isset($_POST['submit'])){
-    $errorusername=0;
-    $errorunos = 0;
+
 
     $OIB = $_POST['oib'];
     $ime = $_POST['ime'];
@@ -165,13 +166,13 @@ $(function(){
 	</form>
 
     <?php
-        if ($errorusername) {
+        if ($errorusername == 1) {
             echo'
             <div class="alert" id = "alert" >
                 <span class="closebtn" onclick = "myFunction();" >&times;</span >
             Takav username već postoji!</div >';
         }
-        if ($errorunos) {
+        if ($errorunos == 1) {
             echo'
                 <div class="alert" id = "alert2" >
                     <span class="closebtn" onclick = "myFunction2();" >&times;</span >

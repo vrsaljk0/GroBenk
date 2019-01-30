@@ -37,7 +37,7 @@ img{ max-width:100%;}
 }
 .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
-.chat_ib h5{ font-size:15px; color:#9F0A00; margin:0 0 8px 0;}
+.chat_ib h5{ font-size:15px; color:black; margin:0 0 8px 0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
 .chat_ib p{ font-size:14px; color:#989898; margin:auto}
 .chat_img {
@@ -136,6 +136,6 @@ img{ max-width:100%;}
 }
 
 .chat_people:hover {
-  background-color:#BCBCBC;
+  background-color:#ebebeb;
 }
 
