@@ -56,6 +56,7 @@ if(isset($_POST['submit'])){
             echo "error:" .mysqli_error($conn);
             echo ' '.$msg;
         }
+        header("Location:index.php");
     }
 
 
