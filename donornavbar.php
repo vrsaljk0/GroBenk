@@ -45,7 +45,7 @@ echo '
 			</li>
 			<li>
 				<div class="dropdown_donor">';
-					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
+					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' order by datum_obav DESC";
 					$run = mysqli_query($conn, $sql);
 					$result = $run or die ("Failed to query database". mysqli_error($conn));
 					$broj_obav = mysqli_num_rows($result);

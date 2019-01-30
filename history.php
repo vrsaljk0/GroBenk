@@ -102,6 +102,7 @@ echo '
 
 while($row = mysqli_fetch_array($result)){
     $OIB_prijatelja = $row['ID_posiljatelja'];
+
     $prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
     $run_prijatelj = mysqli_query($conn, $prijatelj);
     $result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
