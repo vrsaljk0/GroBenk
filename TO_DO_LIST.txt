@@ -12,7 +12,6 @@ FRONTEND::
 
 -DONOR:
 	-sredit dropdown notifikacija
-	-u evente dodat sličice
 	-stavit scrollbar za Praćenja Pratim/Prate me
 
 -NASLOVNA:
