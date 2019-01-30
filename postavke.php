@@ -81,7 +81,7 @@ if(isset($_POST['submit'])){
         $update_run = mysqli_query($conn, $update_query);
         $flag = 1;
     }
-    if ($nova1 != $nova2 and $nova1!=''){
+    if ($nova1 != $nova2){
         $errorlozinka = 1;
     }
 
@@ -214,10 +214,10 @@ echo '
                     <bottom><br><br><a href="donor.php">Nazad na moj profil</a></bottom>
                     ';
                        if ($errorunos == 1) {
-                           echo '<br><br>Pogreška pri unosu podataka<br>';
+                           echo '<br><br>Pogreška pri unosu podataka';
                        }
                        if ($errorlozinka == 1) {
-                           echo 'Promjena lozinke nije uspješna. Lozinke nisu iste.';
+                           echo '<br>Promjena lozinke nije uspješna. Lozinke nisu iste.';
                        }
                   echo'</div>
                 </div>
