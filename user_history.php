@@ -97,7 +97,7 @@ if(isset($_POST['posalji_poruku'])){
     $url = 'user_history.php?username='.$username;
     header("Location:$url");
 }
-$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja order by datum_obav DESC";
+$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja order by datum_obav";
 $run_korisnici = mysqli_query($conn, $sql_korisnici);
 $result_korisnici = $run_korisnici or die ("Failed to query database". mysqli_error($conn));
 

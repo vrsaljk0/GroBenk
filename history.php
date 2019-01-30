@@ -49,9 +49,9 @@ $result = $run or die ("Failed to query database". mysqli_error($conn));
 $row = mysqli_fetch_array($result);
 $moje_ime = $row['ime_prezime_donora'];
 
-$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja != '1'group by ID_posiljatelja DESC";
-$run = mysqli_query($conn, $sql);
-$result = $run or die ("Failed to query database". mysqli_error($conn));
+$sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja!='1' group by ID_posiljatelja order by datum_obav";
+$run_korisnici = mysqli_query($conn, $sql_korisnici);
+$result_korisnici = $run_korisnici or die ("Failed to query database". mysqli_error($conn));
 
 
 $sql_zadnja_admin = "SELECT * from obavijesti WHERE OIBdonora='$OIB' and ID_posiljatelja ='1' order by datum_obav DESC LIMIT 1";
@@ -158,7 +158,7 @@ else {
 }
 
 
-while($row = mysqli_fetch_array($result)){
+while($row = mysqli_fetch_array($result_korisnici)){
     $OIB_prijatelja = $row['ID_posiljatelja'];
 
     $prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
