@@ -85,7 +85,6 @@ else{
 }
 
 
-
 if(isset($_POST['posalji_poruku'])){
     $tekst = $_POST['poruka'];
     if($tekst!=''){
@@ -101,6 +100,24 @@ $sql_korisnici = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posilj
 $run_korisnici = mysqli_query($conn, $sql_korisnici);
 $result_korisnici = $run_korisnici or die ("Failed to query database". mysqli_error($conn));
 
+$d = $zadnji_datum_admin;
+$day = date("d", strtotime($d));
+$month = date("m", strtotime($d));
+$year = date("Y", strtotime($d));
+
+if($month == 1) $mjesec = "Siječanj";
+if($month == 2) $mjesec = "Veljača";
+if($month == 3) $mjesec = "Ožujak";
+if($month == 4) $mjesec = "Travanj";
+if($month == 5) $mjesec = "Svibanj";
+if($month == 6) $mjesec = "Lipanj";
+if($month == 7) $mjesec = "Srpanj";
+if($month == 8) $mjesec = "Kolovoz";
+if($month == 9) $mjesec = "Rujan";
+if($month == 10) $mjesec = "Listopad";
+if($month == 11) $mjesec = "Studeni";
+if($month == 12) $mjesec = "Prosinac";
+
 echo '
 <div class="container" id="sve" onload="myFunction();">
 <div class="messaging">
@@ -112,10 +129,10 @@ echo '
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
-               <form action="user_search.php" method="POST">
-                <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                <form action="user_search.php" method="POST">
+                    <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
+                    <span class="input-group-addon">
+                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
                 </form>
                 </span> </div>
             </div>
@@ -126,7 +143,7 @@ echo '
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
-                      <h5>Admin <span class="chat_date">'.$zadnji_datum_admin.'</span></h5>
+                      <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$zadnja_poruka_admin.'</p>
 
                     </div>
