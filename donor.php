@@ -308,7 +308,9 @@ echo '
                                 donor_OIB_donora = '$OIB')";
 
                         $rezultat = mysqli_query($conn, $upit);
-                        echo '<h4>Pratim:</h4><br>';
+                        echo '<h4>Pratim:</h4><br>
+                        <div style="overflow-y:scroll; height:300px; position:relative;">
+                        ';
                         while($row = mysqli_fetch_array($rezultat)){
                             echo '
                             <div class="follow-info">
@@ -316,16 +318,19 @@ echo '
                                     <img src="donori/'.$row['image'].'">
                                 </div>
                                 <a href="publicprofile.php?username='.urlencode($row['username']).'">'.$row['ime_prezime_donora'].'</a>
-                            </div><br>
-                            ';
+                            </div><br>';
                         }
+                        echo '</div><br>';
 
                         $upit = "SELECT username, ime_prezime_donora, OIB_donora, image from donor where
                                                OIB_donora in (select OIB_prijatelja from followers where
                                                donor_OIB_donora = '$OIB')";
                         $rezultat = mysqli_query($conn, $upit);
 
-                        echo '<h4>Prate me:</h4><br>';
+                        echo '<h4>Prate me:</h4><br>
+                        <div style="overflow-y:scroll; height:300px; position:relative;">
+                        ';
+
                         while($row = mysqli_fetch_array($rezultat)){
                             echo '
                             <div class="follow-info">
@@ -336,6 +341,7 @@ echo '
                             </div><br>';
                         }
                         echo'
+                        </div>
                     </div>
                 </div>
         </div>
