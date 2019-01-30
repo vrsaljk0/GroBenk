@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </div>
-    <div style="margin-left: 70px;">
+    <div>
         <form action="" method="POST">
             <input type="submit" name="submit" class="zbtn" value="Postanite donor" style="height:70px;font-size:20px;width: 100%">
         </form>
