@@ -85,7 +85,6 @@ else{
 }
 
 
-
 if(isset($_POST['posalji_poruku'])){
     $tekst = $_POST['poruka'];
     if($tekst!=''){
@@ -130,9 +129,11 @@ echo '
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Pretraži" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                <form action="user_search.php" method="POST">
+                    <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
+                    <span class="input-group-addon">
+                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </form>
                 </span> </div>
             </div>
           </div>

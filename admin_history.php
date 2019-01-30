@@ -97,9 +97,11 @@ echo '
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Pretraži" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                <form action="user_search.php" method="POST">
+                    <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
+                    <span class="input-group-addon">
+                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </form>
                 </span> </div>
             </div>
           </div>
@@ -109,7 +111,7 @@ echo '
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
-                      <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
+                      <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</h5>
                       <p>'.$zadnja_poruka_admin.'</p>
 
                     </div>
@@ -154,7 +156,7 @@ while($row = mysqli_fetch_array($result)){
                     <div class="chat_people">
                         <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</h5>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                           <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
