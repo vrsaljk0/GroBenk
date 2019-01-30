@@ -6,6 +6,10 @@ donor.php
     
 - nalert dal su lozinke iste kad mijenja
 FRONTEND::
+
+-ADMIN:
+    -da tabići budu u 1 redu
+
 -DONOR:
 	-sredit dropdown notifikacija
 	-u evente dodat sličice
