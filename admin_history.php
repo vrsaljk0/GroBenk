@@ -62,11 +62,18 @@ if(mysqli_num_rows($result_zadnja_admin) == 0){
     $zadnji_datum_admin = "";
     $zadnja_poruka_admin = "Trenutno nema poruka";
     $stanje_admin = "1";
+
 }
 else{
     $zadnji_datum_admin = $row_zadnja_admin['datum_obav'];
     $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
     $stanje_admin = $row_zadnja_admin['procitano'];
+    $id_zadnje_admin = $row_zadnja_admin['id_obavijesti'];
+
+    $sql_update = "UPDATE obavijesti set procitano='1' where id_obavijesti='$id_zadnje_admin'";
+    $run_update = mysqli_query($conn, $sql_update);
+    $result_zadnja =  $run_update or die ("Failed to query database". mysqli_error($conn));
+
 }
 
 

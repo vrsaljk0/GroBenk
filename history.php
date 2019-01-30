@@ -49,7 +49,7 @@ $result = $run or die ("Failed to query database". mysqli_error($conn));
 $row = mysqli_fetch_array($result);
 $moje_ime = $row['ime_prezime_donora'];
 
-$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja !='1'group by ID_posiljatelja";
+$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja != '1'group by ID_posiljatelja";
 $run = mysqli_query($conn, $sql);
 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
