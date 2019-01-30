@@ -67,35 +67,51 @@ else{
     $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
 }
 
+$d = $zadnji_datum_admin;
+$day = date("d", strtotime($d));
+$month = date("m", strtotime($d));
+$year = date("Y", strtotime($d));
+
+if($month == 1) $mjesec = "Siječanj";
+if($month == 2) $mjesec = "Veljača";
+if($month == 3) $mjesec = "Ožujak";
+if($month == 4) $mjesec = "Travanj";
+if($month == 5) $mjesec = "Svibanj";
+if($month == 6) $mjesec = "Lipanj";
+if($month == 7) $mjesec = "Srpanj";
+if($month == 8) $mjesec = "Kolovoz";
+if($month == 9) $mjesec = "Rujan";
+if($month == 10) $mjesec = "Listopad";
+if($month == 11) $mjesec = "Studeni";
+if($month == 12) $mjesec = "Prosinac";
+
+
 echo '
-<div class="container">
+<div class="container" id="sve" onload="myFunction();">
 <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
           <div class="headind_srch">
             <div class="recent_heading">
-              <h4>Povijest poruka</h4>
+              <h4 style="color:#9F0A00;">Povijest poruka</h4>
             </div>
             <div class="srch_bar">
               <div class="stylish-input-group">
-                <form action="user_search.php" method="POST">
-                <input type="text" class="search-bar" name="search_uvjet"  placeholder="Pretraži" >
+                <input type="text" class="search-bar"  placeholder="Pretraži" >
                 <span class="input-group-addon">
                 <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </form>           
                 </span> </div>
             </div>
           </div>
           <div class="inbox_chat">
             <div class="chat_list">
-
                 <a href="admin_history.php">
                 <div class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
-                      <h5>Admin <span class="chat_date">'.$zadnji_datum_admin.'</span></h5>
+                      <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$zadnja_poruka_admin.'</p>
-                       
+
                     </div>
                 </div>
                 </a><br>';
@@ -114,13 +130,31 @@ while($row = mysqli_fetch_array($result)){
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
 
+    $d = $row_zadnja['datum_obav'];
+    $day = date("d", strtotime($d));
+    $month = date("m", strtotime($d));
+    $year = date("Y", strtotime($d));
+
+    if($month == 1) $mjesec = "Siječanj";
+    if($month == 2) $mjesec = "Veljača";
+    if($month == 3) $mjesec = "Ožujak";
+    if($month == 4) $mjesec = "Travanj";
+    if($month == 5) $mjesec = "Svibanj";
+    if($month == 6) $mjesec = "Lipanj";
+    if($month == 7) $mjesec = "Srpanj";
+    if($month == 8) $mjesec = "Kolovoz";
+    if($month == 9) $mjesec = "Rujan";
+    if($month == 10) $mjesec = "Listopad";
+    if($month == 11) $mjesec = "Studeni";
+    if($month == 12) $mjesec = "Prosinac";
+
 
     echo '
                 <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                     <div class="chat_people">
                         <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
                         <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$row_zadnja['datum_obav'].'</span></h5>
+                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</h5>
                           <p>'.$row_zadnja['tekst_obav'].'</p>
                         </div>
                     </div>
@@ -140,12 +174,18 @@ echo'           </div>
                     $result_admin = $run_admin or die ("Failed to query database". mysqli_error($conn));
                     echo '<div class="profile-content">';
                     while($row_admin = mysqli_fetch_array($result_admin)){
+                        $dat = $row_admin['datum_obav']; 
+                        $hour = date("H", strtotime($dat));
+                        $min = date("i", strtotime($dat));
+                        $day = date("d", strtotime($dat));
+                        $month = date("m", strtotime($dat));
+                        $year = date("Y", strtotime($dat));
                         echo '<div class="incoming_msg">
                                 <div class="incoming_msg_img"> <img src="donori/admin.png" alt="sunil"> </div>
                                     <div class="received_msg">
                                     <div class="received_withd_msg">
                                     <p>'.$row_admin['tekst_obav'].'</p>
-                                    <span class="time_date"> '.$row_admin['datum_obav'].' |    June 9</span></div>
+                                    <span class="time_date"> '.$hour.':'.$min.' '.$day.'.'.$month.'.'.$year.'.</span></div>
                                 </div>
                             </div>
                             ';
