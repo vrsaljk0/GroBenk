@@ -61,11 +61,14 @@ $row_zadnja_admin = mysqli_fetch_array($result_zadnja_admin);
 if(mysqli_num_rows($result_zadnja_admin) == 0){
     $zadnji_datum_admin = "";
     $zadnja_poruka_admin = "Trenutno nema poruka";
+    $stanje_admin = "1";
 }
 else{
     $zadnji_datum_admin = $row_zadnja_admin['datum_obav'];
     $zadnja_poruka_admin = $row_zadnja_admin['tekst_obav'];
+    $stanje_admin = $row_zadnja_admin['procitano'];
 }
+
 
 $d = $zadnji_datum_admin;
 $day = date("d", strtotime($d));
@@ -108,7 +111,7 @@ echo '
           <div class="inbox_chat">
             <div class="chat_list">
                 <a href="admin_history.php">
-                <div class="chat_people">
+                <div style="border-style:solid; border-color:black; border-width: thin; background:#ebebeb;" class="chat_people">
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</h5>
@@ -131,6 +134,7 @@ while($row = mysqli_fetch_array($result)){
     $run_zadnja = mysqli_query($conn, $sql_zadnja);
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
+    $stanje = $row_zadnja['procitano'];
 
     $d = $row_zadnja['datum_obav'];
     $day = date("d", strtotime($d));
@@ -150,18 +154,32 @@ while($row = mysqli_fetch_array($result)){
     if($month == 11) $mjesec = "Studeni";
     if($month == 12) $mjesec = "Prosinac";
 
-
-    echo '
-                <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
-                        <div class="chat_ib">
-                          <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
-                          <p>'.$row_zadnja['tekst_obav'].'</p>
-                        </div>
+    if($stanje == 0) {
+            echo '
+            <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
+                <div style="background-color:#FFD3D3" class="chat_people">
+                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_ib">
+                      <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
+                      <p style="color:black;">'.$row_zadnja['tekst_obav'].'</p>
                     </div>
-                </a><br>';
-}
+                </div>
+            </a><br>';
+    }
+
+    else {
+        echo '
+            <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
+                <div class="chat_people">
+                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_ib">
+                      <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
+                      <p>'.$row_zadnja['tekst_obav'].'</p>
+                    </div>
+                </div>
+            </a><br>';
+        }
+    }
 
 echo'           </div>
             </div>
