@@ -31,7 +31,7 @@ echo '
 
 <nav class="navbar navbar-expand-md navbar-light bg-white ">
 <div class="container-fluid">
-	<a class="navbar-brand" href="index.php"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
+	<a style="width:30%;" class="navbar-brand" href="index.php"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 		<span class="navbar-toggler-icon"></span>
 	</button>
