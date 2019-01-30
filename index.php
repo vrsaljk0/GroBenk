@@ -57,7 +57,7 @@ $_SESSION["vratime"] = $_SERVER['REQUEST_URI'];
             <img src="img/slide3.jpg">
             <div class="carousel-caption">
                 <h1>Potrebna vam je krv?</h1>
-                <button type="button" class="btn btn-outline-light btn-lg">Pošalji zahtjev</button>
+                <h3>Pošaljite nam e-mail na info@grobenk.hr</h3>
             </div>
         </div>
     </div>
