@@ -205,17 +205,17 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $row_zadnja = mysqli_fetch_array($result_zadnja);
     $d = $row_zadnja['datum_obav'];
     $stanje = $row_zadnja['procitano'];
-
+    $ID = $row_zadnja['ID_posiljatelja'];
     if($username_prijatelja == $username){
         $id_zadnje_por = $row_zadnja['id_obavijesti'];
-        $ID = $row_zadnja['ID_posiljatelja'];
         if($ID != $OIB){
             $sql_update_zadnju = "UPDATE obavijesti SET procitano = '1' WHERE id_obavijesti = '$id_zadnje_por'";
             $run_update = mysqli_query($conn, $sql_update_zadnju);
             $result_update = $run_update or die ("Failed to query database". mysqli_error($conn));
         }
+         //ne zelimo da nam se označi naša poruka crvenim
     }
-
+    if($ID == $OIB) $stanje = 1;
     $day = date("d", strtotime($d));
     $month = date("m", strtotime($d));
     $year = date("Y", strtotime($d));

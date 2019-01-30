@@ -49,7 +49,7 @@ $result = $run or die ("Failed to query database". mysqli_error($conn));
 $row = mysqli_fetch_array($result);
 $moje_ime = $row['ime_prezime_donora'];
 
-$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja != '1'group by ID_posiljatelja";
+$sql = "SELECT * from obavijesti where OIBdonora ='$OIB' and ID_posiljatelja != '1'group by ID_posiljatelja DESC";
 $run = mysqli_query($conn, $sql);
 $result = $run or die ("Failed to query database". mysqli_error($conn));
 
@@ -88,7 +88,7 @@ if($month == 11) $mjesec = "Studeni";
 if($month == 12) $mjesec = "Prosinac";
 
 if($stanje_admin == 0) {
-echo '
+    echo '
 <div class="container" id="sve" onload="myFunction();">
 <div class="messaging">
       <div class="inbox_msg">
@@ -124,7 +124,7 @@ echo '
 
 else {
 
-echo '
+    echo '
 <div class="container" id="sve" onload="myFunction();">
 <div class="messaging">
       <div class="inbox_msg">
@@ -174,7 +174,14 @@ while($row = mysqli_fetch_array($result)){
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
     $row_zadnja = mysqli_fetch_array($result_zadnja);
     $stanje = $row_zadnja['procitano'];
-    
+
+    $id_zadnje_por = $row_zadnja['id_obavijesti'];
+    $ID = $row_zadnja['ID_posiljatelja'];
+    if($ID == $OIB) $stanje = 1; //ne zelimo da nam se označi naša poruka crvenim
+
+
+
+
     $d = $row_zadnja['datum_obav'];
     $day = date("d", strtotime($d));
     $month = date("m", strtotime($d));
@@ -194,7 +201,7 @@ while($row = mysqli_fetch_array($result)){
     if($month == 12) $mjesec = "Prosinac";
 
     if($stanje == 0) {
-            echo '
+        echo '
             <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                 <div style="background-color:#FFD3D3" class="chat_people">
                     <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
@@ -217,8 +224,8 @@ while($row = mysqli_fetch_array($result)){
                     </div>
                 </div>
             </a><br>';
-        }
     }
+}
 
 echo '
             </div>
