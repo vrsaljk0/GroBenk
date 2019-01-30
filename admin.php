@@ -41,7 +41,7 @@ echo '
                 <a class="nav-link" href="dodajbolnicu.php">Dodaj bolnicu</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="donacije.php">Donacije</a>
+                <a class="nav-link" href="http://localhost/GroBenk-Vol2/donacije.php?keyword=&trazi=Tra%C5%BEi">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>

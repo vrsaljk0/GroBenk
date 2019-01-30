@@ -13,6 +13,9 @@
             }
         });
     });
+    function myFunction() {
+        document.getElementById("alert").style.display = "none";
+    }
 </SCRIPT>
 
 <?php
@@ -23,6 +26,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     header("Location:odjava.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
+$error = 0;
 if (!$_SESSION['admin_loggedin']) header("Location:denied_permission.php");
 echo '
     <head>
@@ -48,12 +52,15 @@ echo "
     </script>";
 echo '
 <div class="admin-content">
-        <ul class="nav nav-tabs" id="myTab" >
+        <ul class="nav nav-tabs" id="myTab" style="width:950px;margin-left: -140px">
             <li class="nav-item">
                 <a class="nav-link" href="eventi.php?keyword=&trazi=Traži">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="dodajbolnicu.php">Dodaj bolnicu</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link active" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
@@ -133,37 +140,45 @@ if ($result = mysqli_num_rows($run) != 0) {
     if (isset($_GET['doniraj'])) {
         $date = date("Ymd");
         $kol = $_GET['kolicina'];
-        if (!empty($_GET['check_list'])) {
-            foreach ($_GET['check_list'] as $OIB) {
-                $info = "select * from donor where OIB_donora = '$OIB'";
-                $run = mysqli_query($conn, $info);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                $row = mysqli_fetch_array($result);
-                $krvna_grupa = $row['krvna_grupa_don'];
-                $lokacija = "select * from lokacija where datum_dogadaja = '$date' and
-                                     id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$OIB')";
-                $run = mysqli_query($conn, $lokacija);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                $row = mysqli_fetch_array($result);
-                $id_lokacije = $row['id_lokacije'];
-                echo $id_lokacije;
-                //umetanje donacije u tablicu donacija
-                $sql = "INSERT into donacija (kolicina_krvi_donacije, krvna_grupa_zal, OIB_donora, idlokacija)
-                                        values ( '$kol', '$krvna_grupa', '$OIB', '$id_lokacije')";
-                $run = mysqli_query($conn, $sql);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                $sql = "UPDATE donor SET br_donacija = br_donacija+1 where OIB_donora = '$OIB'";
-                $run = mysqli_query($conn, $sql);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                $sql = "UPDATE moj_event SET prisutnost = '1' WHERE OIB_donora_don = '$OIB' AND id_lokacije='$id_lokacije'";
-                $run = mysqli_query($conn, $sql);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                $sql = "UPDATE zaliha set kolicina_grupe = kolicina_grupe + '$kol' where krvna_grupa = '$krvna_grupa'";
-                $run = mysqli_query($conn, $sql);
-                $result = $run or die ("Failed to query database" . mysqli_error($conn));
-                header("Location:donacije.php?keyword=&trazi=Traži");
+        if ($kol<=0 or $kol>0.7) {
+            $error = 1;
+
+        } else {
+            if (!empty($_GET['check_list'])) {
+                foreach ($_GET['check_list'] as $OIB) {
+                    $info = "select * from donor where OIB_donora = '$OIB'";
+                    $run = mysqli_query($conn, $info);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    $row = mysqli_fetch_array($result);
+                    $krvna_grupa = $row['krvna_grupa_don'];
+                    $lokacija = "select * from lokacija where datum_dogadaja = '$date' and
+                                         id_lokacije in (select id_lokacije from moj_event where OIB_donora_don = '$OIB')";
+                    $run = mysqli_query($conn, $lokacija);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    $row = mysqli_fetch_array($result);
+                    $id_lokacije = $row['id_lokacije'];
+                    echo $id_lokacije;
+                    //umetanje donacije u tablicu donacija
+                    $sql = "INSERT into donacija (kolicina_krvi_donacije, krvna_grupa_zal, OIB_donora, idlokacija)
+                                            values ( '$kol', '$krvna_grupa', '$OIB', '$id_lokacije')";
+                    $run = mysqli_query($conn, $sql);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    $sql = "UPDATE donor SET br_donacija = br_donacija+1 where OIB_donora = '$OIB'";
+                    $run = mysqli_query($conn, $sql);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    $sql = "UPDATE moj_event SET prisutnost = '1' WHERE OIB_donora_don = '$OIB' AND id_lokacije='$id_lokacije'";
+                    $run = mysqli_query($conn, $sql);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    $sql = "UPDATE zaliha set kolicina_grupe = kolicina_grupe + '$kol' where krvna_grupa = '$krvna_grupa'";
+                    $run = mysqli_query($conn, $sql);
+                    $result = $run or die ("Failed to query database" . mysqli_error($conn));
+                    header("Location:donacije.php?keyword=&trazi=Traži");
+                }
             }
         }
+    }
+    if ($error == 1) {
+        echo 'Unesite ispravnu količinu krvi.';
     }
     if (isset($_GET['odbij'])) {
         $date = date("Ymd");
