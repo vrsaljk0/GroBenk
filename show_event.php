@@ -101,10 +101,10 @@ echo '
             ';
         }
         echo '
-        <bottom><br><br><a href="eventi.php?keyword=&trazi=Traži">Nazad</a></bottom>
         </div>  
+        <bottom><br><br><a href="eventi.php?keyword=&trazi=Traži">Nazad</a></bottom>
     </div>
-    <div style="height:200px;">
+    <div style="height:400px;">
     </div>
 </div>';
 ?>
