@@ -98,7 +98,7 @@ echo'
             <div class="col-md-3">
              <div class="text-center">
                 <img src="lokacije/'.$row['image'].'" class="avatar img-thumbnail" alt="avatar">
-                <h6>Promijeni sliku profila</h6>
+                <h6>Promijeni sliku eventa</h6>
                 <input type="file" name = "image" class="form-control">
                 <input type="hidden" name="image_text" value="'.$row['naziv_lokacije'].'">
               </div>
