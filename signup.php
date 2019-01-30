@@ -3,6 +3,9 @@
     function myFunction() {
         document.getElementById("alert").style.display = "none";
     }
+    function myFunction2() {
+        document.getElementById("alert2").style.display = "none";
+    }
 </SCRIPT>
 
 
@@ -11,6 +14,9 @@ require_once "dbconnect.php";
 mysqli_set_charset($conn,"utf8");
 
 if(isset($_POST['submit'])){
+    $errorusername=0;
+    $errorunos = 0;
+
     $OIB = $_POST['oib'];
     $ime = $_POST['ime'];
     $krvna_grupa = $_POST['krvna_grupa'];
@@ -31,12 +37,13 @@ if(isset($_POST['submit'])){
     $run_provjera = mysqli_query($conn, $provjera);
     $result_provjera = $run_provjera or die ("Failed to query database". mysqli_error($conn));
     if(mysqli_num_rows($result_provjera) != 0){
-        echo '
-        <div class="alert" id="alert">
-            <span class="closebtn" onclick="myFunction();">&times;</span> 
-            Takav username već postoji!</div>';
+        $errorusername = 1;
     }
-    else{
+    if (strpos($OIB, '"')!==false or strpos($ime, '"')!==false or $krvna_grupa=="0" or strpos($prebivaliste, '"')!==false or strpos($email, '"')!==false or
+        strpos($adresa, '"')!==false or strpos($username, '"')!==false or strpos($lozinka, '"')!==false) {
+        $errorunos = 1;
+    }
+    if ($errorusername == 0 and $errorunos==0){
         $reg_query="insert into donor values('$OIB','$krvna_grupa', '$ime', '$datum_rod', '$prebivaliste', '$postanskibr', '$brojmob','$email', '$spol','$adresa', '$username', '$lozinka', '0', '$image')";
         $reg_run=mysqli_query($conn, $reg_query);
         $result = $reg_run or die("Došlo je pogreške pokušajte ponovno!");
@@ -75,7 +82,7 @@ if(isset($_POST['submit'])){
 
 <script>
 $(function(){
-  $("#nav-placeholder").load("navbar.html");
+  $("#nav-placeholder").load("navbar.php");
 });
 </script>
 
@@ -101,16 +108,25 @@ $(function(){
 		</div>
 
 		<div class="textboxreg">
-		<input type="text" placeholder="OIB"  name="oib" required=""><br>
+		<input type="number" placeholder="OIB"  name="oib" required=""><br>
 	    </div>
 
-        <div class="textboxreg">
-            <input type="text" placeholder="krvna_grupa"  name="krvna_grupa" required=""><br>
+        <div class=""><br>
+            <select name="krvna_grupa" class="form-control" value="0" style="width: 100%;height:40px;background:url(img/background2.png);background-color: #A60202;color:white">';
+                <option value="0">Krvna grupa</option>
+                <?php
+                $krvna_grupa = array("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-");
+                for ($i = 0; $i < 8; $i++) {
+                    echo'<option value=' . $krvna_grupa[$i] . '>' . $krvna_grupa[$i] . '</option>';
+                }
+
+                ?>
+            </select><br>
         </div>
 
         <div class="textboxreg">
 	    <p>Datum rođenja:</p>
-		<input type="date" placeholder="Datum rođenja"  name="datum_rod" required=""><br>
+		<input type="date" name="datum_rod" required="" value=""><br>
 	    </div>
 
 	    <div class="textboxreg">
@@ -122,7 +138,7 @@ $(function(){
 	    </div>
 
 	    <div class="textboxreg">
-		<input type="text" placeholder="Poštanski broj"  name="postanskibr" required=""><br>
+		<input type="number" placeholder="Poštanski broj"  name="postanskibr" required=""><br>
 	    </div>
 
 	    <div class="textboxreg">
@@ -147,6 +163,21 @@ $(function(){
 
 	    <input class="btnreg" type="submit" name="submit" value="Registriraj se"><br>
 	</form>
+
+    <?php
+        if ($errorusername) {
+            echo'
+            <div class="alert" id = "alert" >
+                <span class="closebtn" onclick = "myFunction();" >&times;</span >
+            Takav username već postoji!</div >';
+        }
+        if ($errorunos) {
+            echo'
+                <div class="alert" id = "alert2" >
+                    <span class="closebtn" onclick = "myFunction2();" >&times;</span >
+                Pogreška u unosu!</div >';
+        }
+    ?>
 </div>
 </body>
 </html>

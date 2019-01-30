@@ -3,18 +3,18 @@
 	margin: 0;
 	padding: 0;
 	font-family: sans-serif;
-	background: url(img/login2.jpg) no-repeat;
+	background: url(img/background.png) no-repeat;
 	background-size: 100% 200%;
 }
 
 .textboxreg p {
-	color: #898383;
+	color: white;
 	font-size: 18px;
 	margin: 0 10px;
 }
 
 .reg-box {
-	width: 280px;
+	width: 500px;
 	padding-top: 20%;
 	position: absolute;
 	top: 50%;
@@ -63,7 +63,7 @@
 }
 
 .btnreg:hover {
-  background-color: #FD7878;
+  background-color: #9F0A00;
 }
 
 /* Customize the label (the container) */
@@ -97,18 +97,18 @@
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: white;
   border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
 .containerreg:hover input ~ .checkmarkreg {
-  background-color: #ccc;
+  background-color: white;
 }
 
 /* When the radio button is checked, add a blue background */
 .containerreg input:checked ~ .checkmarkreg {
-  background-color: #FE6C6C;
+  background-color: #9F0A00;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -132,3 +132,5 @@
   border-radius: 50%;
   background: white;
 }
+
+
