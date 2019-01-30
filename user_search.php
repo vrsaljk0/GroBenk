@@ -149,6 +149,7 @@ echo '
                 <a href="admin_history.php">
                 <div class="chat_people">
                     <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/admin.png"> </div>
+                    
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$zadnja_poruka_admin.'</p>
