@@ -73,7 +73,7 @@ $(function(){
 
 echo '
 <div class="admin-content">
-        <ul class="nav nav-tabs" id="myTab" >
+        <ul class="nav nav-tabs" id="myTab" style="width:950px;margin-left: -140px">
             <li class="nav-item">
                 <a class="nav-link active" href="eventi.php?keyword=&trazi=Traži">Eventi</a>
             </li>
