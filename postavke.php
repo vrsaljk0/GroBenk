@@ -4,6 +4,8 @@ require_once "dbconnect.php"; //fancy include just because I can
 require_once "functions.php";
 session_start();
 $OIB = $_SESSION["mojOIB"];
+$errorunos = 0;
+$errorlozinka = 0;
 mysqli_set_charset($conn,"utf8");
 if (!isset($_SESSION['donor_loggedin'])) header("Location:denied_permission.php");
 echo '
@@ -62,23 +64,30 @@ if(isset($_POST['submit'])){
             $msg = "Došlo je do greške obratite se administratoru";
         }
     }
+    if (strpos($ime, '"')!==false or strpos($username, '"')!==false or strpos($prebivaliste, '"')!==false or strpos($adresa, '"')!==false
+        or strpos($trenutna, '"')!==false or strpos($nova1, '"')!==false) {
+            $errorunos = 1;
+    } else {
 
-    $query = "UPDATE donor SET OIB_donora = '$OIB_d', ime_prezime_donora = '$ime', datum_rodenja='$datum_rod',
+        $query = "UPDATE donor SET OIB_donora = '$OIB_d', ime_prezime_donora = '$ime', datum_rodenja='$datum_rod',
               prebivaliste = '$prebivaliste', postanski_broj='$postanskibr', broj_mobitela='$brojmob', mail_donora='$email',
               adresa_donora='$adresa', krvna_grupa_don = '$krvna_grupa', username = '$username'
               where OIB_donora='$OIB_d'";
-    $run = mysqli_query($conn, $query);
-    $result = $run or die ("Failed to query database" . mysqli_error($conn));
-
+        $run = mysqli_query($conn, $query);
+        $result = $run or die ("Failed to query database" . mysqli_error($conn));
+    }
     if ($trenutna === $password and $nova1 === $nova2 and $nova1 != '' && $nova2!='') {
         $update_query = "update donor set password = '$nova1' where OIB_donora = '$OIB_d'";
         $update_run = mysqli_query($conn, $update_query);
         $flag = 1;
-
     }
+    if ($nova1 != $nova2 and $nova1!=''){
+        $errorlozinka = 1;
+    }
+
     if($flag)$url = 'index.php';
     else $url = 'donor.php';
-    header("Location: $url");
+    if ($errorlozinka ==0 and $errorunos ==0)header("Location: $url");
 }
 
 
@@ -203,7 +212,14 @@ echo '
                     <input type="submit" style="background: #DC0E0E; border: 1px solid #A60202;" class="btn btn-primary" name="submit" value="Promijeni podatke">
                     <span></span>
                     <bottom><br><br><a href="donor.php">Nazad na moj profil</a></bottom>
-                  </div>
+                    ';
+                       if ($errorunos == 1) {
+                           echo '<br><br>Pogreška pri unosu podataka<br>';
+                       }
+                       if ($errorlozinka == 1) {
+                           echo 'Promjena lozinke nije uspješna. Lozinke nisu iste.';
+                       }
+                  echo'</div>
                 </div>
             </div>
         </div>
