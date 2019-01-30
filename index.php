@@ -48,12 +48,6 @@ $_SESSION["vratime"] = $_SERVER['REQUEST_URI'];
             </div>
         </div>
         <div class="carousel-item">
-            <img src="img/slide2.jpg">
-            <div class="carousel-caption">
-                <h1>Trenutne zalihe krvi</h1>
-            </div>
-        </div>
-        <div class="carousel-item">
             <img src="img/slide3.jpg">
             <div class="carousel-caption">
                 <h1>Potrebna vam je krv?</h1>
