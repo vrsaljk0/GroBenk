@@ -14,6 +14,7 @@
 
   $id_bolnice = $_GET['id_bolnice'];
   $OIB = $_SESSION['id'];
+$_SESSION['vratime'] = $_SERVER['REQUEST_URI'];
 
   $query ="select * from donor where OIB_donora = '$OIB'";
   $run = mysqli_query($conn, $query);
@@ -70,7 +71,7 @@ echo'
   <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg">
   <div class="profil-info">
     <div class="profil-title">
-    <h1>'.$row['naziv_bolnice'].'</h1>
+     <h1>'.$row['naziv_bolnice'].'<a href="karta.php?naziv='.$row['naziv_bolnice'].'&adresa='.$row['adresa_bolnice'].'"><img src="kontakt\lokacija.png" style="margin:0; width:50px;height:50px"></a></h1>
     </div>
     <div class="profil-content">
         <ul class="nav nav-tabs" id="myTab" >
