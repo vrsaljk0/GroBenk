@@ -83,7 +83,7 @@ echo '
     if(isset($_GET['prihvati'])){
         if(!empty($_GET['check_list'])){
             foreach($_GET['check_list'] as $id) {
-                $now = date('Y-m-d');
+                $now = date('Y-m-d H:i:s');
 
                 $sql = "SELECT krvna_grupa_zaht, kolicina_krvi_zaht from zahtjev where idzahtjev = '$id'";
                 $run = mysqli_query($conn, $sql);
@@ -130,7 +130,7 @@ echo '
                             $row2 = mysqli_fetch_assoc($result2);
                             $datum = $row2['datum_dogadaja'];
 
-                            if (date('Y-m-d', strtotime("+3 months", strtotime($datum))) <= $now || is_null($datum)) {
+                            if (date('Y-m-d', strtotime("+ months", strtotime($datum))) <= $now || is_null($datum)) {
                                 $mozes_donirati = 1;
                             }
 
@@ -140,7 +140,7 @@ echo '
                                      order by datum_dogadaja desc limit 1";
                             $run3 = mysqli_query($conn, $sql3);
                             $result3 = $run3 or die ("Failed to query database". mysqli_error($conn));
-                            $row3 = mysqli_fetch_assoc($result2);
+                            $row3 = mysqli_fetch_assoc($result3);
                             $datum = $row3['datum_dogadaja'];
 
                             if (date('Y-m-d', strtotime("+4 months", strtotime($datum))) <= $now || is_null($datum)) {

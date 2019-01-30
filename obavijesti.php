@@ -107,7 +107,8 @@ if(isset($_GET['obavijest'])) {
 
     $tekst = $_GET['tekst'];
 
-    $datum = date('Y-m-d');
+    $datum = date('Y-m-d H:i:s');
+
     $status = 0;
     if (strlen($tekst)<5) {
         $error=1;
@@ -195,4 +196,5 @@ echo '
     <div style="height:200px;">
     </div>
 </div>';
+?>
 ?>

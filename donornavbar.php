@@ -45,7 +45,7 @@ echo '
 			</li>
 			<li>
 				<div class="dropdown_donor">';
-					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB'";
+					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' order by datum_obav DESC";
 					$run = mysqli_query($conn, $sql);
 					$result = $run or die ("Failed to query database". mysqli_error($conn));
 					$class = 'far fa-bell';
@@ -61,7 +61,7 @@ echo '
 					<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
 						<div class="dropdown-content_donor"  style="min-width: 280px; max-height: 250px; overflow-y:scroll;">';
 							//ajmo prvo obavijesti od admina
-							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1'";
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1' order by datum_obav DESC";
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
 							if($neprocitano){
@@ -77,7 +77,7 @@ echo '
 							    	</form>';
 								}
 							}
-							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1'";
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1' order by datum_obav DESC";
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
 							if($neprocitano){
