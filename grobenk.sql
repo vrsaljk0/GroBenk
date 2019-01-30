@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 29, 2019 at 05:08 PM
+-- Generation Time: Jan 30, 2019 at 06:47 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -65,11 +65,11 @@ CREATE TABLE IF NOT EXISTS `bolnica` (
 --
 
 INSERT INTO `bolnica` (`idbolnica`, `naziv_bolnice`, `grad`, `adresa_bolnice`, `postanski_broj`, `password`) VALUES
-(101, 'KBC Susak', 'Zagreb', 'Kreï¿½imirova', 51001, '101'),
-(102, 'KBC Sisak', 'Sisak', 'Sisacka 13', 57474, 'kbcri56'),
-(103, 'KBC Zagreb', 'Zagreb', 'Ilica 15', 50000, 'zajc45'),
-(104, 'KBC', 'Zadar', 'Zadarska 13', 43000, 'dubdub'),
-(105, 'KBC Draga', 'Draga', 'Kelinova 14', 51088, 'kbc89');
+(101, 'KBC Susak', 'Zagreb', ' Ul. Tome Strižića 3', 51001, '101'),
+(102, 'KBC Sisak', 'Sisak', 'Ul. Josipa Jurja Strossmayera 59', 57474, 'kbcri56'),
+(103, 'KBC Zagreb', 'Zagreb', 'Kišpatićeva ul. 12', 50000, 'zajc45'),
+(104, 'KBC', 'Zadar', 'Ul. Bože Peričića 5', 43000, 'dubdub'),
+(105, 'KBC Dubrava', 'Zagreb', 'Avenija Gojka Šuška 6', 51088, 'kbc89');
 
 -- --------------------------------------------------------
 
@@ -88,20 +88,41 @@ CREATE TABLE IF NOT EXISTS `donacija` (
   UNIQUE KEY `id_donacija_UNIQUE` (`id_donacija`),
   KEY `fk_donacija_donor_idx` (`OIB_donora`),
   KEY `fk_donacija_lokacija1_idx` (`idlokacija`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `donacija`
 --
 
 INSERT INTO `donacija` (`id_donacija`, `kolicina_krvi_donacije`, `krvna_grupa_zal`, `OIB_donora`, `idlokacija`) VALUES
-(14, 0.5, 'A+', 62039216922, 2),
-(15, 0.6, 'AB-', 57523379503, 2),
-(16, 0.2, 'B+', 18814952778, 2),
-(17, 0.5, 'AB-', 25905508615, 11),
-(18, 0.5, 'AB-', 25905508615, 10),
-(19, 0.2, 'A+', 62039216922, 1),
-(20, 0.4, 'B+', 18814952778, 12);
+(21, 0.5, '0+', 29389527738, 1),
+(22, 0.5, '0-', 92279595902, 1),
+(23, 0.5, 'AB+', 10528147607, 1),
+(24, 0.5, 'B-', 24821182322, 1),
+(27, 0.7, 'AB-', 25905508615, 14),
+(28, 0.5, 'B+', 18814952778, 14),
+(29, 0.5, 'B-', 46834013129, 14),
+(30, 0.5, 'A-', 13115585171, 15),
+(31, 0.6, 'A+', 99218368216, 15),
+(34, 0.5, 'A-', 13115585171, 15),
+(35, 0.5, '0+', 29389527738, 15),
+(36, 0.5, 'AB+', 10528147607, 16),
+(37, 0.5, 'AB+', 13115585172, 16),
+(38, 0.5, 'B-', 24821182322, 16),
+(39, 0.7, 'A-', 13115585171, 18),
+(40, 0.5, 'AB+', 79220235879, 18),
+(41, 0.5, 'B+', 18814952778, 19),
+(42, 0.7, 'B-', 46834013129, 18),
+(43, 0.6, 'AB-', 57523379503, 19),
+(44, 0.5, 'AB-', 57523379503, 19),
+(45, 0.7, 'B-', 24821182322, 20),
+(46, 0.5, 'B+', 18814952778, 20),
+(47, 0.7, 'A+', 6781251619, 1),
+(48, 0.6, 'B-', 24821182322, 1),
+(49, 0.5, 'A-', 13115585171, 1),
+(50, 0.5, 'A+', 99218368216, 1),
+(51, 0.5, 'AB-', 25905508615, 1),
+(52, 0.5, 'AB-', 25905508615, 15);
 
 -- --------------------------------------------------------
 
@@ -135,20 +156,20 @@ CREATE TABLE IF NOT EXISTS `donor` (
 --
 
 INSERT INTO `donor` (`OIB_donora`, `krvna_grupa_don`, `ime_prezime_donora`, `datum_rodenja`, `prebivaliste`, `postanski_broj`, `broj_mobitela`, `mail_donora`, `spol`, `adresa_donora`, `username`, `password`, `br_donacija`, `image`) VALUES
-(6781251619, 'A+', 'Romano Polić', '2019-01-11', 'Rijeka', 51000, 998861132, 'romano@gmail.com', 'M', 'Rastočine 8', 'romano12', 'romano', 0, 'mario_PNG55.png'),
-(10528147607, 'AB+', 'Domagoj Buljubašić', '1995-02-03', 'Zagreb', 51000, 954472385, 'dodoz43@gmail.com', 'M', 'Turni?i 12', 'domagoj', 'dodo123', 7, 'image2.jpg'),
+(6781251619, 'A+', 'Romano Polić', '1998-01-05', 'Rijeka', 51000, 998861132, 'romano@gmail.com', 'M', 'Rastočine 8', 'romano12', 'romano', 1, 'romano_polic.jpg'),
+(10528147607, 'AB+', 'Domagoj Buljubašić', '1995-02-03', 'Zagreb', 51000, 954472385, 'dodoz43@gmail.com', 'M', 'Turnići 12', 'domagoj', 'dodo123', 7, 'image2.jpg'),
 (13115585171, 'A-', 'Marko Stojaković', '1960-02-12', 'Zagreb', 51000, 924563789, 'marko_stokjo@gmail.com', 'M', 'Grabovac', 'marko', 'marko123', 23, 'image3.jpg'),
-(13115585172, 'AB+', 'Maja Vrsaljko', '1998-11-01', 'Zadar', 23000, 924563780, 'mvrsaljko@riteh.hr', 'Z', 'Benkovac 22', 'maja2', 'majab91', 0, 'image11.png'),
-(18814952778, 'B+', 'Tyrion Lannister', '1968-06-10', 'Kings Landing', 51000, 997763321, 'tyrion123@gmail.com', 'M', 'Casterly Rock', 'tyrion', 'got123', 27, 'image12.jpg'),
-(24821182322, 'B-', 'Patricija Dadič', '1992-05-23', 'Rijeka', 51000, 998751246, 'patry@gmail.com', 'Z', 'Kapelska', 'patricija', '123456', 11, 'image5.png'),
-(25905508615, 'AB-', 'Katarina Anić', '2019-01-12', 'Rijeka', 51000, 914537810, 'anica_frketic@gmail.com', 'Z', 'Vojni put 16', 'katarina', 'anica123', 17, 'preuzmi.jpg'),
-(29389527738, '0+', 'Maja Vukelić', '1987-12-21', 'Kaštel Sućurac', 21213, 924789234, 'majavuk@hotmail.com', 'Z', 'Suva?a 10', 'maja', 'maja123', 14, 'image6.jpg'),
+(13115585172, 'AB+', 'Maja Vrsaljko', '1998-11-01', 'Rijeka', 23000, 924563780, 'mvrsaljko@riteh.hr', 'Z', 'Benkovac 22', 'maja2', 'majab91', 0, 'image11.png'),
+(18814952778, 'B+', 'Tyrion Lannister', '1968-06-10', 'Rijeka', 51000, 997763321, 'tyrion123@gmail.com', 'M', 'Casterly Rock', 'tyrion', 'got123', 27, 'image12.jpg'),
+(24821182322, 'B-', 'Patricija Dadić', '1992-05-23', 'Rijeka', 51000, 998751246, 'patry@gmail.com', 'Z', 'Kapelska', 'patricija', '123456', 11, 'image5.png'),
+(25905508615, 'AB-', 'Katarina Anić', '2019-01-12', 'Zagreb', 51000, 914537810, 'anica_frketic@gmail.com', 'Z', 'Vojni put 15', 'katarina', 'anica123', 17, 'katarina_anic.jpg'),
+(29389527738, '0+', 'Maja Vukelić', '1987-12-21', 'Kaštel Sućurac', 21213, 924789234, 'majavuk@hotmail.com', 'Z', 'Suvača 10', 'maja', 'maja123', 14, 'image6.jpg'),
 (46834013129, 'B-', 'Marija Čupić', '2018-08-31', 'Zagreb', 51000, 567345, 'cucic@gmail.com', 'Z', 'Ilica 12', 'mare', 'marica', 0, 'image5.png'),
-(47903334648, '0-', 'Jasmin Stanković', '1990-05-08', 'Rijeka', 51000, 925563594, 'jasmin456@gmail.com', 'Z', 'Adami?eva 3', 'jasmin', 'jasmin123', 14, 'image8.jpg'),
-(57523379503, 'AB-', 'Dalibor Trumbetić', '1972-06-12', 'Split', 21000, 998845574, 'dalibor_trumbetic@gmail.com', 'M', 'Trumbi?eva obala 13', 'dali12', '12345', 12, 'image4.jpg'),
-(62039216922, 'A+', 'Irma Plantak', '1992-06-18', 'Zagreb', 21000, 953341523, 'irma123@gmail.com', 'Z', 'Ante Star?evi?a 10', 'irma', 'irma123', 15, 'image7.jpg'),
-(79220235879, 'AB+', 'Vinko Sabić', '1983-08-05', 'Split', 21000, 991132563, 'vino_sab@gmail.com', 'M', 'ï¿½abanova 24', 'vinko', 'vinko123', 10, 'image10.jpg'),
-(92279595902, '0-', 'Karolina Tušek', '1965-09-06', 'Split', 21000, 991142589, 'karolina_tusek@gmail.com', 'Z', 'Hercegova?ka 1', 'karolina', 'karolina', 23, 'image6.jpg'),
+(47903334648, '0-', 'Jasmin Stanković', '1990-05-08', 'Rijeka', 51000, 925563594, 'jasmin456@gmail.com', 'Z', 'Adamićeva 3', 'jasmin', 'jasmin123', 14, 'image8.jpg'),
+(57523379503, 'AB-', 'Dalibor Trumbetić', '1972-06-12', 'Split', 21000, 998845574, 'dalibor_trumbetic@gmail.com', 'M', 'Trumbićeva obala 13', 'dali12', '12345', 12, 'image4.jpg'),
+(62039216922, 'A+', 'Irma Plantak', '1992-06-18', 'Zagreb', 21000, 953341523, 'irma123@gmail.com', 'Z', 'Ante Starčević 10', 'irma', 'irma123', 15, 'image7.jpg'),
+(79220235879, 'AB+', 'Vinko Sabić', '1983-08-05', 'Split', 21000, 991132563, 'vino_sab@gmail.com', 'M', 'Šabanova 24', 'vinko', 'vinko123', 10, 'image10.jpg'),
+(92279595902, '0-', 'Karolina Tušek', '1965-09-06', 'Split', 21000, 991142589, 'karolina_tusek@gmail.com', 'Z', 'Hercegovačka 1', 'karolina', 'karolina', 23, 'image6.jpg'),
 (99218368216, 'A+', 'Klara Vidaković', '1970-05-02', 'Split', 21000, 994573109, 'klara1234@gmail.com', 'Z', 'Pojišanska 18', 'klara', 'klara213', 21, 'image9.jpg');
 
 -- --------------------------------------------------------
@@ -183,7 +204,18 @@ INSERT INTO `followers` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 (13115585172, 25905508615),
 (13115585172, 10528147607),
 (25905508615, 10528147607),
-(10528147607, 25905508615);
+(10528147607, 25905508615),
+(25905508615, 6781251619),
+(10528147607, 6781251619),
+(24821182322, 6781251619),
+(79220235879, 6781251619),
+(92279595902, 6781251619),
+(47903334648, 6781251619),
+(6781251619, 25905508615),
+(24821182322, 25905508615),
+(25905508615, 46834013129),
+(25905508615, 47903334648),
+(10528147607, 47903334648);
 
 -- --------------------------------------------------------
 
@@ -217,7 +249,18 @@ INSERT INTO `following` (`donor_OIB_donora`, `OIB_prijatelja`) VALUES
 (25905508615, 13115585172),
 (10528147607, 13115585172),
 (10528147607, 25905508615),
-(25905508615, 10528147607);
+(25905508615, 10528147607),
+(6781251619, 25905508615),
+(6781251619, 10528147607),
+(6781251619, 24821182322),
+(6781251619, 79220235879),
+(6781251619, 92279595902),
+(6781251619, 47903334648),
+(25905508615, 6781251619),
+(25905508615, 24821182322),
+(46834013129, 25905508615),
+(47903334648, 25905508615),
+(47903334648, 10528147607);
 
 -- --------------------------------------------------------
 
@@ -240,39 +283,19 @@ CREATE TABLE IF NOT EXISTS `komentari` (
 --
 
 INSERT INTO `komentari` (`user_autora`, `autor`, `idbolnica_bol`, `tekst_komentara`, `datum_kom`) VALUES
-('', 'KBC Rijeka', 101, 'Hvala svima na donacijama! Ovdje možete ostavljati svoje komentare, prijedloge i slično!', '2018-12-27 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'Pozdrav plavoj sestri sa šaltera 5 hehe xD', '2019-01-02 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'gegep', '2019-01-04 00:00:00'),
-('anica6', 'Katarina Ani?', 101, 'test test\r\n', '2019-01-08 00:00:00'),
-('101', 'KBC Susak', 101, 'dobro jutro', '2019-01-09 00:00:00'),
-('anica6', 'Katarina Ani?', 101, 'test12', '2019-01-09 00:00:00'),
-('101', 'KBC Susak', 101, 'lalalalla', '2019-01-09 00:00:00'),
-('anica6', 'Katarina Ani?', 103, 'nenenen', '2019-01-09 00:00:00'),
-('101', 'KBC Susak', 101, 'HEHE\r\n', '2019-01-10 00:00:00'),
-('101', 'KBC Susak', 101, 'test 12', '2019-01-10 00:00:00'),
-('101', 'KBC Susak', 101, 'lalala', '2019-01-10 00:00:00'),
-('anica6', 'Katarina Ani?', 101, 'fztztfzt', '2019-01-10 00:00:00'),
-('101', 'KBC Susak', 101, 'hehehe', '2019-01-23 00:00:00'),
-('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23 00:00:00'),
-('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23 00:00:00'),
-('101', 'KBC Susak', 101, 'gjhfhg', '2019-01-23 00:00:00'),
-('anica6', 'Katarina Ani?', 101, 'hejjj', '2019-01-23 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'lalalalal', '2019-01-23 00:00:00'),
-('101', 'KBC Susak', 101, 'ćao ćao', '2019-01-23 00:00:00'),
-('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24 00:00:00'),
-('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24 00:00:00'),
-('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24 00:00:00'),
-('101', 'KBC Susak', 101, '1 2 3 ', '2019-01-24 00:00:00'),
-('101', 'KBC Susak', 101, 'test test test', '2019-01-24 00:00:00'),
-('101', 'KBC Susak', 101, '1 2 danas je dacn', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'dan je dan za metak', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'dan je dan za metak', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'jhfsdf', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'jhfsdf', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'sranjeee', '2019-01-25 00:00:00'),
-('domagoj', 'Domagoj Buljubasic', 101, 'hellou', '2019-01-25 14:02:59'),
-('katarina', 'Katarina CocaCola', 101, 'Dobra večer prijatelji', '2019-01-25 17:48:04');
+('katarina', 'Katarina Anić', 101, 'komenar1\r\n', '2019-01-30 16:45:05'),
+('katarina', 'Katarina Anić', 101, 'komentar2', '2019-01-30 16:45:10'),
+('katarina', 'Katarina Anić', 101, 'komentar3', '2019-01-30 16:45:13'),
+('katarina', 'Katarina Anić', 101, 'komentar4', '2019-01-30 16:45:18'),
+('katarina', 'Katarina Anić', 101, 'komentar5', '2019-01-30 16:45:23'),
+('katarina', 'Katarina Anić', 101, 'komentar6', '2019-01-30 16:45:27'),
+('romano12', 'Romano Polić', 101, 'komentar7', '2019-01-30 16:46:09'),
+('romano12', 'Romano Polić', 101, 'test1', '2019-01-30 16:46:12'),
+('domagoj', 'Domagoj Buljubašić', 101, 'Danas je oblačan dan', '2019-01-30 16:46:36'),
+('domagoj', 'Domagoj Buljubašić', 101, 'komentar10', '2019-01-30 16:46:42'),
+('domagoj', 'Domagoj Buljubašić', 101, 'Koliko vremena treba proći između dvije donacije ?', '2019-01-30 16:47:00'),
+('katarina', 'Katarina Anić', 101, 'Za muškarce 4 mjeseca, a za žene 3 ', '2019-01-30 17:05:13'),
+('101', 'KBC Susak', 101, 'Ne draga Katarina, za muškarce je 3 mjeseca, a za žene 4 :)', '2019-01-30 17:07:19');
 
 -- --------------------------------------------------------
 
@@ -292,24 +315,28 @@ CREATE TABLE IF NOT EXISTS `lokacija` (
   `kraj` time NOT NULL,
   `image` varchar(300) COLLATE utf8mb4_croatian_ci NOT NULL,
   PRIMARY KEY (`id_lokacije`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `lokacija`
 --
 
 INSERT INTO `lokacija` (`id_lokacije`, `grad`, `naziv_lokacije`, `adresa_lokacije`, `postanski_broj`, `datum_dogadaja`, `start`, `kraj`, `image`) VALUES
-(1, 'Rijeka', 'Studentski Centar Rijeka', 'Radmile Matejcic 6', 51000, '2018-12-28', '07:00:00', '12:00:00', 'studentski_centar.jpg'),
-(2, 'Rijeka', 'Studentski Centar Rijeka', 'Radmile Matejcic 5', 51000, '2019-01-05', '10:00:00', '14:00:00', 'studentski_centar.jpg'),
-(3, 'Rijeka', 'Fakultet Zdravstvenih studija', 'Viktora cara Emina 5', 51000, '2019-01-15', '08:00:00', '09:00:00', 'fzs_ri.JPG'),
-(4, 'Zagreb', 'Fakultet elektrotehnike i računarstva', 'Unska ul. 3', 10000, '2019-01-05', '11:30:00', '13:30:00', 'fer_02.jpg'),
-(5, 'Zagreb', 'Klinicki bolnicki cetar Sestre milosrdnice', 'Vinogradska cesta 29', 10000, '2019-01-08', '07:15:00', '13:45:00', 'sestre_milosrdnice.jpg'),
-(6, 'Rijeka', 'Gradska knjižnica Rijeka', 'Ul. Matije Gupca 23', 51000, '2019-01-02', '15:00:00', '18:30:00', 'Gorana-Tuskan-v.d.-ravnateljice-Gradske-knjiznice-Rijeka_ca_large.jpg'),
-(7, 'Rijeka', 'Filozofski fakultet Rijeka', 'Sveučilišna Avenija 4', 51000, '2019-01-02', '09:00:00', '11:15:00', 'filozofski.jpg'),
-(8, 'Zagreb', 'Medicinski fakultet Zagreb', 'Šalata ul. 2', 10000, '2019-01-09', '15:00:00', '17:00:00', 'med_zg.jpg'),
-(9, 'Zagreb', 'Crveni križ Zagreb', 'Ilica 23', 10000, '2019-01-12', '13:00:00', '15:00:00', 'crveni_kriz.png'),
-(10, 'Zagreb', 'Prehrabeno-biotehnološki fakultet', 'Pierottijeva ul. 6', 1000, '2019-01-10', '14:00:00', '19:00:00', 'pbf_zg.jpg'),
-(12, 'Rijeka', 'Tehnički fakultet Rijeka', 'Vukovarska 58', 51000, '2019-01-09', '10:00:00', '13:00:00', 'tehnicki.jpg');
+(1, 'Rijeka', 'Studentski Centar Rijeka', 'Radmile Matejcic 6', 51000, '2018-12-28', '10:00:00', '12:00:00', 'studentski_centar.jpg'),
+(14, 'Zagreb', 'Fakultet Elektrotehnike i Računarstva', 'Unska ul. 3', 10000, '2019-01-15', '15:00:00', '16:00:00', 'fer_02.jpg'),
+(15, 'Rijeka', 'Tehnički fakultet Rijeka', 'Vukovarska 58', 51000, '2018-12-10', '15:00:00', '17:00:00', 'tehnicki.jpg'),
+(16, 'Rijeka', 'Filozofski fakultet Rijeka', 'Sveučilišna Avenija 4', 51000, '2018-09-12', '12:00:00', '15:00:00', 'filozofski.jpg'),
+(17, 'Benkovac', 'Gradska Knjiznica Benkovac', ' Šetalište kneza Branimira 46', 23420, '2018-03-08', '15:00:00', '19:00:00', 'benkovac.jpg'),
+(18, 'Rijeka', 'Crveni križ Rijeka', 'Trg Republike Hrvatske 2', 51000, '2018-06-12', '12:00:00', '15:00:00', 'crveni_kriz.png'),
+(19, 'Rijeka', 'Filozofski fakultet Rijeka', ' Sveučilišna Avenija 4', 51000, '2017-10-10', '15:00:00', '18:00:00', 'fzs_ri.JPG'),
+(20, 'Rijeka', 'Gradska knjižnica Rijeka', ' Ul. Matije Gupca 23', 51000, '2018-10-15', '13:00:00', '14:00:00', 'Gorana-Tuskan-v.d.-ravnateljice-Gradske-knjiznice-Rijeka_ca_large.jpg'),
+(21, 'Rijeka', 'Tehnički Fakultet Rijeka', 'Vukovarska 58', 51000, '2019-01-31', '10:00:00', '12:00:00', 'tehnicki.jpg'),
+(22, 'Rijeka', 'Gradska Knjižnica Rijeka', 'Ul. Matije Gupca 23', 51000, '2019-01-31', '16:00:00', '18:00:00', 'Gorana-Tuskan-v.d.-ravnateljice-Gradske-knjiznice-Rijeka_ca_large.jpg'),
+(23, 'Rijeka', 'Medicinski Fakultet Rijeka', 'Ul. Braće Branchetta 20/1', 51000, '2019-01-30', '08:00:00', '09:00:00', 'medri.jpg'),
+(24, 'Rijeka', 'Studentski Centar Rijeka', 'Ul. Radmile Matejčić 5', 51000, '2019-02-22', '16:00:00', '16:00:00', 'scri.jpg'),
+(25, 'Rijeka', 'Crveni Križ Rijeka', 'Trg Republike Hrvatske 2', 51000, '2019-03-08', '12:00:00', '15:00:00', 'crveni_kriz.jpg'),
+(26, 'Zagreb', 'Prehrambeno tehnološki fakultet', 'Pierottijeva ul. 6', 10000, '2019-02-12', '15:00:00', '16:00:00', 'pbf_zg.jpg'),
+(27, 'Zagreb', 'Medicinski fakultet Zagreb', 'Šalata ul. 2', 10000, '2019-02-14', '16:00:00', '19:00:00', 'med_zg.jpg');
 
 -- --------------------------------------------------------
 
@@ -333,20 +360,56 @@ CREATE TABLE IF NOT EXISTS `moj_event` (
 INSERT INTO `moj_event` (`OIB_donora_don`, `id_lokacije`, `prisutnost`) VALUES
 (29389527738, 1, 1),
 (47903334648, 1, 1),
-(92279595902, 3, 1),
-(6781251619, 6, 1),
-(79220235879, 10, -1),
-(79220235879, 4, -1),
-(46834013129, 4, 1),
-(6781251619, 7, -1),
-(18814952778, 8, -1),
-(13115585171, 5, 0),
-(18814952778, 6, 0),
-(13115585171, 10, 1),
-(99218368216, 5, 1),
-(10528147607, 5, 1),
-(13115585172, 10, 1),
-(13115585172, 6, 1);
+(29389527738, 1, 1),
+(92279595902, 1, 1),
+(62039216922, 1, -1),
+(10528147607, 1, 1),
+(24821182322, 1, 1),
+(25905508615, 14, 1),
+(18814952778, 14, 1),
+(46834013129, 14, 1),
+(13115585171, 14, -1),
+(13115585171, 15, 1),
+(99218368216, 15, 1),
+(13115585171, 15, 1),
+(29389527738, 15, 1),
+(29389527738, 15, 1),
+(13115585171, 15, 1),
+(47903334648, 15, 1),
+(62039216922, 15, 1),
+(99218368216, 15, -1),
+(13115585171, 15, -1),
+(10528147607, 16, 1),
+(13115585172, 16, 1),
+(24821182322, 16, 1),
+(13115585171, 18, -1),
+(79220235879, 18, 1),
+(18814952778, 18, 1),
+(46834013129, 18, 1),
+(57523379503, 19, 1),
+(57523379503, 19, 1),
+(24821182322, 20, 1),
+(18814952778, 20, 1),
+(6781251619, 1, 1),
+(24821182322, 1, 1),
+(13115585171, 1, 1),
+(99218368216, 1, 1),
+(10528147607, 26, 0),
+(25905508615, 21, 0),
+(25905508615, 16, 1),
+(25905508615, 14, 1),
+(6781251619, 22, 0),
+(6781251619, 23, 0),
+(13115585172, 21, 0),
+(13115585172, 23, 0),
+(13115585172, 24, 0),
+(13115585171, 26, 0),
+(18814952778, 21, 0),
+(18814952778, 23, 0),
+(46834013129, 26, 0),
+(47903334648, 21, 0),
+(47903334648, 23, 0),
+(47903334648, 24, 0);
 
 -- --------------------------------------------------------
 
@@ -364,52 +427,52 @@ CREATE TABLE IF NOT EXISTS `obavijesti` (
   `procitano` int(11) NOT NULL,
   PRIMARY KEY (`id_obavijesti`),
   KEY `OIB_donora_fk` (`OIBdonora`)
-) ENGINE=InnoDB AUTO_INCREMENT=601 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=663 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `obavijesti`
 --
 
 INSERT INTO `obavijesti` (`id_obavijesti`, `OIBdonora`, `ID_posiljatelja`, `tekst_obav`, `datum_obav`, `procitano`) VALUES
-(577, 62039216922, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-26 00:00:00', 0),
-(578, 99218368216, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-26 00:00:00', 0),
-(579, 13115585172, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-26 00:00:00', 0),
-(580, 13115585172, 10528147607, 'hejjjjjjjjj', '2019-01-27 13:53:23', 0),
-(581, 13115585172, 10528147607, '123', '2019-01-27 13:53:26', 0),
-(582, 10528147607, 13115585172, 'kako si', '2019-01-27 13:53:54', 0),
-(583, 13115585172, 10528147607, '', '2019-01-27 14:54:59', 0),
-(584, 13115585172, 10528147607, 'dobro ti', '2019-01-27 15:08:59', 0),
-(585, 13115585172, 10528147607, '', '2019-01-27 15:09:03', 0),
-(586, 25905508615, 10528147607, 'hejjj', '2019-01-27 15:29:21', 0),
-(587, 10528147607, 25905508615, 'ćaoo', '2019-01-27 15:29:36', 0),
-(588, 25905508615, 10528147607, 'kako si maco ? ', '2019-01-27 15:33:13', 0),
-(589, 13115585172, 10528147607, 'poruka maji', '2019-01-27 15:33:42', 0),
-(590, 25905508615, 10528147607, 'poruka kati', '2019-01-27 15:34:44', 0),
-(591, 13115585172, 10528147607, 'zadnja poruka u 16:37 kati', '2019-01-27 15:37:10', 0),
-(592, 10528147607, 13115585172, 'poruka domagojujujuujuj', '2019-01-28 14:59:56', 0),
-(593, 25905508615, 10528147607, 'hejjj kako si katooooo', '2019-01-28 15:00:23', 0),
-(594, 62039216922, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-28 00:00:00', 0),
-(595, 99218368216, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-28 00:00:00', 0),
-(596, 6781251619, 1, 'gufhgjg', '2019-01-28 00:00:00', 0),
-(597, 24821182322, 1, 'gufhgjg', '2019-01-28 00:00:00', 0),
-(598, 25905508615, 1, 'gufhgjg', '2019-01-28 00:00:00', 0),
-(599, 47903334648, 1, 'gufhgjg', '2019-01-28 00:00:00', 0),
-(600, 10528147607, 25905508615, 'zguhgj', '2019-01-28 15:49:16', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `poruke`
---
-
-DROP TABLE IF EXISTS `poruke`;
-CREATE TABLE IF NOT EXISTS `poruke` (
-  `OIB_primatelja` double UNSIGNED NOT NULL,
-  `OIB_prijatelja` int(11) NOT NULL,
-  `tekst_poruke` varchar(300) COLLATE utf8mb4_croatian_ci DEFAULT NULL,
-  PRIMARY KEY (`OIB_primatelja`),
-  UNIQUE KEY `OIB_donora_UNIQUE` (`OIB_primatelja`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
+(624, 6781251619, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 0),
+(625, 13115585172, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 0),
+(626, 18814952778, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 0),
+(627, 24821182322, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 0),
+(628, 25905508615, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 1),
+(629, 47903334648, 1, '16.1 Predavanje na temu doniranja organa', '2019-01-15 16:28:25', 0),
+(630, 6781251619, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(631, 10528147607, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(632, 13115585171, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(633, 13115585172, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(634, 18814952778, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(635, 24821182322, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(636, 25905508615, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 1),
+(637, 29389527738, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(638, 46834013129, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(639, 47903334648, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(640, 57523379503, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(641, 62039216922, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(642, 79220235879, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(643, 92279595902, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(644, 99218368216, 1, 'Sretan Božić i Nova Godina', '2019-01-30 16:28:47', 0),
+(645, 6781251619, 1, '17.12 Humanitarni koncert za Stipu', '2019-01-30 16:29:28', 0),
+(646, 6781251619, 1, 'Trenutno je manjak vaše krvne grupe u zalihi. Razmislite o donaciji! Hvala!', '2019-01-30 16:29:37', 0),
+(647, 25905508615, 6781251619, 'Hej Kato..kako si?', '2019-01-30 17:08:41', 1),
+(648, 6781251619, 25905508615, 'Dobro, kako si ti ? ', '2019-01-30 17:19:18', 0),
+(649, 13115585172, 25905508615, 'hej', '2019-01-30 17:19:46', 0),
+(650, 25905508615, 13115585172, 'hej', '2019-01-30 17:19:52', 1),
+(651, 13115585172, 25905508615, 'jel dolaziš sutra na rwa prezentaciju ? ', '2019-01-30 17:21:30', 0),
+(652, 25905508615, 13115585172, 'naravno!!', '2019-01-30 17:41:59', 1),
+(653, 25905508615, 6781251619, 'evo ide...sutra doniram hehe', '2019-01-30 17:44:07', 1),
+(654, 10528147607, 25905508615, 'hej dodo', '2019-01-30 17:44:51', 0),
+(655, 25905508615, 10528147607, 'hej kato', '2019-01-30 17:45:10', 1),
+(656, 10528147607, 25905508615, 'oćeš sutra u menzu poslije doniranja ? ', '2019-01-30 17:45:32', 0),
+(657, 25905508615, 10528147607, 'neću...žurim učiti', '2019-01-30 17:45:46', 1),
+(658, 10528147607, 25905508615, 'ajde samo daj...sretno!', '2019-01-30 17:53:18', 1),
+(659, 13115585172, 25905508615, 'xD', '2019-01-30 18:15:25', 1),
+(660, 25905508615, 13115585172, 'onda se vidimo!', '2019-01-30 18:16:45', 1),
+(661, 13115585172, 25905508615, 'Može kava poslije ? ', '2019-01-30 18:21:37', 1),
+(662, 25905508615, 13115585172, 'da u alienu!', '2019-01-30 18:22:29', 0);
 
 -- --------------------------------------------------------
 
@@ -428,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `zahtjev` (
   PRIMARY KEY (`idzahtjev`),
   UNIQUE KEY `idzahtjev_UNIQUE` (`idzahtjev`),
   KEY `fk_zahtjev_bolnica1_idx` (`id_bolnica`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_croatian_ci;
 
 --
 -- Dumping data for table `zahtjev`
@@ -445,11 +508,12 @@ INSERT INTO `zahtjev` (`idzahtjev`, `id_bolnica`, `kolicina_krvi_zaht`, `krvna_g
 (29, 101, 0.4, 'B+', '2019-01-09', 1),
 (30, 101, 0.4, 'B+', '2019-01-09', 1),
 (31, 101, 0.5, 'A+', '2019-01-10', 1),
-(32, 101, 0.5, 'A+', '2019-01-23', 0),
 (33, 101, 0.5, 'A+', '2019-01-23', 0),
 (34, 101, 0.5, 'A+', '2019-01-25', 0),
-(35, 101, 25, 'AB+', '2019-01-26', 0),
-(36, 101, 52, 'B-', '2019-01-26', 0);
+(36, 101, 52, 'B-', '2019-01-26', 0),
+(37, 101, 5, 'B+', '2019-01-29', 1),
+(38, 101, 15, 'AB+', '2019-01-30', 1),
+(39, 101, 50, 'A+', '2019-01-30', 0);
 
 -- --------------------------------------------------------
 
@@ -469,14 +533,14 @@ CREATE TABLE IF NOT EXISTS `zaliha` (
 --
 
 INSERT INTO `zaliha` (`krvna_grupa`, `kolicina_grupe`) VALUES
-('A+', '0.19999999999999996'),
-('A-', '0'),
-('AB+', '0'),
-('AB-', '1.6'),
-('B+', '49.2'),
+('A+', '10'),
+('A-', '35.8'),
+('AB+', '29.5'),
+('AB-', '110.5'),
+('B+', '65'),
 ('B-', '0'),
-('0+', '0'),
-('0-', '0');
+('0+', '63.5'),
+('0-', '21.3');
 
 --
 -- Constraints for dumped tables
@@ -512,12 +576,6 @@ ALTER TABLE `moj_event`
 --
 ALTER TABLE `obavijesti`
   ADD CONSTRAINT `OIB_donora_fk` FOREIGN KEY (`OIBdonora`) REFERENCES `donor` (`OIB_donora`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `poruke`
---
-ALTER TABLE `poruke`
-  ADD CONSTRAINT `OIB_primatelja` FOREIGN KEY (`OIB_primatelja`) REFERENCES `donor` (`OIB_donora`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `zahtjev`
