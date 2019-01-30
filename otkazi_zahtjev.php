@@ -13,7 +13,7 @@ if (!isset($_SESSION['bolnica_loggedin'])) header("Location:denied_permission.ph
 
 $_SESSION["current_page"] = $_SERVER['REQUEST_URI'];
 
-
+$uspjeh=0;
 $date = date("Ymd");
 $idbolnica = $_SESSION['id'];
 
@@ -31,6 +31,7 @@ if(isset($_POST['otkazi_zahtjev'])){
     $sql = "DELETE FROM zahtjev WHERE idzahtjev='$id'";
     $run = mysqli_query($conn, $sql);
     $result = $run or die ("Failed to query database". mysqli_error($conn));
+    if ($run) $uspjeh=1;
 }
 
 
@@ -46,7 +47,12 @@ echo'
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="bolnica_zahtjevstyle.css" rel="stylesheet">
-</head>';
+</head>
+<script>
+    function myFunction() {
+      document.getElementById("alert").style.display = "none";
+    }
+    </script>';
 
 echo "
 <div id='nav-placeholder' onload>
@@ -98,7 +104,19 @@ echo'
                     </span>
                     <input type="submit" style="margin-left: 37%;" class="zbtn" name="otkazi_zahtjev" value="Otkaži"/>
                </form>
-            </div>
+               </div>
         </div>
+        ';
+                 if ($uspjeh==1) {
+                     echo '
+                <div class="col-md-8">
+                <div class="alert" id="alert">
+                  <span class="closebtn" onclick="myFunction();">&times;</span> 
+                  Odabrani zahtjev je otkazan
+                </div></div>
+                     ';
+                 }
+            echo'
     </div>
+    
 </div>';
