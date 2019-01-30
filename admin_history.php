@@ -142,6 +142,7 @@ while($row = mysqli_fetch_array($result_korisnici)){
     $sql_zadnja = "SELECT * from obavijesti WHERE (OIBdonora = '$OIB' AND ID_posiljatelja = '$OIB_prijatelja') OR (OIBdonora = '$OIB_prijatelja' AND ID_posiljatelja ='$OIB') order by datum_obav DESC LIMIT 1";
     $run_zadnja = mysqli_query($conn, $sql_zadnja);
     $result_zadnja = $run_zadnja or die ("Failed to query database". mysqli_error($conn));
+
     $row_zadnja = mysqli_fetch_array($result_zadnja);
     $stanje = $row_zadnja['procitano'];
     $ID = $row_zadnja['ID_posiljatelja'];
