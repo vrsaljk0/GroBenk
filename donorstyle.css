@@ -293,15 +293,6 @@ table th {
 	float: center;
 }
 
-.event-date {
-	float: left;
-	border-right: 1px solid;
-	background-color: #E76C6C;
-	width: 125px;
-	height: 125px;
-	display: inline-block;
-}
-
 .event-checkbox {
 	display: block;
 	float: right;

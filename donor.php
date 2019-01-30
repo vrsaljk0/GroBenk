@@ -1,6 +1,3 @@
-<?php
-
-echo '
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +9,20 @@ echo '
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="style.css" rel="stylesheet">
     <link href="donorstyle.css" rel="stylesheet">
-</head>';
+    <style>
 
+    .event-date {
+        float: left;
+        border-right: 1px solid;
+        background-size: 125px 125px;
+        width: 125px;
+        height: 125px;
+        display: inline-block;
+    }
+
+    </style>
+</head>
+<?php
     require_once "dbconnect.php"; 
     require_once "functions.php";
     session_start();
@@ -184,7 +193,7 @@ echo '
                     </div>
 
                     <div class="tab-pane fade show '.$active2.'" id="event" role="tabpanel" aria-labelledby="event-tab">';
-                            $upit = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj from lokacija where id_lokacije in(
+                            $upit = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj, image from lokacija where id_lokacije in(
                                     SELECT id_lokacije from moj_event where OIB_donora_don = '$OIB' and prisutnost = '0')";
                             $run = mysqli_query($conn, $upit);
                             $result = $run or die("Failed to query database". mysqli_error($conn));
@@ -198,6 +207,7 @@ echo '
                                     $day = date("d", strtotime($d));
                                     $month = date("m", strtotime($d));
                                     $year = date("Y", strtotime($d));
+                                    $image = $row['image'];
 
                                     if($month == 1) $mjesec = "Siječanj";
                                     if($month == 2) $mjesec = "Veljača";
@@ -218,7 +228,7 @@ echo '
                                     $minutes_kraj = date('i', strtotime($row['kraj']));
 
                               echo '<div class="event">
-                                            <div class="event-date">
+                                            <div style="background-image: radial-gradient(ellipse at center, rgba(255,255,255,1) 21%,rgba(255,255,255,0) 100%), url(lokacije/'.$image.');" class="event-date">
                                                 <span class="day">'.$day.'</span>
                                                 <span class="month">'.$mjesec.'</span>
                                                 <span class="year">'.$year.'</span>
@@ -237,7 +247,7 @@ echo '
                             </div>';
 
                             $date = date("Ymd");
-                            $dolazim = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj FROM lokacija WHERE grad IN 
+                            $dolazim = "SELECT id_lokacije, grad, naziv_lokacije, adresa_lokacije, datum_dogadaja, start, kraj, image FROM lokacija WHERE grad IN 
                                        (SELECT prebivaliste FROM donor WHERE OIB_donora = '$OIB') AND datum_dogadaja >= '$date' AND id_lokacije NOT IN 
                                        (SELECT id_lokacije from moj_event WHERE OIB_donora_don = '$OIB')";
                             $run = mysqli_query($conn, $dolazim);
@@ -252,6 +262,7 @@ echo '
                                     $day = date("d", strtotime($d));
                                     $month = date("m", strtotime($d));
                                     $year = date("Y", strtotime($d));
+                                    $image = $row_dolazim['image'];
 
                                     if($month == 1) $mjesec = "Siječanj";
                                     if($month == 2) $mjesec = "Veljača";
@@ -272,7 +283,7 @@ echo '
                                     $minutes_kraj = date('i', strtotime($row_dolazim['kraj']));
 
                               echo '<div class="event">
-                                            <div class="event-date">
+                                            <div style="background-image: radial-gradient(ellipse at center, rgba(255,255,255,1) 21%,rgba(255,255,255,0) 100%), url(lokacije/'.$image.')" class="event-date">
                                                 <span class="day">'.$day.'</span>
                                                 <span class="month">'.$mjesec.'</span>
                                                 <span class="year">'.$year.'</span>
@@ -331,5 +342,4 @@ echo '
     </div>
 ';
 ?>
-
 
