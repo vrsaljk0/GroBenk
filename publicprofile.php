@@ -135,8 +135,8 @@
                 <form action="" method="POST">
                     <button class="submitsearch" type="submit" name="follow" id="button" onclick="ChangeButton()">'.$str.'</button>';
                     if($str == 'Unfollow'){
-                        echo'<input type="text" name="poruka" placeholder="Pošalji kratku poruku"> 
-                        <input type="submit" name="posalji_poruku" value="Posalji">';
+                        echo'<br><input type="text" style="margin-left:0;" name="poruka" placeholder="Pošalji kratku poruku"> 
+                        <input type="submit" style="margin-left:0;" name="posalji_poruku" value="Pošalji">';
                     }
                 echo'</form>
             </div>

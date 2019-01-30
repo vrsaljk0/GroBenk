@@ -25,13 +25,13 @@ echo '
 <html>
 <head>
 <style>
-
+	<link href="cs.css" rel="stylesheet">
 </style>
 </head>
 
 <nav class="navbar navbar-expand-md navbar-light bg-white ">
 <div class="container-fluid">
-	<a class="navbar-brand" href="index.php"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
+	<a style="width:30%;" class="navbar-brand" href="index.php"><img src="img/logo3_.png">&nbsp BloodBank GroBenk</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -45,9 +45,10 @@ echo '
 			</li>
 			<li>
 				<div class="dropdown_donor">';
-					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' order by datum_obav DESC";
+					$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0'";
 					$run = mysqli_query($conn, $sql);
 					$result = $run or die ("Failed to query database". mysqli_error($conn));
+					$broj_obav = mysqli_num_rows($result);
 					$class = 'far fa-bell';
 					$neprocitano = 0;
 					while($row = mysqli_fetch_array($result)){
@@ -59,47 +60,98 @@ echo '
 					}
 					echo'
 					<button class="dropbtn_donor"><i class="'.$class.'"></i></button>
-						<div class="dropdown-content_donor"  style="min-width: 280px; max-height: 250px; overflow-y:scroll;">';
+						<div style="width:500px; max-height: 450px; overflow-y:scroll;" class="dropdown-content_donor">
+						            <div style="text-align:center;" class="notify-drop-title">
+						                <div style="border-bottom:solid; height:70px;">
+						                    <br><h4>Obavijesti (<b>'.$broj_obav.'</b>)</h4>
+						                </div>
+						            </div>
+						';
 							//ajmo prvo obavijesti od admina
-							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1' order by datum_obav DESC";
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja = '1'";
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
+							
 							if($neprocitano){
-								if(mysqli_num_rows($result) != 0) {
+							    if(mysqli_num_rows($result) != 0){
+								    echo'
+								    <form action="notification.php" method="POST">';
+								    echo'<b>ADMIN</b><br>';
+								    while($row = mysqli_fetch_array($result)){
+								    	$d = $row['datum_obav'];
+									    $day = date("d", strtotime($d));
+									    $month = date("m", strtotime($d));
+									    $year = date("Y", strtotime($d));
+									    $hour = date("H", strtotime($d));
+	    								$min = date("i", strtotime($d));
 									echo '
-							    	<form action="notification.php" method="POST">';
-										echo '<b>ADMIN</b><br>';
-										while ($row = mysqli_fetch_array($result)) {
-											echo '<i>' . $row['datum_obav'] . '</i> ';
-											echo $row['tekst_obav'] . '  <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value=' . $row['id_obavijesti'] . '></p>';
-										}
-										echo '<input type="hidden" name="OIB" value="' . $OIB . '">
-							    	</form>';
+					                 	<div>
+						                    <span style="height:50px; width:50px; float:right;">
+						                    	<input style="margin-top:5px;" class="squaredTwo" type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'>
+						                    </span>
+
+						                    <img style="width:50px; height:50px;" src="donori/admin.png">
+											<span style="display: inline-block; width:350px; padding-left: 15px; margin-left:60px margin-right:60px;;">
+											'.$row['tekst_obav'].'
+											</span>
+						                    	
+						                    	<p style = "margin-left:10px; margin-top:10px;" class="time"><i>'.$day.'. '.$month.' '.$year.'. '.$hour.':'.$min.'</i></p>
+					                    </div>
+					                    <hr>';
+								    }
+								    echo '<input type="hidden" name="OIB" value="'.$OIB.'">
+								    </form>';
 								}
 							}
-							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1' order by datum_obav DESC";
+							$sql = "SELECT * from obavijesti where OIBdonora = '$OIB' and procitano='0' and ID_posiljatelja != '1'";
 							$run = mysqli_query($conn, $sql);
 							$result = $run or die ("Failed to query database". mysqli_error($conn));
-							if($neprocitano){
-							    echo'
-							    <form action="notification.php" method="POST">';
-								if(mysqli_num_rows($result) != 0) {
-									echo '<b>KORISNICI</b><br>';
-									while ($row = mysqli_fetch_array($result)) {
-										$OIB_prijatelja = $row['ID_posiljatelja'];
-										$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
+							if(mysqli_num_rows($result) != 0){
+								if($neprocitano){
+								    echo'
+								    <form action="notification.php" method="POST">';
+								    echo'<b>KORISNICI</b><br>';
+								    while($row = mysqli_fetch_array($result)){
+								    	$d = $row['datum_obav'];
+									    $day = date("d", strtotime($d));
+									    $month = date("m", strtotime($d));
+									    $year = date("Y", strtotime($d));
+									    $hour = date("H", strtotime($d));
+	    								$min = date("i", strtotime($d));
+
+								    	$OIB_prijatelja = $row['ID_posiljatelja'];
+								    	$prijatelj = "SELECT * from donor where OIB_donora = '$OIB_prijatelja'";
 										$run_prijatelj = mysqli_query($conn, $prijatelj);
-										$result2 = $run_prijatelj or die ("Failed to query database" . mysqli_error($conn));
+										$result2 = $run_prijatelj or die ("Failed to query database". mysqli_error($conn));
 										$row_prijatelj = mysqli_fetch_array($result2);
 										$ime = $row_prijatelj['ime_prezime_donora'];
 										$username_prijatelja = $row_prijatelj['username'];
-										echo '<i>' . $row['datum_obav'] . '</i> <a  href="publicprofile.php?username=' . urlencode($username_prijatelja) . '"><font color="FF00CC">' . $row_prijatelj['ime_prezime_donora'] . '</font></a>
-										 ' . $row['tekst_obav'] . ' <input type="checkbox" name="check_list[]" onclick="this.form.submit();" value=' . $row['id_obavijesti'] . '></p>';
-									}
+										$image_prijatelja = $row_prijatelj['image'];
+										echo '
+
+										<div>
+										<a href="publicprofile.php?username='.urlencode($username_prijatelja).'"><font color="DC0E0E">'.$row_prijatelj['ime_prezime_donora'].'</font></a>
+						                    <span style="height:50px; width:50px; float:right;">
+						                    	<input style="margin-top:5px;" class="squaredTwo" type="checkbox" name="check_list[]" onclick="this.form.submit();" value='.$row['id_obavijesti'].'>
+						                    </span>
+
+					                    <img style="width:50px; height:50px;" src="donori/'.$image_prijatelja.'">
+										<span style="display: inline-block; width:350px; padding-left: 15px; margin-left:60px margin-right:60px;;">
+										'.$row['tekst_obav'].'
+										</span>
+					                    	
+					                    	<p style = "margin-left:10px; margin-top:10px;" class="time"><i>'.$day.'. '.$month.' '.$year.'. '.$hour.':'.$min.'</i></p>
+					                    </div>
+					                    <hr>';
+					                    
+								    }
+
+
+								    echo '<a href="history.php">Prikaži sve</a>
+								    <input type="hidden" name="OIB" value="'.$OIB.'">
+								    </form>';
 								}
-							    echo '<a href="history.php">Prikaži sve</a>
-							    <input type="hidden" name="OIB" value="'.$OIB.'">
-							    </form>';
+
 							}
 							else{
 							    echo'Nema novih obavijesti
