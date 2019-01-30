@@ -7,17 +7,11 @@ donor.php
 - nalert dal su lozinke iste kad mijenja
 FRONTEND::
 
--ADMIN:
-    -da tabići budu u 1 redu
-
 -DONOR:
-	-sredit dropdown notifikacija
-	-u evente dodat sličice
 	-stavit scrollbar za Praćenja Pratim/Prate me
 
 -NASLOVNA:
 	-SVE HAHAHA
-	-kod sign up-a da ne prođe ako vec postoji taj username ALERT!!!
 	-kriva lozinka, treba lijepi alert
 
 zabrana pristupa, malo uredit - dobro je nema vezezezezezze
@@ -47,17 +41,6 @@ SQL INJECTION i jos neki alertovi(ono sta sam napravila, provjerite jel radi kak
     ADMIN
         donacije.php
             -kolicina krvi mora bit <0, 0.7>L NE ODE NA DOBAR LINK!!!
-
-    KARTA.PHP
-        -kod evenata i na publicu bolnice
-
-    CHAT
-        -search
-
-    SIGNUP
-        -dropdown kod krvnih krupa
-        -promjenit background
-        -button da te vrati na index.php ako si slucajno zalutao
 
     BAZA
         -popunit s normalnim podacima hehe
