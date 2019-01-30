@@ -29,8 +29,8 @@ echo '
     </script>";
 
 echo '
-<div class="admin-content">
-        <ul class="nav nav-tabs" id="myTab" >
+<div class="admin-content" >
+        <ul class="nav nav-tabs" id="myTab" style="width:950px;margin-left: -140px">
             <li class="nav-item">
                 <a class="nav-link" href="eventi.php?keyword=&trazi=Pretraži">Eventi</a>
             </li>
