@@ -115,7 +115,7 @@ echo '
                     <div class="chat_img"> <img src="donori/admin.png"> </div>
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
-                      <p>'.$zadnja_poruka_admin.'</p>
+                      <p style="color:black;">'.$zadnja_poruka_admin.'</p>
 
                     </div>
                 </div>
@@ -148,7 +148,7 @@ echo '
             <div class="chat_list">
                 <a href="admin_history.php">
                 <div class="chat_people">
-                    <div class="chat_img"> <img src="donori/admin.png"> </div>
+                    <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                     <div class="chat_ib">
                       <h5>Admin <span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p>'.$zadnja_poruka_admin.'</p>
@@ -197,7 +197,7 @@ while($row = mysqli_fetch_array($result)){
             echo '
             <a class="a" href="user_history.php?username='.urlencode($username_prijatelja).'">
                 <div style="background-color:#FFD3D3" class="chat_people">
-                    <div class="chat_img"> <img src="donori/'.$row_prijatelj['image'].'"> </div>
+                    <div class="chat_img"> <img style="width:50px; height:50px; object-fit:cover;" src="donori/'.$row_prijatelj['image'].'"> </div>
                     <div class="chat_ib">
                       <h5>'.$row_prijatelj['ime_prezime_donora'].'<span class="chat_date">'.$day.'. '.$mjesec.' '.$year.'.</span></h5>
                       <p style="color:black;">'.$row_zadnja['tekst_obav'].'</p>
