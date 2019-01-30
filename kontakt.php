@@ -38,7 +38,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     });
 </script>
 
-<div id="slides" class="carousel slide" data-ride="carousel">
+<div id="slides" class="carousel slide" data-ride="carousel" data-interval="2000">
     <ul class="carousel-indicators">
         <li data-target="#slides" data-slide-to="0" class="active"></li>
         <li data-target="#slides" data-slide-to="1" ></li>
