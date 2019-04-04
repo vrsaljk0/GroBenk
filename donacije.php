@@ -51,10 +51,10 @@ echo "
     });
     </script>";
 echo '
-<div class="admin-content">
-        <ul class="nav nav-tabs" id="myTab" style="width:950px;margin-left: -140px">
+<div class="admin-content" >
+        <ul class="nav nav-tabs" id="myTab" style="width:1050px;margin-left: -140px">
             <li class="nav-item">
-                <a class="nav-link" href="eventi.php?keyword=&trazi=Traži">Eventi</a>
+                <a class="nav-link" href="eventi.php?keyword=&trazi=Pretraži">Eventi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="zahtjevi.php">Zahtjevi</a>
@@ -62,8 +62,11 @@ echo '
             <li class="nav-item">
                 <a class="nav-link" href="dodajbolnicu.php">Dodaj bolnicu</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link active" href="donacije.php?keyword=&trazi=Traži">Donacije</a>
+            <li class="nav-item">
+                <a class="nav-link" href="pregled.php">Pregled</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost/GroBenk-Vol2/donacije.php?keyword=&trazi=Tra%C5%BEi">Donacije</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="obavijesti.php">Obavijesti</a>
@@ -198,7 +201,7 @@ if ($result = mysqli_num_rows($run) != 0) {
         }
     }
 } else {
-    echo 'neka poruka u stilu:<h3>Trenutno nema prijava za donaciju</h3>';
+    echo '<h3>Trenutno nema prijava za donaciju</h3>';
 }
 echo '
     <div style="height:200px;">
