@@ -232,7 +232,7 @@ echo'
         <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/120311/preview.svg" width="100%" >
     </div>
     <div style="width:25%;float:left;padding:50px;margin-top: 30px">
-        <h2>Pregled donora</h2><br>
+        <br>
         
         <form action="" method="POST">
         <h4>Tlak:</h4>
