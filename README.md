@@ -1,88 +1,88 @@
-# Project Title
+# GroBenk
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+GroBenk je web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj web aplikacija i Baza podataka. U osnovi, radi se o društvenoj mreži imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje korisnike krivi i donore na jednom mjestu.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+1. Web Server (WAMPP ili XAMPP)
+2. Importati grobenk.sql u bazu na phpmyadminu pod nazivom grobenk
 
-```
-Give examples
-```
 
-### Installing
+## Getting Started
 
-A step by step series of examples that tell you how to get a development env running
+1. u fileu dbconnect upisati svoje podatke.
+2. pokrenuti index.html
 
-Say what the step will be
 
-```
-Give the example
-```
+### About
 
-And repeat
+1. *Donor*
+- Korisnik se može registrirati kao donor krvi.
+- Na mom profilu pišu moji podaci i broj donacija (i nagrade ako ih imam)
+- Povijest mojih donacija
+- Mogu kliknuti da dolazim na evente koje objavi admin (nekakva kvazi geolokacija; riječkim donatorima se prikazuju samo eventi u Ri)
+- Followanje/unfollowanje ostalih donora
+- Mogu komentirati bolnice na njihovim profilima 
+- Mogu poslati poruku drugim donorima (sustav kratkih poruka; nije chat u pravom smislu riječi jer nije "real time", za prikaz nove poruke potrebno je refreshati stranicu)
+- Primam obavijesti (prvenstveno od admina)
 
-```
-until finished
-```
+2. Admin
+- Admin prati donore i njihove donacije pa sukladno njima dodjeljuje
+nagrade npr. za 50 donacija korisnik na svom profilu dobije srebrenu
+zvjezdicu.
+- Izrađuje "evente" za nove donacije 
+Šalje obavijesti korisnicima npr. ako manjka A+ krvne grupe poslat će svim
+takvim donorima obavijest ili ako se krv donira na Turniću svim donorima
+koji su u blizini šalje se obavijest.
+- Izrađuje mjesečne statistike koje se vide na naslovnoj stranici
+- Unosi nove donacije 
 
-End with an example of getting some data out of the system or using it for a little demo
+Kako sustav doniranja funkcionira ? 
+Nakon što admin objavi event donori se prijave na isti (klikom sa svog profila)
+Admin dobije popis donora koji su se prijavili i označi ih klikom ako su stvarno donirali taj dan i koliko(broj donacija za donor++,
+količina krvi++ itd).
+
+Admin pregledava i zahtjeve od bolnica (klikom je odobri, zahtjev se izbriše, kolicina krvi--)
+
+
+3. Bolnice
+- Bolnice šalju zahtjeve za krvlju banci krvi
+- Prate zalihe krvi i mogu objavljivati na naslovnoj stranici
+- Sudjeluju na svom forumu (svaka bolnica ima svoj forum)
+
+4. Guest
+
+- Guest korisnik vidi "ono što je na površini"
+- osnovne informacije (O nama, Kako donirati krvi, Gdje nas pronaći,
+Kontakti itd)
+- trenutne zalihe krvi
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* PHP5
+* HTML5
+* CSS
+* JS
+* SQL
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Maja Vrsaljko** - *Razvoj backend-a* - (https://github.com/vrsaljk0)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Azra Subašić** - *Razvoj frontend-a* - (https://github.com/hax91)
 
-## License
+* **Ivana Baćac** - *Razvoj backend-a* - (https://github.com/Bachvac)
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Usage
+
+
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Projekt je ocjenjen maksimalnim brojem bodova na oba kolegija.
 
