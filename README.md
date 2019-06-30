@@ -8,7 +8,7 @@ Društvene mreža imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje
 Web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj web aplikacija i Baza podataka.
 
 
-### Prerequisites
+## Prerequisites
 
 1. Web Server (WAMPP ili XAMPP)
 2. Importati grobenk.sql u bazu na phpmyadminu pod nazivom grobenk
