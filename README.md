@@ -1,6 +1,6 @@
 # GroBenk
 
-Društvene mreža imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje korisnike krivi i donore na jednom mjestu.
+Društvene mreža imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje korisnike krvi i donore na jednom mjestu.
 
 
 ### Motivation
