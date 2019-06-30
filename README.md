@@ -1,66 +1,88 @@
-# GroBenk-Vol2
-Novi repozitorij BloodBank GroBenk projekta iz RWA.
-Kako sve funkcionira ukratko (da imamo lijepi pregled svega što moramo napraviti).
+# Project Title
 
-INSTALACIJA
-------------
-Kako bi mogli pokrenuti našu banku krvi potrebno je imati instalirano:
-1. Server (WAMPP ili XAMPP)
-2. importati grobenk.sql u bazu na phpmyadminu pod nazivom grobenk
-2. u fileu dbconnect upisati svoje podatke.
-3. pokrenuti index.html
+One Paragraph of project description goes here
 
-EDITOR
--------
-Ja sam si instalirali PHPStorm iz JetBoxa i postavila WAMPP kao Interpreter i onda mogu pokretati kodove direktno iz editora.
-Tamo sam si još namjestila live uređivanje stranice da ne moram svaki put refreshati i još neke detaljčiće za ugodniji rad.
+## Getting Started
 
-PLAN I PROGRAM (kopirani iz mejla Sandiju)
----------------
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-1. Donor
-- Korisnik se može registrirati kao donor krvi. (done)
-- Na mom profilu pišu moji podaci i broj donacija (i nagrade ako ih imam)
-- Povijest mojih donacija
-- Mogu kliknuti da dolazim na evente koje objavi admin
-- Followanje/unfollowanje ostalih donora
-- Mogu komentirati bolnice na njihovim profilima
-- Mogu poslati poruku drugim donorima
-- Primam obavijesti
+### Prerequisites
 
-2. Admin
-- Admin prati donore i njihove donacije pa sukladno njima dodjeljuje
-nagrade npr. za 50 donacija korisnik na svom profilu dobije srebrenu
-zvjezdicu.
-- Izrađuje "evente" za nove donacije (koji se odmah označe na karti) -
-Šalje obavijesti korisnicima npr. ako manjka A+ krvne grupe poslat će svim
-takvim donorima obavijest ili ako se krv donira na Turniću svim donorima
-koji su u blizini šalje se obavijest.
-- Sudjeluje u "live chatu" za sve koji posjete stranicu (i za gueste i za
-donore)
-- Na pitanje u "live chatu" može odgovarati i donor koji je ostvario preko
-100 donacija.
-- Izrađuje mjesečne statistike koje se vide na naslovnoj stranici
+What things you need to install the software and how to install them
 
-Kako sustav doniranja funkcionira ? 
-Nakon što admin objavi event donori se prijave na isti (klikom sa svog profila)
-Admin dobije popis donora koji su se prijavili i označi ih klikom ako su stvarno donirali taj dan i koliko(broj donacija za donor++,
-količina krvi++ itd).
+```
+Give examples
+```
 
-Admin pregledava i zahtjeve od bolnica (klikom je odobri, zahtjev se izbriše, kolicina krvi--)
+### Installing
 
+A step by step series of examples that tell you how to get a development env running
 
-3. Bolnice
-- Bolnice šalju zahtjeve za krvlju banci krvi
-- Prate zalihe krvi i mogu objavljivati na naslovnoj stranici
+Say what the step will be
 
-4. Guest
+```
+Give the example
+```
 
--Guest korisnik vidi "ono što je na površini"
-- osnovne informacije (O nama, Kako donirati krvi, Gdje nas pronaći,
-Kontakti itd)
-- trenutne zalihe krvi
-- može poslati upit na "live chat"
--blabla
+And repeat
 
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
 
