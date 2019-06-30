@@ -1,6 +1,12 @@
 # GroBenk
 
-GroBenk je web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj web aplikacija i Baza podataka. U osnovi, radi se o društvenoj mreži imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje korisnike krivi i donore na jednom mjestu.
+Društvene mreža imaginarne banke krvi _GroBenk_ koja spaja bolnice kao krajnje korisnike krivi i donore na jednom mjestu.
+
+
+### Motivation
+
+Web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj web aplikacija i Baza podataka.
+
 
 ### Prerequisites
 
@@ -14,7 +20,9 @@ GroBenk je web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj 
 2. pokrenuti index.html
 
 
-### About
+## About
+
+Aplikacija je podijeljena u četiri pristupne razine definirane slijedećim funkcionalnostima:
 
 1. *Donor*
 - Korisnik se može registrirati kao donor krvi.
@@ -26,7 +34,7 @@ GroBenk je web aplikacija dizajnirana i implementirana u sklopu kolegija Razvoj 
 - Mogu poslati poruku drugim donorima (sustav kratkih poruka; nije chat u pravom smislu riječi jer nije "real time", za prikaz nove poruke potrebno je refreshati stranicu)
 - Primam obavijesti (prvenstveno od admina)
 
-2. Admin
+2. *Admin*
 - Admin prati donore i njihove donacije pa sukladno njima dodjeljuje
 nagrade npr. za 50 donacija korisnik na svom profilu dobije srebrenu
 zvjezdicu.
@@ -45,21 +53,17 @@ količina krvi++ itd).
 Admin pregledava i zahtjeve od bolnica (klikom je odobri, zahtjev se izbriše, kolicina krvi--)
 
 
-3. Bolnice
+3. *Bolnice*
 - Bolnice šalju zahtjeve za krvlju banci krvi
 - Prate zalihe krvi i mogu objavljivati na naslovnoj stranici
 - Sudjeluju na svom forumu (svaka bolnica ima svoj forum)
 
-4. Guest
+4. *Guest*
 
 - Guest korisnik vidi "ono što je na površini"
 - osnovne informacije (O nama, Kako donirati krvi, Gdje nas pronaći,
 Kontakti itd)
 - trenutne zalihe krvi
-
-## Running the tests
-
-
 
 ## Built With
 
@@ -69,6 +73,7 @@ Kontakti itd)
 * JS
 * SQL
 
+
 ## Authors
 
 * **Maja Vrsaljko** - *Razvoj backend-a* - (https://github.com/vrsaljk0)
@@ -76,11 +81,6 @@ Kontakti itd)
 * **Azra Subašić** - *Razvoj frontend-a* - (https://github.com/hax91)
 
 * **Ivana Baćac** - *Razvoj backend-a* - (https://github.com/Bachvac)
-
-
-## Usage
-
-
 
 ## Acknowledgments
 
